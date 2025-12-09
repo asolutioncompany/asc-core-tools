@@ -1,8 +1,6 @@
 # asc-core-tools
 A lightweight WordPress plugin for common customizations of WordPress.
 
-Features include basic security, managing autosaves and revisions, disabling autoupdate emails, database maintenance, disabling all comments, and templating for quickly adding encapsulated PHP, CSS, and JS customizations.
-
 The benefits of this plugin is to quickly secure a WordPress website, provide customizations that usually require custom coding, and quickly template a default plugin for the website to make further small customizations.
 
 It is built for developers in mind who just need a quick solution to cover the basics for small websites.
