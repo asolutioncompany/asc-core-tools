@@ -1,0 +1,40 @@
+# Cursor AI Rules for asc-ai-summaries
+
+This project follows the coding style guidelines defined in `STYLE_GUIDE.md`. Please review and follow those guidelines when writing or modifying code.
+
+## Key Style Preferences
+
+- Use null coalescing operator (`??`) for simple defaults
+- Use switch statements where appropriate
+- Use explicit if statements for conditional logic - avoid ternary operators and conditional assignment
+- Use tabs for indentation (no spaces for column alignment)
+- Separate logic from HTML presentation - do all data preparation before HTML blocks
+- Pre-compute variables before HTML blocks
+- Use descriptive variable names
+
+## Important Patterns
+
+### Avoid Conditional Assignment
+Instead of: `$is_manual = 'none' === $selected_model;`
+Use:
+```php
+$is_manual = false;
+if ( 'none' === $selected_model ) {
+	$is_manual = true;
+}
+```
+
+### Avoid Ternary Operators
+Instead of: `$class = $is_active ? 'active' : 'inactive';`
+Use:
+```php
+$class = 'inactive';
+if ( $is_active ) {
+	$class = 'active';
+}
+```
+
+### Separate Logic from HTML
+Do all data preparation and logic before HTML blocks. Use plain variables in HTML, not complex expressions.
+
+For complete guidelines, see `STYLE_GUIDE.md`.
