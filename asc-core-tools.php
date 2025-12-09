@@ -13,8 +13,12 @@ declare( strict_types = 1 );
  *
  * The benefit of this plugin is to quickly secure a WordPress website, provide customizations
  * that usually require custom coding, and quickly template a default plugin for the website to
- * make further small customizations. It is built for developers in mind who just need a quick
+ * make further small customizations.
+ *
+ * It is built for developers in mind who just need a quick
  * solution to cover the basics for small websites.
+ *
+ * Features:
  *
  * - Disable XMLPRC.php
  * - Hide WordPress Login
