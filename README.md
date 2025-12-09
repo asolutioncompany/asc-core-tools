@@ -1,4 +1,4 @@
-# asc-core-tools
+# aS.c Core Tools
 A lightweight WordPress plugin for common customizations of WordPress.
 
 The benefits of this plugin is to quickly secure a WordPress website, provide customizations that usually require custom coding, and quickly template a default plugin for the website to make further small customizations.
