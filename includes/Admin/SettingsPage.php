@@ -65,7 +65,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'general_security_heading',
-			__( 'Security Settings', 'asc-core-tools' ),
+			__( 'XML-RPC', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_general_section'
@@ -82,7 +82,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'general_updates_heading',
-			__( 'Update Settings', 'asc-core-tools' ),
+			__( 'Autoupdate Emails', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_general_section'
@@ -99,7 +99,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'general_autosave_heading',
-			__( 'Autosave Settings', 'asc-core-tools' ),
+			__( 'Autosave / Heartbeat API', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_general_section'
@@ -107,7 +107,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'disable_autosave',
-			__( 'Disable Autosave [Heartbeat API]', 'asc-core-tools' ),
+			__( 'Disable Autosave / Heartbeat API', 'asc-core-tools' ),
 			array( $this, 'render_disable_autosave' ),
 			$page_slug,
 			'asc_core_tools_general_section',
@@ -125,7 +125,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'general_revisions_heading',
-			__( 'Revision Settings', 'asc-core-tools' ),
+			__( 'Revisions', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_general_section'
@@ -151,7 +151,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'general_comments_heading',
-			__( 'Comment Settings', 'asc-core-tools' ),
+			__( 'Comments', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_general_section'

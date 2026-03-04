@@ -37,7 +37,7 @@ class Core {
 	 */
 	private static array $default_settings = array(
 		'disable_xmlrpc' => 1,
-		'disable_autoupdate_emails' => 0,
+		'disable_autoupdate_emails' => 1,
 		'disable_autosave' => 1,
 		'autosave_interval_seconds' => 300,
 		'disable_revisions' => 1,
@@ -48,7 +48,7 @@ class Core {
 		'enable_ninja_forms' => 1,
 		'enable_social_sharing' => 1,
 		'social_sharing_post_types' => 'post,page',
-		'self_host_fontawesome' => 0,
+		'self_host_fontawesome' => 1,
 	);
 
 	/**
