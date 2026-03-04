@@ -1,0 +1,87 @@
+/*!
+ * aS.c Core Tools Ninja Forms CSS
+ */
+
+body {
+	--asc-ninja-color: #efefef;
+	--asc-ninja-hover-color: #fff;
+	--asc-ninja-bg-color: #888;
+	--asc-ninja-hover-bg-color: #aaa;
+
+	--asc-ninja-error-color: #822;
+}
+
+.nf-form-content button,
+.nf-form-content input[type="button"],
+.nf-form-content input[type="submit"] {
+	transition: none !important;
+}
+.nf-form-content { padding: 0 !important; }
+.nf-after-form-content { margin-bottom: 0 !important; }
+.nf-field-container { margin-bottom: 20px !important; }
+nf-field:last-child .nf-field-container { margin-bottom: 0 !important; }
+.nf-form-fields-required { margin-bottom: 20px !important; }
+.nf-response-msg { margin-top: 10px !important; margin-bottom: 20px !important; }
+.nf-error-msg { margin-top: 5px !important; margin-bottom: 20px !important }
+.nf-error-field-errors { margin-top: 10px !important; margin-bottom: 0 !important; }
+.nf-input-limit:empty { margin-top: 0 !important; }
+
+.nf-form-content button, .nf-form-content input[type="button"], .nf-form-content input[type="submit"] {
+	cursor: pointer !important;
+	height: auto !important;
+	font-weight: 600 !important;
+	line-height: 1em !important;
+	font-size: 1em !important;
+	padding: 20px 40px !important;
+	border-radius: 50px !important;
+	color: var(--asc-ninja-color) !important; /* button font color */
+	background-color: var(--asc-ninja-bg-color) !important; /* button color */
+}
+.nf-form-content button:active, .nf-form-content input[type="button"]:active, .nf-form-content input[type="submit"]:active,
+.nf-form-content button:hover, .nf-form-content input[type="button"]:hover, .nf-form-content input[type="submit"]:hover {
+	color: var(--asc-ninja-hover-color) !important; /* button font color */
+	background-color: var(--asc-ninja-hover-bg-color) !important; /* button hover color */
+}
+
+.nf-form-content .list-select-wrap .nf-field-element > div:active,
+.nf-form-content .list-select-wrap .nf-field-element > div:focus,
+.nf-form-content input:not([type="button"]):active,
+.nf-form-content input:not([type="button"]):focus,
+.nf-form-content textarea:active,
+.nf-form-content textarea:focus {
+	border-color: var(--asc-ninja-bg-color) !important; /* field focus border color */
+}
+input:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="reset"]:focus,
+input[type="search"]:focus,
+textarea:focus, .wp-block-search__input:focus,
+[data-section="section-header-mobile-trigger"] .ast-button-wrap .ast-mobile-menu-trigger-minimal:focus,
+.ast-mobile-popup-drawer.active .menu-toggle-close:focus,
+.woocommerce-ordering select.orderby:focus,
+#ast-scroll-top:focus,
+.woocommerce a.add_to_cart_button:focus,
+.woocommerce .button.single_add_to_cart_button:focus {
+	border-style: solid !important;
+}
+.nf-error-msg, .ninja-forms-req-symbol {
+	color: var(--asc-ninja-error-color) !important; /* required symbol color */
+}
+.nf-error.field-wrap .nf-field-element::after {
+	background: var(--asc-ninja-error-color) !important; /* field alert color */
+	border-radius: 0 9px 9px 0 !important;
+}
+.nf-error.textarea-wrap .nf-field-element::after {
+	border-radius: 9px !important;
+}
+.nf-form-content .list-select-wrap .nf-field-element > div,
+.nf-form-content input:not([type="button"]),
+.nf-form-content textarea {
+	border-radius: 10px !important;
+}
+.nf-form-content .nf-error .ninja-forms-field {
+	border-color: var(--asc-ninja-error-color) !important; /* error message color */
+}
