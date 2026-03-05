@@ -15,44 +15,46 @@ body {
 }
 
 .asc-core-tools-share-container {
-	text-align: center !important;
-	margin: 60px auto 50px auto !important; /* spacing for social share box */
+	text-align: center;
+	margin: 60px auto 50px auto; /* spacing for social share box */
 }
 .asc-core-tools-share-container .asc-core-tools-share-header {
-	margin-right: 10px !important;
-	font-weight: 600 !important;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	font-weight: 600;
 }
 @media (max-width: 420px) {
 	.asc-core-tools-share-container .asc-core-tools-share-header {
-		display: block !important;
-		margin-right: 0 !important;
-		margin-bottom: 5px !important;
+		display: block;
+		margin-right: 0;
+		margin-bottom: 5px;
 	}
 }
 .asc-core-tools-share-container .acs-share-networks {
-	text-align: center !important;
+	text-align: center;
 }
 .asc-core-tools-share-container .asc-core-tools-share-icon {
-	cursor: pointer !important;
-	margin-right: 10px !important;
-	margin-bottom: 10px !important;
-	display: inline-block !important;
-	vertical-align: middle !important;
-	text-align: center !important;
-	min-height: 50px !important;
-	min-width: 50px !important;
-	font-size: 18px !important;
-	line-height: 24px !important;
-	padding: 13px !important;
-	border-radius: 10px !important;
-	color: var(--asc-social-color) !important; /* icon color */
-	background-color: var(--asc-social-bg-color) !important; /* icon background color */
+	cursor: pointer;
+	margin-top: 7.5px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	min-height: 50px;
+	min-width: 50px;
+	font-size: 18px;
+	line-height: 24px;
+	padding: 13px;
+	border-radius: 10px;
+	color: var(--asc-social-color); /* icon color */
+	background-color: var(--asc-social-bg-color); /* icon background color */
 }
 .asc-core-tools-share-container .asc-core-tools-share-icon:hover,
 .asc-core-tools-share-container .asc-core-tools-share-icon:active,
 .asc-core-tools-share-container .asc-core-tools-share-icon:focus {
-	background-color: var(--asc-social-hover-bg-color) !important; /* hover icon background color */
-	color: var(--asc-social-hover-color) !important; /* hover icon color */
+	background-color: var(--asc-social-hover-bg-color); /* hover icon background color */
+	color: var(--asc-social-hover-color); /* hover icon color */
 }
 
 .asc-core-tools-share-container button.asc-core-tools-share-icon {
@@ -62,35 +64,35 @@ body {
 	appearance: none;
 }
 .asc-core-tools-share-container .asc-core-tools-copy {
-	position: relative !important;
-	cursor: copy !important;
+	position: relative;
+	cursor: copy;
 }
 .asc-core-tools-share-container .asc-core-tools-share-success {
-	cursor: pointer !important;
+	cursor: pointer;
 	display: none;
-	position: absolute !important;
-	overflow: hidden !important;
-	border-radius: 10px !important;
-	bottom: 60px !important;
+	position: absolute;
+	overflow: hidden;
+	border-radius: 10px;
+	bottom: 60px;
 	right: 50px;
-	width: 160px !important;
-	min-height: 40px !important;
-	font-size: 18px !important;
-	line-height: 24px !important;
-	padding: 8px 13px !important;
-	color: var(--asc-social-alert-color) !important; /* success message font color */
-	background-color: var(--asc-social-alert-bg-color) !important; /* success message background color */
-	margin: 0 !important;
-	z-index: 999999 !important;
+	width: 160px;
+	min-height: 40px;
+	font-size: 18px;
+	line-height: 24px;
+	padding: 8px 13px;
+	color: var(--asc-social-alert-color); /* success message font color */
+	background-color: var(--asc-social-alert-bg-color); /* success message background color */
+	margin: 0;
+	z-index: 999999;
 }
 .asc-core-tools-share-container .asc-core-tools-share-success:hover,
 .asc-core-tools-share-container .asc-core-tools-share-success:active,
 .asc-core-tools-share-container .asc-core-tools-share-success:focus {
-	color: var(--asc-social-alert-hover-color) !important; /* hover icon color */
-	background-color: var(--asc-social-alert-hover-bg-color) !important; /* hover icon background color */
+	color: var(--asc-social-alert-hover-color); /* hover icon color */
+	background-color: var(--asc-social-alert-hover-bg-color); /* hover icon background color */
 }
 .asc-core-tools-share-container .asc-core-tools-share-alert-message {
-	margin-right: 10px !important;
+	margin-right: 10px;
 }
 .asc-core-tools-share-container .asc-core-tools-share-alert-close {
 }
