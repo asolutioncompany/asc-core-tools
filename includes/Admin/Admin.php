@@ -59,6 +59,9 @@ class Admin {
 		// Initialize database tools (AJAX handlers)
 		new Database();
 
+		// Initialize fonts (AJAX handlers for scan/generate)
+		new Fonts();
+
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 	}
 

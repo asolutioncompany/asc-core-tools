@@ -55,6 +55,7 @@ class Core {
 		'share_email' => 1,
 		'share_copy_link' => 1,
 		'self_host_fontawesome' => 1,
+		'enable_local_fonts' => 0,
 	);
 
 	/**
@@ -284,6 +285,19 @@ class Core {
 				$plugin_url . $ninja_css,
 				array(),
 				filemtime( $plugin_path . $ninja_css )
+			);
+		}
+
+		// Local fonts: load generated fonts.css from wp-content/fonts when enabled
+		if ( ! empty( $settings['enable_local_fonts'] ) ) {
+			$fonts_css_url = content_url( 'fonts/fonts.css' );
+			$fonts_css_path = WP_CONTENT_DIR . '/fonts/fonts.css';
+			$version = is_file( $fonts_css_path ) ? (string) filemtime( $fonts_css_path ) : '1';
+			wp_enqueue_style(
+				'asc_core_tools_local_fonts',
+				$fonts_css_url,
+				array(),
+				$version
 			);
 		}
 

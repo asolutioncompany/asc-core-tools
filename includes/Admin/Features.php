@@ -65,11 +65,11 @@ class Features {
 		$html = '<div class="asc-core-tools-share-container" role="region" aria-label="' . esc_attr__( 'Share this', 'asc-core-tools' ) . '">';
 		$html .= '<div class="asc-core-tools-share-networks">';
 		$html .= '<span class="asc-core-tools-share-header">Share:</span>';
-		if ( ! empty( $settings['share_linkedin'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="LinkedIn" aria-label="' . esc_attr__( 'Share on LinkedIn', 'asc-core-tools' ) . '"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>';
-		}
 		if ( ! empty( $settings['share_facebook'] ) ) {
 			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="Facebook" aria-label="' . esc_attr__( 'Share on Facebook', 'asc-core-tools' ) . '"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>';
+		}
+		if ( ! empty( $settings['share_linkedin'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="LinkedIn" aria-label="' . esc_attr__( 'Share on LinkedIn', 'asc-core-tools' ) . '"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>';
 		}
 		if ( ! empty( $settings['share_bluesky'] ) ) {
 			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $bluesky_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="Bluesky" aria-label="' . esc_attr__( 'Share on Bluesky', 'asc-core-tools' ) . '"><i class="fab fa-bluesky" aria-hidden="true"></i></a>';

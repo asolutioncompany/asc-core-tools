@@ -221,6 +221,29 @@ class SettingsPage {
 		);
 
 		add_settings_field(
+			'features_local_fonts_heading',
+			__( 'Local Fonts', 'asc-core-tools' ),
+			$subsection_cb,
+			$page_slug,
+			'asc_core_tools_features_section'
+		);
+		add_settings_field(
+			'enable_local_fonts',
+			__( 'Enable local fonts', 'asc-core-tools' ),
+			array( $this, 'render_enable_local_fonts' ),
+			$page_slug,
+			'asc_core_tools_features_section',
+			array( 'label_for' => 'enable_local_fonts' )
+		);
+		add_settings_field(
+			'local_fonts_actions',
+			'',
+			array( $this, 'render_local_fonts_actions' ),
+			$page_slug,
+			'asc_core_tools_features_section'
+		);
+
+		add_settings_field(
 			'features_fontawesome_heading',
 			__( 'Font Awesome', 'asc-core-tools' ),
 			$subsection_cb,
@@ -229,7 +252,7 @@ class SettingsPage {
 		);
 		add_settings_field(
 			'self_host_fontawesome',
-			__( 'Self-host Font Awesome', 'asc-core-tools' ),
+			__( 'Enable local Font Awesome fonts', 'asc-core-tools' ),
 			array( $this, 'render_self_host_fontawesome' ),
 			$page_slug,
 			'asc_core_tools_features_section',
@@ -332,6 +355,7 @@ class SettingsPage {
 		$output['share_email'] = ! empty( $input['share_email'] ) ? 1 : 0;
 		$output['share_copy_link'] = ! empty( $input['share_copy_link'] ) ? 1 : 0;
 		$output['self_host_fontawesome'] = ! empty( $input['self_host_fontawesome'] ) ? 1 : 0;
+		$output['enable_local_fonts'] = ! empty( $input['enable_local_fonts'] ) ? 1 : 0;
 
 		$result = wp_parse_args( $output, wp_parse_args( $current, $defaults ) );
 
@@ -557,6 +581,53 @@ class SettingsPage {
 	}
 
 	/**
+	 * Render Enable local fonts checkbox.
+	 *
+	 * @return void
+	 */
+	public function render_enable_local_fonts(): void {
+		$settings = Settings::get_settings();
+		$value = ! empty( $settings['enable_local_fonts'] );
+		$name = Admin::OPTION_NAME . '[enable_local_fonts]';
+		$id = 'enable_local_fonts';
+		?>
+		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
+			value="1" <?php checked( $value ); ?>>
+		<?php
+	}
+
+	/**
+	 * Render Local fonts description, Scan button, font list, and Generate CSS button.
+	 *
+	 * @return void
+	 */
+	public function render_local_fonts_actions(): void {
+		$files = Fonts::get_last_directory_files();
+		$message = count( $files ) > 0
+			? __( 'Files in wp-content/fonts:', 'asc-core-tools' )
+			: __( 'No font files or fonts.css found.', 'asc-core-tools' );
+		?>
+		<div class="asc-core-tools-description"><?php esc_html_e( 'Upload your fonts to the wp-content/fonts directory.', 'asc-core-tools' ); ?></div>
+		<p>
+			<button type="button" class="button asc-core-tools-scan-fonts"><?php esc_html_e( 'Scan for fonts', 'asc-core-tools' ); ?></button>
+			<button type="button" class="button asc-core-tools-generate-fonts-css"><?php esc_html_e( 'Generate CSS', 'asc-core-tools' ); ?></button>
+		</p>
+		<div class="asc-core-tools-font-list" aria-live="polite">
+			<?php if ( count( $files ) > 0 ) : ?>
+				<p><strong><?php echo esc_html( $message ); ?></strong></p>
+				<ul>
+					<?php foreach ( $files as $file ) : ?>
+						<li><?php echo esc_html( $file ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php else : ?>
+				<p><?php echo esc_html( $message ); ?></p>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Render Enable Social Sharing checkbox.
 	 *
 	 * @return void
@@ -599,8 +670,8 @@ class SettingsPage {
 		<?php
 		$settings = Settings::get_settings();
 		$networks = array(
-			'share_linkedin' => __( 'LinkedIn', 'asc-core-tools' ),
 			'share_facebook' => __( 'Facebook', 'asc-core-tools' ),
+			'share_linkedin' => __( 'LinkedIn', 'asc-core-tools' ),
 			'share_bluesky' => __( 'Bluesky', 'asc-core-tools' ),
 			'share_x' => __( 'X', 'asc-core-tools' ),
 			'share_email' => __( 'Email', 'asc-core-tools' ),
