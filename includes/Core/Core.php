@@ -48,6 +48,12 @@ class Core {
 		'enable_ninja_forms' => 1,
 		'enable_social_sharing' => 1,
 		'social_sharing_post_types' => 'post,page',
+		'share_facebook' => 1,
+		'share_x' => 1,
+		'share_linkedin' => 1,
+		'share_bluesky' => 1,
+		'share_email' => 1,
+		'share_copy_link' => 1,
 		'self_host_fontawesome' => 1,
 	);
 

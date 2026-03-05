@@ -30,6 +30,8 @@
 .asc-core-tools-tab-content .form-table th,
 .asc-core-tools-tab-content .form-table td {
 	vertical-align: top;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 /* Section start: space only after a section (margin-top on next section's first row). */
 .asc-core-tools-tab-content .form-table tr.asc-core-tools-section-start {
@@ -63,19 +65,23 @@
 
 .asc-core-tools-tab-content .form-table .asc-core-tools-table-input-description > label {
 	display: block;
-	margin: 12px 0 5px !important;
+	margin: 12px 0 5px;
 }
 .asc-core-tools-tab-content .form-table td fieldset label {
-	margin: 0.35em 0 5px !important;
+	margin: 12px 0;
 }
 
 .asc-core-tools-description {
 	margin-top: 5px;
 	margin-bottom: 20px;
-	color: #646970;
 }
 .asc-core-tools-description:last-child {
 	margin-bottom: 0;
+}
+/* Short description above controls (e.g. networks list): 5px bottom margin, default font color. */
+.asc-core-tools-description-label {
+	margin-top: 15px;
+	margin-bottom: 5px;
 }
 
 .asc-core-tools-fieldset {

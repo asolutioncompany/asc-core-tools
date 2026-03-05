@@ -238,7 +238,7 @@ class SettingsPage {
 
 		add_settings_field(
 			'features_social_heading',
-			__( 'Social Sharing Settings', 'asc-core-tools' ),
+			__( 'Social Sharing', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_features_section'
@@ -266,10 +266,17 @@ class SettingsPage {
 			'asc_core_tools_features_section',
 			array( 'label_for' => 'social_sharing_post_types' )
 		);
+		add_settings_field(
+			'social_sharing_networks',
+			'',
+			array( $this, 'render_social_sharing_networks' ),
+			$page_slug,
+			'asc_core_tools_features_section'
+		);
 
 		add_settings_field(
 			'features_ninja_heading',
-			__( 'Ninja Form Settings', 'asc-core-tools' ),
+			__( 'Ninja Forms', 'asc-core-tools' ),
 			$subsection_cb,
 			$page_slug,
 			'asc_core_tools_features_section'
@@ -318,6 +325,12 @@ class SettingsPage {
 		$output['social_sharing_post_types'] = isset( $input['social_sharing_post_types'] )
 			? sanitize_text_field( $input['social_sharing_post_types'] )
 			: $defaults['social_sharing_post_types'];
+		$output['share_facebook'] = ! empty( $input['share_facebook'] ) ? 1 : 0;
+		$output['share_x'] = ! empty( $input['share_x'] ) ? 1 : 0;
+		$output['share_linkedin'] = ! empty( $input['share_linkedin'] ) ? 1 : 0;
+		$output['share_bluesky'] = ! empty( $input['share_bluesky'] ) ? 1 : 0;
+		$output['share_email'] = ! empty( $input['share_email'] ) ? 1 : 0;
+		$output['share_copy_link'] = ! empty( $input['share_copy_link'] ) ? 1 : 0;
 		$output['self_host_fontawesome'] = ! empty( $input['self_host_fontawesome'] ) ? 1 : 0;
 
 		$result = wp_parse_args( $output, wp_parse_args( $current, $defaults ) );
@@ -573,6 +586,40 @@ class SettingsPage {
 		<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="<?php echo esc_attr( $value ); ?>" class="regular-text">
 		<?php
+	}
+
+	/**
+	 * Render Social Sharing networks checkboxes (which icons to show in the sharing bar).
+	 *
+	 * @return void
+	 */
+	public function render_social_sharing_networks(): void {
+		?>
+		<div class="asc-core-tools-description-label"><?php esc_html_e( 'Networks to show in sharing bar:', 'asc-core-tools' ); ?></div>
+		<?php
+		$settings = Settings::get_settings();
+		$networks = array(
+			'share_linkedin' => __( 'LinkedIn', 'asc-core-tools' ),
+			'share_facebook' => __( 'Facebook', 'asc-core-tools' ),
+			'share_bluesky' => __( 'Bluesky', 'asc-core-tools' ),
+			'share_x' => __( 'X', 'asc-core-tools' ),
+			'share_email' => __( 'Email', 'asc-core-tools' ),
+			'share_copy_link' => __( 'Copy link', 'asc-core-tools' ),
+		);
+		foreach ( $networks as $key => $label ) {
+			$value = ! empty( $settings[ $key ] );
+			$name = Admin::OPTION_NAME . '[' . $key . ']';
+			$id = $key;
+			?>
+			<div class="asc-core-tools-checkbox">
+				<label for="<?php echo esc_attr( $id ); ?>">
+					<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
+						value="1" <?php checked( $value ); ?>>
+					<?php echo esc_html( $label ); ?>
+				</label>
+			</div>
+			<?php
+		}
 	}
 
 	/**

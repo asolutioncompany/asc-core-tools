@@ -23,7 +23,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 ### Features
 - **Shortcodes** – `[asc_core_tools_year]` (current year); `[asc_core_tools_social_sharing]` when social sharing is enabled.
 - **Ninja Forms** – Optional customization (enable to load custom public CSS).
-- **Social sharing** – Optional sharing bar (Facebook, Twitter, LinkedIn, Email, Copy link) on selected post types or via shortcode; requires clipboard.js and Font Awesome, which are included in the vendor directory and self-hosted by default.
+- **Social sharing** – Optional sharing bar (Facebook, X, LinkedIn, Bluesky, Email, Copy link) on selected post types or via shortcode; you can choose which networks to show (all enabled by default). Requires clipboard.js and Font Awesome, which are included in the vendor directory and self-hosted by default.
 - **Self-host Font Awesome** – Option to self-host Font Awesome from the plugin; on by default.
 
 ### Database

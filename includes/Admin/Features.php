@@ -49,24 +49,40 @@ class Features {
 	 * @return string HTML markup for the share container.
 	 */
 	public static function social_sharing( string $link, string $title ): string {
+		$settings = Core::get_settings();
 		$enc_link = urlencode( $link );
 		$enc_title = urlencode( $title );
 		$subject = rawurlencode( htmlspecialchars_decode( $title, ENT_QUOTES | ENT_HTML5 ) );
 		$attr_link = esc_attr( $link );
 
 		$fb_url = 'https://www.facebook.com/sharer.php?u=' . $enc_link . '&amp;t=' . $enc_title;
-		$tw_url = 'https://twitter.com/share?text=' . $enc_title . '&amp;url=' . $enc_link;
+		$x_url = 'https://twitter.com/intent/tweet?text=' . $enc_title . '&amp;url=' . $enc_link;
 		$li_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . $enc_link;
+		$bluesky_text = $title . ' ' . $link;
+		$bluesky_url = 'https://bsky.app/intent/compose?text=' . rawurlencode( $bluesky_text );
 		$mail_url = 'mailto:?subject=' . $subject . '&body=' . rawurlencode( $link );
 
 		$html = '<div class="asc-core-tools-share-container">';
 		$html .= '<div class="asc-core-tools-share-networks">';
 		$html .= '<span class="asc-core-tools-share-header">Share:</span>';
-		$html .= '<a class="asc-core-tools-share-icon" title="Facebook" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-facebook-f"></i></a>';
-		$html .= '<a class="asc-core-tools-share-icon" title="Twitter" href="' . esc_url( $tw_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-twitter"></i></a>';
-		$html .= '<a class="asc-core-tools-share-icon" title="LinkedIn" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-linkedin-in"></i></a>';
-		$html .= '<a class="asc-core-tools-share-icon" title="Email" href="' . esc_url( $mail_url ) . '" target="_self" rel="noopener noreferrer nofollow"><i class="far fa-envelope"></i></a>';
-		$html .= '<a class="asc-core-tools-share-icon asc-core-tools-copy" title="Copy Link" data-clipboard-text="' . $attr_link . '" rel="noopener noreferrer nofollow"><i class="far fa-copy"></i><span class="asc-core-tools-share-success"></span></a>';
+		if ( ! empty( $settings['share_linkedin'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" title="LinkedIn" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-linkedin-in"></i></a>';
+		}
+		if ( ! empty( $settings['share_facebook'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" title="Facebook" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-facebook-f"></i></a>';
+		}
+		if ( ! empty( $settings['share_bluesky'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" title="Bluesky" href="' . esc_url( $bluesky_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-bluesky"></i></a>';
+		}
+		if ( ! empty( $settings['share_x'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" title="X" href="' . esc_url( $x_url ) . '" target="_blank" rel="noopener noreferrer nofollow"><i class="fab fa-x-twitter"></i></a>';
+		}
+		if ( ! empty( $settings['share_email'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon" title="Email" href="' . esc_url( $mail_url ) . '" target="_self" rel="noopener noreferrer nofollow"><i class="far fa-envelope"></i></a>';
+		}
+		if ( ! empty( $settings['share_copy_link'] ) ) {
+			$html .= '<a class="asc-core-tools-share-icon asc-core-tools-copy" title="Copy Link" data-clipboard-text="' . $attr_link . '" rel="noopener noreferrer nofollow"><i class="far fa-copy"></i><span class="asc-core-tools-share-success"></span></a>';
+		}
 		$html .= '</div>';
 		$html .= '</div>';
 
