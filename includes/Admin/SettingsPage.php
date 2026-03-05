@@ -694,14 +694,14 @@ class SettingsPage {
 		<div class="wrap asc-core-tools-admin">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-			<nav class="nav-tab-wrapper asc-core-tools-tabs">
-				<a class="nav-tab<?php echo $active_tab_class['general']; ?>" data-tab="general">
+			<nav class="nav-tab-wrapper asc-core-tools-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings sections', 'asc-core-tools' ); ?>">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['general']; ?>" id="asc-core-tools-tab-general" role="tab" aria-selected="<?php echo $active_tab === 'general' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-general" data-tab="general">
 					<?php esc_html_e( 'General', 'asc-core-tools' ); ?>
 				</a>
-				<a class="nav-tab<?php echo $active_tab_class['features']; ?>" data-tab="features">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['features']; ?>" id="asc-core-tools-tab-features" role="tab" aria-selected="<?php echo $active_tab === 'features' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-features" data-tab="features">
 					<?php esc_html_e( 'Features', 'asc-core-tools' ); ?>
 				</a>
-				<a class="nav-tab<?php echo $active_tab_class['database']; ?>" data-tab="database">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['database']; ?>" id="asc-core-tools-tab-database" role="tab" aria-selected="<?php echo $active_tab === 'database' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-database" data-tab="database">
 					<?php esc_html_e( 'Database', 'asc-core-tools' ); ?>
 				</a>
 			</nav>
@@ -711,7 +711,7 @@ class SettingsPage {
 				settings_fields( 'asc_core_tools_settings_group' );
 				?>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-general-tab"<?php echo $inactive_tab_css['general']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-general-tab" id="asc-core-tools-panel-general" role="tabpanel" aria-labelledby="asc-core-tools-tab-general"<?php echo $inactive_tab_css['general']; ?>>
 					<h2><?php esc_html_e( 'General Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -776,7 +776,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-features-tab"<?php echo $inactive_tab_css['features']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-features-tab" id="asc-core-tools-panel-features" role="tabpanel" aria-labelledby="asc-core-tools-tab-features"<?php echo $inactive_tab_css['features']; ?>>
 					<h2><?php esc_html_e( 'Features', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -845,7 +845,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-database-tab"<?php echo $inactive_tab_css['database']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo $inactive_tab_css['database']; ?>>
 					<h2><?php esc_html_e( 'Database Maintenance', 'asc-core-tools' ); ?></h2>
 					<table class="form-table asc-core-tools-database-table" role="presentation">
 						<tbody>

@@ -9,6 +9,17 @@
 	cursor: pointer;
 }
 
+/* Focus styling */
+.asc-core-tools-tabs .nav-tab:focus,
+.asc-core-tools-admin .form-table input:focus,
+.asc-core-tools-admin .form-table select:focus,
+.asc-core-tools-admin .form-table textarea:focus,
+.asc-core-tools-admin .form-table button:focus,
+.asc-core-tools-admin button:focus {
+	outline: 1px solid currentColor;
+	outline-offset: 0;
+}
+
 .asc-core-tools-admin p.submit {
 	margin-top: 0;
 }
@@ -19,7 +30,6 @@
 	padding: 10px 40px 20px;
 	background-color: #fff;
 	border: 1px solid #c3c4c7;
-	box-shadow: 0 1px 1px rgba(0,0,0,.04);
 	box-sizing: border-box;
 	max-width: 960px;
 }
@@ -33,7 +43,6 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-/* Section start: space only after a section (margin-top on next section's first row). */
 .asc-core-tools-tab-content .form-table tr.asc-core-tools-section-start {
 	margin-top: 20px;
 	margin-bottom: 0;
@@ -46,7 +55,6 @@
 	padding-top: 0;
 	padding-bottom: 5px;
 }
-/* Rows within a section: minimal vertical space. */
 .asc-core-tools-tab-content .form-table tr.asc-core-tools-section-row {
 	margin-top: 0;
 	margin-bottom: 0;
@@ -78,7 +86,6 @@
 .asc-core-tools-description:last-child {
 	margin-bottom: 0;
 }
-/* Short description above controls (e.g. networks list): 5px bottom margin, default font color. */
 .asc-core-tools-description-label {
 	margin-top: 15px;
 	margin-bottom: 5px;
@@ -93,6 +100,12 @@
 }
 .asc-core-tools-database-tab .form-table td {
 	padding-left: 0;
+}
+.asc-core-tools-database-tab .asc-core-tools-delete-obsolete-data,
+.asc-core-tools-database-tab .asc-core-tools-delete-orphaned-data,
+.asc-core-tools-database-tab .asc-core-tools-optimize-tables {
+	margin-right: 5px;
+	margin-bottom: 10px;
 }
 @media screen and (max-width: 782px) {
 	.asc-core-tools-database-tab .form-table td {

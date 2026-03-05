@@ -22,14 +22,23 @@
 
 			const targetTab = $(this).attr('data-tab');
 			const targetClass = '.asc-core-tools-' + targetTab + '-tab';
+			const $panel = $(targetClass);
 
-			// Set active tab
-			$('.asc-core-tools-tabs .nav-tab').removeClass('nav-tab-active');
-			$(this).addClass('nav-tab-active');
+			// Set active tab and ARIA
+			$('.asc-core-tools-tabs .nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
+			$(this).addClass('nav-tab-active').attr('aria-selected', 'true');
 
 			// Show/hide active tab content
 			$('.asc-core-tools-tab-content').hide();
-			$(targetClass).show();
+			$panel.show();
+
+			// Move focus into the panel: first focusable element or the panel's h2
+			var $focusTarget = $panel.find('input:visible, select:visible, textarea:visible, button:visible, [href]:visible').first();
+			if ($focusTarget.length) {
+				$focusTarget.focus();
+			} else {
+				$panel.find('h2').first().attr('tabindex', '-1').focus();
+			}
 
 			// Hide Save Settings button on Database tab, show on others
 			if (targetTab === 'database') {

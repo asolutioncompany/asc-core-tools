@@ -62,18 +62,19 @@
 
 		$(document).on('click', '.asc-core-tools-share-icon', function(e) {
 			var title = $(this).attr('title');
-
-			if ('Email' == title) {
-				return true;
-			}
+			var url = $(this).attr('href');
 
 			if ('Copy Link' == title) {
 				return false;
 			}
 
-			var url = $(this).attr('href');
+			if ('Email' == title) {
+				return true;
+			}
 
-			asc_core_tools_social_share_popup(url, title, window, 480, 640);
+			if (url) {
+				asc_core_tools_social_share_popup(url, title, window, 480, 640);
+			}
 
 			return false;
 		});

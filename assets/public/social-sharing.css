@@ -55,6 +55,12 @@ body {
 	color: var(--asc-social-hover-color) !important; /* hover icon color */
 }
 
+.asc-core-tools-share-container button.asc-core-tools-share-icon {
+	border: none;
+	font: inherit;
+	-webkit-appearance: none;
+	appearance: none;
+}
 .asc-core-tools-share-container .asc-core-tools-copy {
 	position: relative !important;
 	cursor: copy !important;
