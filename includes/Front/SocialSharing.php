@@ -1,9 +1,9 @@
 <?php
 /**
- * Features Class
+ * SocialSharing Class
  *
- * Handles feature functionality: shortcodes (year, social sharing) and
- * automatic social sharing on content when enabled via the settings page.
+ * Renders the social sharing bar and registers the shortcode and the_content filter
+ * when social sharing is enabled.
  *
  * @package asc-core-tools
  * @since 1.0.0
@@ -11,20 +11,17 @@
 
 declare( strict_types = 1 );
 
-namespace ASC\CoreTools\Admin;
+namespace ASC\CoreTools\Front;
 
 use ASC\CoreTools\Core\Core;
 
 /**
- * Features Class
- *
- * Registers shortcodes and the_content filter only when the corresponding
- * settings are enabled (social sharing). The year shortcode is always registered.
+ * SocialSharing Class
  */
-class Features {
+class SocialSharing {
 
 	/**
-	 * Initialize the Features class.
+	 * Initialize the SocialSharing class.
 	 *
 	 * @return void
 	 */
@@ -33,12 +30,17 @@ class Features {
 	}
 
 	/**
-	 * Shortcode to display the current year (e.g. for copyright footers).
+	 * Register social sharing shortcode and the_content filter when enabled.
 	 *
-	 * @return string Current 4-digit year.
+	 * @return void
 	 */
-	public function shortcode_year(): string {
-		return (string) gmdate( 'Y' );
+	private function init(): void {
+		$settings = Core::get_settings();
+		if ( empty( $settings['enable_social_sharing'] ) ) {
+			return;
+		}
+		add_shortcode( 'asc_core_tools_social_sharing', array( $this, 'shortcode_social_sharing' ) );
+		add_filter( 'the_content', array( $this, 'the_content_social_sharing' ), 10, 1 );
 	}
 
 	/**
@@ -134,24 +136,5 @@ class Features {
 		}
 
 		return $content . self::social_sharing( get_permalink( $post->ID ), $post->post_title );
-	}
-
-	/**
-	 * Initialize features: register shortcodes and hooks only when enabled.
-	 *
-	 * Year shortcode is always registered. Social sharing shortcode and
-	 * the_content filter are only added when enable_social_sharing is set.
-	 *
-	 * @return void
-	 */
-	private function init(): void {
-		$settings = Core::get_settings();
-
-		add_shortcode( 'asc_core_tools_year', array( $this, 'shortcode_year' ) );
-
-		if ( ! empty( $settings['enable_social_sharing'] ) ) {
-			add_shortcode( 'asc_core_tools_social_sharing', array( $this, 'shortcode_social_sharing' ) );
-			add_filter( 'the_content', array( $this, 'the_content_social_sharing' ), 10, 1 );
-		}
 	}
 }

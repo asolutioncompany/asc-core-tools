@@ -1,5 +1,5 @@
 /*!
- * aS.c Core Tools Ninja Forms CSS
+ * aS.c Core Tools Front CSS - Ninja Forms
  */
 
 body {
@@ -22,7 +22,7 @@ body {
 nf-field:last-child .nf-field-container { margin-bottom: 0 !important; }
 .nf-form-fields-required { margin-bottom: 20px !important; }
 .nf-response-msg { margin-top: 10px !important; margin-bottom: 20px !important; }
-.nf-error-msg { margin-top: 5px !important; margin-bottom: 20px !important }
+.nf-error-msg { margin-top: 5px !important; margin-bottom: 20px !important; }
 .nf-error-field-errors { margin-top: 10px !important; margin-bottom: 0 !important; }
 .nf-input-limit:empty { margin-top: 0 !important; }
 

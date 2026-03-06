@@ -2,7 +2,7 @@
 /**
  * Database Class
  *
- * Admin class for database settings.
+ * Admin class for database maintenance.
  *
  * @package: asc-core-tools
  * @since 1.0.0
@@ -24,6 +24,17 @@ class Database {
 	 */
 	public function __construct() {
 		$this->init();
+	}
+
+	/**
+	 * Initialize database components.
+	 *
+	 * @return void
+	 */
+	private function init(): void {
+		add_action( 'wp_ajax_asc_core_tools_delete_obsolete_data', array( $this, 'ajax_delete_obsolete_data' ) );
+		add_action( 'wp_ajax_asc_core_tools_delete_orphaned_data', array( $this, 'ajax_delete_orphaned_data' ) );
+		add_action( 'wp_ajax_asc_core_tools_optimize_tables', array( $this, 'ajax_optimize_tables' ) );
 	}
 
 	/**
@@ -280,16 +291,5 @@ class Database {
 		$message = 'Optimized ' . $full_table . ' table.';
 		$response->message = __( $message, 'asc-core-tools' );
 		wp_send_json( $response );
-	}
-
-	/**
-	 * Initialize database components.
-	 *
-	 * @return void
-	 */
-	private function init(): void {
-		add_action( "wp_ajax_asc_core_tools_delete_obsolete_data", array( $this, "ajax_delete_obsolete_data" ) );
-		add_action( "wp_ajax_asc_core_tools_delete_orphaned_data", array( $this, "ajax_delete_orphaned_data" ) );
-		add_action( "wp_ajax_asc_core_tools_optimize_tables", array( $this, "ajax_optimize_tables" ) );
 	}
 }

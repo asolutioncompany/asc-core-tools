@@ -45,6 +45,58 @@ class General {
 	}
 
 	/**
+	 * Initialize general components: apply settings via hooks.
+	 *
+	 * @return void
+	 */
+	private function init(): void {
+		$settings = Core::get_settings();
+
+		if ( ! empty( $settings['disable_xmlrpc'] ) ) {
+			add_filter( 'xmlrpc_enabled', '__return_false' );
+		}
+
+		if ( ! empty( $settings['disable_autoupdate_emails'] ) ) {
+			add_filter( 'auto_plugin_update_send_email', '__return_false' );
+			add_filter( 'auto_theme_update_send_email', '__return_false' );
+			add_filter( 'auto_core_update_send_email', '__return_false' );
+		}
+
+		if ( ! empty( $settings['disable_autosave'] ) ) {
+			add_action( 'admin_init', array( $this, 'deregister_heartbeat' ), 1 );
+			add_action( 'init', array( $this, 'deregister_heartbeat' ), 1 );
+		} else {
+			add_filter( 'heartbeat_settings', array( $this, 'update_heartbeat' ) );
+		}
+
+		add_filter( 'wp_revisions_to_keep', array( $this, 'limit_revisions' ), 10, 2 );
+
+		if ( ! empty( $settings['disable_comments'] ) ) {
+			add_filter( 'comments_open', '__return_false', 20, 2 );
+			add_filter( 'pings_open', '__return_false', 20, 2 );
+			add_action( 'init', array( $this, 'remove_comment_support' ), 100 );
+			add_filter( 'rest_pre_dispatch', array( $this, 'disable_comments_rest_api' ), 10, 3 );
+			add_action( 'admin_menu', array( $this, 'maybe_remove_comments_menu' ), 999 );
+		}
+
+		if ( ! empty( $settings['hide_login'] ) && ! empty( $settings['login_page_slug'] ) ) {
+			add_filter( 'query_vars', array( $this, 'add_login_query_var' ) );
+			add_action( 'init', array( $this, 'add_login_rewrite_rule' ) );
+			add_action( 'init', array( $this, 'redirect_backdoor_login_param_to_home' ), 1 );
+			add_action( 'template_redirect', array( $this, 'redirect_slug_to_wp_login' ) );
+			add_action( 'login_init', array( $this, 'gate_wp_login_by_slug_param' ) );
+			add_filter( 'site_url', array( $this, 'filter_login_url_to_slug' ), 10, 4 );
+			add_filter( 'network_site_url', array( $this, 'filter_login_url_to_slug_network' ), 10, 3 );
+			add_filter( 'wp_redirect', array( $this, 'filter_redirect_login_to_slug' ), 10, 2 );
+			add_filter( 'login_url', array( $this, 'login_url_to_slug' ), 10, 3 );
+			add_filter( 'logout_url', array( $this, 'logout_url_to_wp_login_with_slug' ), 10, 2 );
+			add_filter( 'logout_redirect', array( $this, 'logout_redirect_to_home' ), 10, 3 );
+			add_action( 'admin_init', array( $this, 'restrict_wp_admin' ) );
+			add_filter( 'rest_authentication_errors', array( $this, 'restrict_rest_api' ) );
+		}
+	}
+
+	/**
 	 * Deregister WP Heartbeat and Autosave scripts (disables autosave).
 	 *
 	 * @return void

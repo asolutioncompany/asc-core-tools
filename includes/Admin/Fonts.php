@@ -18,13 +18,6 @@ namespace ASC\CoreTools\Admin;
 class Fonts {
 
 	/**
-	 * Directory file list from last load/scan (for initial render).
-	 *
-	 * @var array<int, string>
-	 */
-	public static $last_directory_files = array();
-
-	/**
 	 * Subdirectory and file for local fonts (under WP_CONTENT_DIR).
 	 *
 	 * @var string
@@ -46,11 +39,27 @@ class Fonts {
 	private const ALLOWED_EXTENSIONS = array( 'woff2', 'woff', 'ttf', 'otf', 'eot' );
 
 	/**
+	 * Directory file list from last load/scan (for initial render).
+	 *
+	 * @var array<int, string>
+	 */
+	public static $last_directory_files = array();
+
+	/**
 	 * Initialize the Fonts class.
 	 *
 	 * @return void
 	 */
 	public function __construct() {
+		$this->init();
+	}
+
+	/**
+	 * Initialize actions and hooks.
+	 *
+	 * @return void
+	 */
+	private function init(): void {
 		add_action( 'wp_ajax_asc_core_tools_scan_fonts', array( $this, 'ajax_scan_fonts' ) );
 		add_action( 'wp_ajax_asc_core_tools_generate_fonts_css', array( $this, 'ajax_generate_fonts_css' ) );
 		add_action( 'load-settings_page_asc-core-tools', array( $this, 'on_load_settings_page' ) );
@@ -84,29 +93,36 @@ class Fonts {
 		if ( ! is_dir( $dir ) ) {
 			return array();
 		}
+
 		$files = @scandir( $dir );
 		if ( $files === false ) {
 			return array();
 		}
+
 		$list = array();
 		foreach ( $files as $file ) {
 			if ( $file === '.' || $file === '..' ) {
 				continue;
 			}
+
 			$path = $dir . '/' . $file;
 			if ( ! is_file( $path ) ) {
 				continue;
 			}
+
 			if ( $file === self::FONTS_CSS_FILE ) {
 				$list[] = $file;
 				continue;
 			}
+
 			$ext = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
 			if ( in_array( $ext, self::ALLOWED_EXTENSIONS, true ) ) {
 				$list[] = $file;
 			}
 		}
+
 		sort( $list );
+
 		return $list;
 	}
 
@@ -120,11 +136,14 @@ class Fonts {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+
 		$settings = \ASC\CoreTools\Core\Core::get_settings();
 		$enable_local_fonts = ! empty( $settings['enable_local_fonts'] );
+
 		if ( $enable_local_fonts ) {
 			$this->do_generate_css();
 		}
+
 		self::$last_directory_files = $this->get_directory_files();
 	}
 
@@ -149,16 +168,20 @@ class Fonts {
 		if ( $fonts_dir === false ) {
 			return false;
 		}
+
 		$resolved = realpath( $path );
 		if ( $resolved !== false ) {
 			return strpos( $resolved, $fonts_dir ) === 0;
 		}
+
 		// File may not exist yet: resolve parent directory and check basename has no traversal.
 		$parent = realpath( dirname( $path ) );
 		if ( $parent === false || $parent !== $fonts_dir ) {
 			return false;
 		}
+
 		$basename = basename( $path );
+
 		return $basename !== '' && $basename !== '.' && $basename !== '..' && strpos( $basename, '/' ) === false && strpos( $basename, '\\' ) === false;
 	}
 
@@ -197,27 +220,35 @@ class Fonts {
 		if ( strpos( $lower, 'thin' ) !== false ) {
 			return '100';
 		}
+
 		if ( strpos( $lower, 'extralight' ) !== false || strpos( $lower, 'extra-light' ) !== false ) {
 			return '200';
 		}
+
 		if ( strpos( $lower, 'light' ) !== false ) {
 			return '300';
 		}
+
 		if ( strpos( $lower, 'medium' ) !== false ) {
 			return '500';
 		}
+
 		if ( strpos( $lower, 'semibold' ) !== false || strpos( $lower, 'semi-bold' ) !== false ) {
 			return '600';
 		}
+
 		if ( strpos( $lower, 'bold' ) !== false ) {
 			return '700';
 		}
+
 		if ( strpos( $lower, 'extrabold' ) !== false || strpos( $lower, 'extra-bold' ) !== false ) {
 			return '800';
 		}
+
 		if ( strpos( $lower, 'black' ) !== false ) {
 			return '900';
 		}
+
 		return '400';
 	}
 
@@ -240,6 +271,7 @@ class Fonts {
 	private function font_family_from_basename( string $basename ): string {
 		$name = preg_replace( '/[-_](regular|normal|italic|bold|light|thin|medium|black)$/i', '', $basename );
 		$name = trim( preg_replace( '/[-_]+/', ' ', $name ) );
+
 		return $name !== '' ? $name : $basename;
 	}
 
@@ -257,6 +289,7 @@ class Fonts {
 			'otf'   => 'opentype',
 			'eot'   => 'embedded-opentype',
 		);
+
 		return $map[ $ext ] ?? 'woff2';
 	}
 
@@ -289,14 +322,17 @@ class Fonts {
 			if ( $file === '.' || $file === '..' || $file === self::FONTS_CSS_FILE ) {
 				continue;
 			}
+
 			$path = $dir . '/' . $file;
 			if ( ! is_file( $path ) ) {
 				continue;
 			}
+
 			$ext = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
 			if ( ! in_array( $ext, self::ALLOWED_EXTENSIONS, true ) ) {
 				continue;
 			}
+
 			if ( ! $this->path_is_in_fonts_dir( $path ) ) {
 				continue;
 			}

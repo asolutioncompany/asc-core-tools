@@ -1,5 +1,5 @@
 /*!
- * aS.c Core Tools Public Javascript
+ * aS.c Core Tools Front Javascript
  */
 
 (function ($) { // jQuery Encapsulation
@@ -7,9 +7,9 @@
 
 	$(document).ready(function () {
 		// Localized Ajax URL
-		var ajax_url = asc_core_tools_public.ajax_url;
+		var ajax_url = asc_core_tools_front.ajax_url;
 
 		// Localized Ajax Nonce
-		var ajax_nonce = asc_core_tools_public.ajax_nonce;
+		var ajax_nonce = asc_core_tools_front.ajax_nonce;
 	});
 })(jQuery);

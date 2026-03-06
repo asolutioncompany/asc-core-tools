@@ -53,16 +53,83 @@ class Admin {
 	 * @return void
 	 */
 	private function init(): void {
-		// Initialize settings page
 		$this->settings_page = new SettingsPage();
-
-		// Initialize database tools (AJAX handlers)
 		new Database();
-
-		// Initialize fonts (AJAX handlers for scan/generate)
 		new Fonts();
-
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
+	}
+
+	/**
+	 * Get the plugin URL.
+	 *
+	 * @return string
+	 */
+	private function get_plugin_url(): string {
+		return plugin_dir_url( \ASC_CORE_TOOLS_PLUGIN_FILE );
+	}
+
+	/**
+	 * Get the plugin path.
+	 *
+	 * @return string
+	 */
+	private function get_plugin_path(): string {
+		return plugin_dir_path( \ASC_CORE_TOOLS_PLUGIN_FILE );
+	}
+
+	/**
+	 * Enqueue admin assets (CSS and JavaScript).
+	 *
+	 * @return void
+	 */
+	public function enqueue_admin_assets(): void {
+		$plugin_url = $this->get_plugin_url();
+		$plugin_path = $this->get_plugin_path();
+		$css_file = 'assets/admin/admin.css';
+		$js_file = 'assets/admin/admin.js';
+
+		wp_enqueue_style(
+			'asc_core_tools_admin',
+			$plugin_url . $css_file,
+			array(),
+			filemtime( $plugin_path . $css_file )
+		);
+
+		wp_enqueue_script(
+			'asc_core_tools_admin',
+			$plugin_url . $js_file,
+			array( 'jquery' ),
+			filemtime( $plugin_path . $js_file ),
+			true
+		);
+
+		$db_js = 'assets/admin/database.js';
+		wp_enqueue_script(
+			'asc_core_tools_admin_database',
+			$plugin_url . $db_js,
+			array( 'asc_core_tools_admin' ),
+			filemtime( $plugin_path . $db_js ),
+			true
+		);
+
+		$fonts_js = 'assets/admin/fonts.js';
+		wp_enqueue_script(
+			'asc_core_tools_admin_fonts',
+			$plugin_url . $fonts_js,
+			array( 'asc_core_tools_admin' ),
+			filemtime( $plugin_path . $fonts_js ),
+			true
+		);
+
+		wp_localize_script(
+			'asc_core_tools_admin',
+			'asc_core_tools_admin',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'ajax_nonce' => wp_create_nonce( 'asc-core-tools-admin-ajax-nonce' ),
+			)
+		);
 	}
 
 	/**
