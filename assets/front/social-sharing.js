@@ -30,6 +30,7 @@
 			);
 		}
 
+		// If message is ever dynamic or translated, escape it before using .html() to avoid XSS.
 		function asc_core_tools_show_success(message) {
 			var status_bar = $('.asc-core-tools-share-success');
 			status_bar.hide();

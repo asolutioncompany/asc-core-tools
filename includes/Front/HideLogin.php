@@ -67,11 +67,22 @@ class HideLogin {
 		add_filter( 'rest_authentication_errors', array( $this, 'restrict_rest_api' ) );
 	}
 
+	/**
+	 * Register query var for the custom login rewrite rule.
+	 *
+	 * @param array<string> $vars Public query vars.
+	 * @return array<string> Modified query vars.
+	 */
 	public function add_login_query_var( array $vars ): array {
 		$vars[] = self::LOGIN_QUERY_VAR;
 		return $vars;
 	}
 
+	/**
+	 * Add rewrite rule so the login page slug points to our query var.
+	 *
+	 * @return void
+	 */
 	public function add_login_rewrite_rule(): void {
 		$settings = Core::get_settings();
 		$slug = $settings['login_page_slug'] ?? '';
@@ -85,6 +96,11 @@ class HideLogin {
 		);
 	}
 
+	/**
+	 * Return the custom login URL (slug) for the site when Hide Login is enabled.
+	 *
+	 * @return string URL to the custom login page, or empty string if not configured.
+	 */
 	public function get_custom_login_url(): string {
 		$settings = Core::get_settings();
 		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
@@ -97,6 +113,11 @@ class HideLogin {
 		return home_url( '/?' . $slug );
 	}
 
+	/**
+	 * Gate wp-login.php: allow only when slug param is present and matches the stored slug.
+	 *
+	 * @return void
+	 */
 	public function gate_wp_login_by_slug_param(): void {
 		$settings = Core::get_settings();
 		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
@@ -113,6 +134,11 @@ class HideLogin {
 		}
 	}
 
+	/**
+	 * Redirect unauthenticated users who hit the backdoor query var to the home page.
+	 *
+	 * @return void
+	 */
 	public function redirect_backdoor_login_param_to_home(): void {
 		$settings = Core::get_settings();
 		if ( empty( $settings['hide_login'] ) || trim( (string) ( $settings['login_page_slug'] ?? '' ) ) === '' ) {
@@ -125,6 +151,11 @@ class HideLogin {
 		exit;
 	}
 
+	/**
+	 * When the request is for the custom login slug, redirect to wp-login.php with the slug parameter.
+	 *
+	 * @return void
+	 */
 	public function redirect_slug_to_wp_login(): void {
 		if ( ! get_query_var( self::LOGIN_QUERY_VAR ) ) {
 			return;
@@ -152,18 +183,49 @@ class HideLogin {
 		exit;
 	}
 
+	/**
+	 * Replace wp-login.php in site_url with the custom login slug.
+	 *
+	 * @param string    $url     Full URL.
+	 * @param string    $path    Path (e.g. wp-login.php).
+	 * @param string|null $scheme Scheme (WordPress may pass null).
+	 * @param int|null  $blog_id Blog ID (site_url only).
+	 * @return string
+	 */
 	public function filter_login_url_to_slug( string $url, string $path, ?string $scheme, $blog_id = null ): string {
 		return $this->replace_wp_login_php_with_slug( $url, $scheme );
 	}
 
+	/**
+	 * Replace wp-login.php in network_site_url with the custom login slug.
+	 *
+	 * @param string    $url    Full URL.
+	 * @param string    $path   Path.
+	 * @param string|null $scheme Scheme (WordPress may pass null).
+	 * @return string
+	 */
 	public function filter_login_url_to_slug_network( string $url, string $path, ?string $scheme ): string {
 		return $this->replace_wp_login_php_with_slug( $url, $scheme );
 	}
 
+	/**
+	 * Replace wp-login.php in redirect location with the custom login slug.
+	 *
+	 * @param string $location Redirect URL.
+	 * @param int    $status   Status code.
+	 * @return string
+	 */
 	public function filter_redirect_login_to_slug( string $location, int $status ): string {
 		return $this->replace_wp_login_php_with_slug( $location );
 	}
 
+	/**
+	 * If URL contains wp-login.php: on login page add slug param; elsewhere replace with custom slug URL.
+	 *
+	 * @param string      $url    URL to filter.
+	 * @param string|null $scheme Optional scheme (kept for filter signature compatibility).
+	 * @return string
+	 */
 	private function replace_wp_login_php_with_slug( string $url, ?string $scheme = null ): string {
 		if ( strpos( $url, 'wp-login.php?action=postpass' ) !== false ) {
 			return $url;
@@ -199,6 +261,14 @@ class HideLogin {
 		return $custom;
 	}
 
+	/**
+	 * Filter login_url to return the custom slug URL; wp-admin redirect target returns home URL.
+	 *
+	 * @param string $url    Default login URL.
+	 * @param string $redirect Redirect path.
+	 * @param bool   $force_reauth Whether to force reauth.
+	 * @return string
+	 */
 	public function login_url_to_slug( string $url, string $redirect, bool $force_reauth ): string {
 		$custom = $this->get_custom_login_url();
 		if ( $custom === '' ) {
@@ -216,6 +286,13 @@ class HideLogin {
 		return $custom;
 	}
 
+	/**
+	 * Filter logout_url to point to wp-login.php with the slug param and redirect_to=home.
+	 *
+	 * @param string $logout_url Default logout URL.
+	 * @param string $redirect   Redirect path after logout.
+	 * @return string
+	 */
 	public function logout_url_to_wp_login_with_slug( string $logout_url, string $redirect ): string {
 		$settings = Core::get_settings();
 		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
@@ -235,6 +312,14 @@ class HideLogin {
 		return $url;
 	}
 
+	/**
+	 * After logout, redirect to the custom login page when Hide Login is enabled.
+	 *
+	 * @param string          $redirect_to             Redirect URL.
+	 * @param string          $requested_redirect_to  redirect_to from the request.
+	 * @param \WP_User|null   $user                    User that was logged out (may be null).
+	 * @return string
+	 */
 	public function logout_redirect_to_home( string $redirect_to, string $requested_redirect_to, $user ): string {
 		$settings = Core::get_settings();
 		if ( empty( $settings['hide_login'] ) || trim( (string) ( $settings['login_page_slug'] ?? '' ) ) === '' ) {
@@ -248,6 +333,11 @@ class HideLogin {
 		return $result;
 	}
 
+	/**
+	 * Restrict wp-admin: redirect to home if user is not logged in.
+	 *
+	 * @return void
+	 */
 	public function restrict_wp_admin(): void {
 		if ( is_user_logged_in() ) {
 			return;
@@ -256,6 +346,12 @@ class HideLogin {
 		exit;
 	}
 
+	/**
+	 * Restrict REST API for non-authenticated users when Hide Login is enabled.
+	 *
+	 * @param \WP_Error|null|bool $result Result of authentication check.
+	 * @return \WP_Error|null|bool
+	 */
 	public function restrict_rest_api( $result ) {
 		if ( is_user_logged_in() ) {
 			return $result;

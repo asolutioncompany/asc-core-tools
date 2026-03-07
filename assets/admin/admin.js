@@ -1,5 +1,8 @@
 /*!
  * aS.c Core Tools Admin Javascript
+ *
+ * Handles the settings page tab switcher: toggles tab panels, updates ARIA state,
+ * moves focus into the active panel, and shows/hides the Save Settings button by tab.
  */
 
 (function ($) { // jQuery Encapsulation

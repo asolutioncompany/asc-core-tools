@@ -1,5 +1,8 @@
 /*!
  * aS.c Core Tools Admin Javascript - Fonts
+ *
+ * AJAX handlers for the Features tab: Scan for fonts (lists files in wp-content/fonts)
+ * and Generate CSS (builds fonts.css with @font-face rules). Sends nonce and action.
  */
 
 (function ($) {

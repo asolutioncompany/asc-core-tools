@@ -9,13 +9,26 @@
 	cursor: pointer;
 }
 
-/* Focus styling */
-.asc-core-tools-tabs .nav-tab:focus,
+/* Focus styling: show ring for keyboard, not necessarily for mouse (focus-visible) */
+.asc-core-tools-tabs .nav-tab:focus {
+	outline: none;
+}
+.asc-core-tools-tabs .nav-tab:focus-visible {
+	outline: 1px solid currentColor;
+	outline-offset: 0;
+}
 .asc-core-tools-admin .form-table input:focus,
 .asc-core-tools-admin .form-table select:focus,
 .asc-core-tools-admin .form-table textarea:focus,
 .asc-core-tools-admin .form-table button:focus,
 .asc-core-tools-admin button:focus {
+	outline: none;
+}
+.asc-core-tools-admin .form-table input:focus-visible,
+.asc-core-tools-admin .form-table select:focus-visible,
+.asc-core-tools-admin .form-table textarea:focus-visible,
+.asc-core-tools-admin .form-table button:focus-visible,
+.asc-core-tools-admin button:focus-visible {
 	outline: 1px solid currentColor;
 	outline-offset: 0;
 }

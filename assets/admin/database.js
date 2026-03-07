@@ -1,5 +1,8 @@
 /*!
  * aS.c Core Tools Admin Javascript - Database
+ *
+ * AJAX handlers for the Database tab: delete obsolete data, delete orphaned data
+ * (by table), optimize tables. Sends nonce and action; updates the status area on success/error.
  */
 
 (function ($) {

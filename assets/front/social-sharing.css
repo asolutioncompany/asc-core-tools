@@ -51,10 +51,18 @@ body {
 	background-color: var(--asc-social-bg-color); /* icon background color */
 }
 .asc-core-tools-share-container .asc-core-tools-share-icon:hover,
-.asc-core-tools-share-container .asc-core-tools-share-icon:active,
-.asc-core-tools-share-container .asc-core-tools-share-icon:focus {
+.asc-core-tools-share-container .asc-core-tools-share-icon:active {
 	background-color: var(--asc-social-hover-bg-color); /* hover icon background color */
 	color: var(--asc-social-hover-color); /* hover icon color */
+}
+.asc-core-tools-share-container .asc-core-tools-share-icon:focus {
+	outline: none;
+}
+.asc-core-tools-share-container .asc-core-tools-share-icon:focus-visible {
+	background-color: var(--asc-social-hover-bg-color);
+	color: var(--asc-social-hover-color);
+	outline: 1px solid currentColor;
+	outline-offset: 2px;
 }
 
 .asc-core-tools-share-container button.asc-core-tools-share-icon {
