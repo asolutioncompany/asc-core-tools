@@ -15,7 +15,6 @@ declare( strict_types = 1 );
 namespace ASC\CoreTools\Core;
 
 use ASC\CoreTools\Admin\Admin;
-use ASC\CoreTools\Admin\General;
 use ASC\CoreTools\Front\Front;
 
 /**
@@ -79,7 +78,6 @@ class Core {
 	 */
 	private function init(): void {
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-		new General();
 		new Front();
 		if ( is_admin() ) {
 			$this->init_admin();
@@ -105,6 +103,24 @@ class Core {
 			self::$instance = new self();
 		}
 		return self::$instance;
+	}
+
+	/**
+	 * Get the plugin URL.
+	 *
+	 * @return string
+	 */
+	public function get_plugin_url(): string {
+		return plugin_dir_url( \ASC_CORE_TOOLS_PLUGIN_FILE );
+	}
+
+	/**
+	 * Get the plugin path.
+	 *
+	 * @return string
+	 */
+	public function get_plugin_path(): string {
+		return plugin_dir_path( \ASC_CORE_TOOLS_PLUGIN_FILE );
 	}
 
 	/**

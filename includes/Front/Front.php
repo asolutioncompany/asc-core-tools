@@ -37,6 +37,8 @@ class Front {
 	private function init(): void {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_assets' ) );
 		add_shortcode( 'asc_core_tools_year', array( $this, 'shortcode_year' ) );
+		new HideLogin();
+		new DisableComments();
 		new SocialSharing();
 	}
 
@@ -50,24 +52,6 @@ class Front {
 	}
 
 	/**
-	 * Get the plugin URL.
-	 *
-	 * @return string
-	 */
-	private function get_plugin_url(): string {
-		return plugin_dir_url( \ASC_CORE_TOOLS_PLUGIN_FILE );
-	}
-
-	/**
-	 * Get the plugin path.
-	 *
-	 * @return string
-	 */
-	private function get_plugin_path(): string {
-		return plugin_dir_path( \ASC_CORE_TOOLS_PLUGIN_FILE );
-	}
-
-	/**
 	 * Enqueue front assets (front-end CSS and JavaScript).
 	 *
 	 * Conditionally loads Font Awesome, ninja-forms.css, local fonts, and
@@ -76,8 +60,9 @@ class Front {
 	 * @return void
 	 */
 	public function enqueue_front_assets(): void {
-		$plugin_url = $this->get_plugin_url();
-		$plugin_path = $this->get_plugin_path();
+		$core = Core::get_instance();
+		$plugin_url = $core->get_plugin_url();
+		$plugin_path = $core->get_plugin_path();
 		$settings = Core::get_settings();
 
 		$css_file = 'assets/front/front.css';

@@ -12,6 +12,8 @@ declare( strict_types = 1 );
 
 namespace ASC\CoreTools\Admin;
 
+use ASC\CoreTools\Core\Core;
+
 /**
  * Admin Class
  */
@@ -54,28 +56,20 @@ class Admin {
 	 */
 	private function init(): void {
 		$this->settings_page = new SettingsPage();
-		new Database();
-		new Fonts();
+		new General();
+		add_action( 'load-settings_page_' . self::PAGE_SLUG, array( $this, 'load_settings_page_components' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 	}
 
 	/**
-	 * Get the plugin URL.
+	 * Load Database and Fonts only when the plugin settings page is displayed.
 	 *
-	 * @return string
+	 * @return void
 	 */
-	private function get_plugin_url(): string {
-		return plugin_dir_url( \ASC_CORE_TOOLS_PLUGIN_FILE );
-	}
-
-	/**
-	 * Get the plugin path.
-	 *
-	 * @return string
-	 */
-	private function get_plugin_path(): string {
-		return plugin_dir_path( \ASC_CORE_TOOLS_PLUGIN_FILE );
+	public function load_settings_page_components(): void {
+		new Database();
+		new Fonts();
 	}
 
 	/**
@@ -84,8 +78,9 @@ class Admin {
 	 * @return void
 	 */
 	public function enqueue_admin_assets(): void {
-		$plugin_url = $this->get_plugin_url();
-		$plugin_path = $this->get_plugin_path();
+		$core = Core::get_instance();
+		$plugin_url = $core->get_plugin_url();
+		$plugin_path = $core->get_plugin_path();
 		$css_file = 'assets/admin/admin.css';
 		$js_file = 'assets/admin/admin.js';
 
