@@ -56,10 +56,13 @@ class Admin {
 	 */
 	private function init(): void {
 		$this->settings_page = new SettingsPage();
+
 		new WordPressSettings();
 		new Database();
 		new Fonts();
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+
 		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 	}
 
@@ -143,7 +146,7 @@ class Admin {
 	 *
 	 * @return SettingsPage|null
 	 */
-	public function get_settings_page(): ?SettingsPage {
+	private function get_settings_page(): ?SettingsPage {
 		return $this->settings_page;
 	}
 }

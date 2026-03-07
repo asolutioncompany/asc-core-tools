@@ -19,7 +19,7 @@ declare( strict_types = 1 );
  * https://github.com/asolutioncompany/asc-core-tools
  *
  * @wordpress-plugin
- * Plugin Name: aS.c Core tools
+ * Plugin Name: aS.c Core Tools
  * Plugin URI: https://github.com/asolutioncompany/asc-core-tools
  * Description: Common customizations for WordPress
  * Version: 1.0.0

@@ -27,14 +27,29 @@
 				},
 				dataType: 'json',
 				success: function(res) {
+					var hasFontList = false;
 					if (res.success && res.data && res.data.fonts && res.data.fonts.length) {
-						list.html('<p><strong>' + (res.data.message || '') + '</strong></p><ul><li>' + res.data.fonts.join('</li><li>') + '</li></ul>');
+						hasFontList = true;
+					}
+					if (hasFontList) {
+						var heading = '';
+						if (res.data && res.data.message) {
+							heading = res.data.message;
+						}
+						list.html('<p><strong>' + heading + '</strong></p><ul><li>' + res.data.fonts.join('</li><li>') + '</li></ul>');
 					} else {
-						list.html('<p>' + (res.data && res.data.message ? res.data.message : 'No font files found.') + '</p>');
+						var listMsg = 'No font files found.';
+						if (res.data && res.data.message) {
+							listMsg = res.data.message;
+						}
+						list.html('<p>' + listMsg + '</p>');
 					}
 				},
 				error: function(xhr) {
-					var msg = (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) ? xhr.responseJSON.data.message : 'Request failed.';
+					var msg = 'Request failed.';
+					if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+						msg = xhr.responseJSON.data.message;
+					}
 					list.html('<p class="notice notice-error">' + msg + '</p>');
 				},
 				complete: function() {
@@ -58,18 +73,32 @@
 				dataType: 'json',
 				success: function(res) {
 					if (res.success) {
-						var msg = (res.data && res.data.message) ? res.data.message : 'Done.';
+						var msg = 'Done.';
+						if (res.data && res.data.message) {
+							msg = res.data.message;
+						}
+						var hasFontList = false;
 						if (res.data && res.data.fonts && res.data.fonts.length) {
+							hasFontList = true;
+						}
+						if (hasFontList) {
 							list.html('<p class="notice notice-success">' + msg + '</p><p><strong>Files in wp-content/fonts:</strong></p><ul><li>' + res.data.fonts.join('</li><li>') + '</li></ul>');
 						} else {
 							list.html('<p class="notice notice-success">' + msg + '</p>');
 						}
 					} else {
-						list.html('<p class="notice notice-error">' + (res.data && res.data.message ? res.data.message : 'Error.') + '</p>');
+						var errMsg = 'Error.';
+						if (res.data && res.data.message) {
+							errMsg = res.data.message;
+						}
+						list.html('<p class="notice notice-error">' + errMsg + '</p>');
 					}
 				},
 				error: function(xhr) {
-					var msg = (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) ? xhr.responseJSON.data.message : 'Request failed.';
+					var msg = 'Request failed.';
+					if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
+						msg = xhr.responseJSON.data.message;
+					}
 					list.html('<p class="notice notice-error">' + msg + '</p>');
 				},
 				complete: function() {

@@ -40,12 +40,19 @@
 				data: { action: 'asc_core_tools_delete_obsolete_data', _ajax_nonce: ajax_nonce },
 				dataType: 'json',
 				success: function(response) {
-					status += '<br/>' + (response.message || '') + '<br/><b>Done.</b><br/>';
+					var msg = '';
+					if (response.message) {
+						msg = response.message;
+					}
+					status += '<br/>' + msg + '<br/><b>Done.</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
 					enable_db_buttons();
 				},
 				error: function(xhr) {
-					var msg = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Error.';
+					var msg = 'Error.';
+					if (xhr.responseJSON && xhr.responseJSON.message) {
+						msg = xhr.responseJSON.message;
+					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
 					enable_db_buttons();
@@ -70,13 +77,26 @@
 				dataType: 'json',
 				success: function(response) {
 					var status = $('.asc-core-tools-db-status').html() || '';
-					status += '<br/>' + (response.message || '');
+					var msg = '';
+					if (response.message) {
+						msg = response.message;
+					}
+					status += '<br/>' + msg;
 					$('.asc-core-tools-db-status').html(status);
+
 					switch(table) {
-						case 'postmeta': delete_orphaned_data('terms'); break;
-						case 'terms': delete_orphaned_data('termmeta'); break;
-						case 'termmeta': delete_orphaned_data('term_taxonomy'); break;
-						case 'term_taxonomy': delete_orphaned_data('term_relationships'); break;
+						case 'postmeta':
+							delete_orphaned_data('terms');
+							break;
+						case 'terms':
+							delete_orphaned_data('termmeta');
+							break;
+						case 'termmeta':
+							delete_orphaned_data('term_taxonomy');
+							break;
+						case 'term_taxonomy':
+							delete_orphaned_data('term_relationships');
+							break;
 						case 'term_relationships':
 							status = $('.asc-core-tools-db-status').html() + '<br/><b>Done.</b><br/>';
 							$('.asc-core-tools-db-status').html(status);
@@ -86,7 +106,10 @@
 				},
 				error: function(xhr) {
 					var status = $('.asc-core-tools-db-status').html() || '';
-					var msg = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Error.';
+					var msg = 'Error.';
+					if (xhr.responseJSON && xhr.responseJSON.message) {
+						msg = xhr.responseJSON.message;
+					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
 					enable_db_buttons();
@@ -115,14 +138,29 @@
 				dataType: 'json',
 				success: function(response) {
 					var status = $('.asc-core-tools-db-status').html() || '';
-					status += '<br/>' + (response.message || '');
+					var msg = '';
+					if (response.message) {
+						msg = response.message;
+					}
+					status += '<br/>' + msg;
 					$('.asc-core-tools-db-status').html(status);
+
 					switch(table) {
-						case 'posts': optimize_tables('postmeta'); break;
-						case 'postmeta': optimize_tables('terms'); break;
-						case 'terms': optimize_tables('termmeta'); break;
-						case 'termmeta': optimize_tables('term_taxonomy'); break;
-						case 'term_taxonomy': optimize_tables('term_relationships'); break;
+						case 'posts':
+							optimize_tables('postmeta');
+							break;
+						case 'postmeta':
+							optimize_tables('terms');
+							break;
+						case 'terms':
+							optimize_tables('termmeta');
+							break;
+						case 'termmeta':
+							optimize_tables('term_taxonomy');
+							break;
+						case 'term_taxonomy':
+							optimize_tables('term_relationships');
+							break;
 						case 'term_relationships':
 							status = $('.asc-core-tools-db-status').html() + '<br/><b>Done.</b><br/>';
 							$('.asc-core-tools-db-status').html(status);
@@ -132,7 +170,10 @@
 				},
 				error: function(xhr) {
 					var status = $('.asc-core-tools-db-status').html() || '';
-					var msg = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Error.';
+					var msg = 'Error.';
+					if (xhr.responseJSON && xhr.responseJSON.message) {
+						msg = xhr.responseJSON.message;
+					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
 					enable_db_buttons();

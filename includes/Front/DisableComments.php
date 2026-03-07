@@ -38,6 +38,7 @@ class DisableComments {
 		if ( empty( $settings['disable_comments'] ) ) {
 			return;
 		}
+
 		add_filter( 'comments_open', '__return_false', 20, 2 );
 		add_filter( 'pings_open', '__return_false', 20, 2 );
 		add_action( 'init', array( $this, 'remove_comment_support' ), 100 );
@@ -53,12 +54,14 @@ class DisableComments {
 	 */
 	public function maybe_remove_comments_menu(): void {
 		$counts = wp_count_comments();
+
 		if ( isset( $counts->total_comments ) ) {
 			$total = (int) $counts->total_comments;
 		} else {
 			$total = (int) ( $counts->approved ?? 0 ) + (int) ( $counts->moderated ?? 0 )
 				+ (int) ( $counts->spam ?? 0 ) + (int) ( $counts->trash ?? 0 );
 		}
+
 		if ( $total === 0 ) {
 			remove_menu_page( 'edit-comments.php' );
 		}
@@ -67,13 +70,14 @@ class DisableComments {
 	/**
 	 * Block comment REST API endpoints when comments are disabled.
 	 *
-	 * @param mixed            $result  Response to replace the requested version with.
-	 * @param \WP_REST_Server  $server  Server instance.
+	 * @param mixed $result Response to replace the requested version with.
+	 * @param \WP_REST_Server $server Server instance.
 	 * @param \WP_REST_Request $request Request used to generate the response.
 	 * @return mixed Unchanged result, or WP_Error for comment routes.
 	 */
 	public function disable_comments_rest_api( $result, \WP_REST_Server $server, \WP_REST_Request $request ) {
 		$route = $request->get_route();
+
 		if ( $route !== null && str_contains( (string) $route, '/comments' ) ) {
 			return new \WP_Error(
 				'rest_comments_disabled',
@@ -81,6 +85,7 @@ class DisableComments {
 				array( 'status' => 403 )
 			);
 		}
+
 		return $result;
 	}
 
@@ -91,6 +96,7 @@ class DisableComments {
 	 */
 	public function remove_comment_support(): void {
 		$post_types = get_post_types( array( 'public' => true ), 'names' );
+
 		foreach ( $post_types as $post_type ) {
 			remove_post_type_support( $post_type, 'comments' );
 			remove_post_type_support( $post_type, 'trackbacks' );

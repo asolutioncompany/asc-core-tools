@@ -12,7 +12,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 ## Features
 
-### General
+### General Settings
 - **Disable XML-RPC** – Turn off the XML-RPC endpoint.
 - **Hide WordPress Login** – Use a custom URL for login; `wp-login.php` is gated by a required parameter so only the custom slug works. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
 - **Disable auto-update emails** – Stop WordPress from sending email notifications after automatic core, plugin, or theme updates.
@@ -27,7 +27,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Social sharing** – Optional sharing bar (Facebook, LinkedIn, Bluesky, X, Email, Copy link) on selected post types or via shortcode; you can choose which networks to show (all enabled by default). Requires clipboard.js and Font Awesome, which are included in the vendor directory and locally hosted by default.
 - **Ninja Forms** – Optional customization (enable to load custom CSS).
 
-### Database
+### Database Maintenance
 - **Delete obsolete data** – Remove revisions, trash, auto-drafts, oembed cache, orphaned post meta, transients, and similar.
 - **Delete orphaned data** – Clean specific tables (postmeta, terms, termmeta, term_taxonomy, term_relationships, terms_and_term_taxonomy).
 - **Optimize tables** – Run OPTIMIZE on core WordPress tables.

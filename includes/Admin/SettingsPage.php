@@ -329,77 +329,96 @@ class SettingsPage {
 		if ( ! empty( $input['disable_xmlrpc'] ) ) {
 			$output['disable_xmlrpc'] = 1;
 		}
+
 		$output['disable_autoupdate_emails'] = 0;
 		if ( ! empty( $input['disable_autoupdate_emails'] ) ) {
 			$output['disable_autoupdate_emails'] = 1;
 		}
+
 		$output['disable_autosave'] = 0;
 		if ( ! empty( $input['disable_autosave'] ) ) {
 			$output['disable_autosave'] = 1;
 		}
+
 		$output['autosave_interval_seconds'] = $defaults['autosave_interval_seconds'];
 		if ( isset( $input['autosave_interval_seconds'] ) ) {
 			$output['autosave_interval_seconds'] = max( 1, (int) $input['autosave_interval_seconds'] );
 		}
+
 		$output['disable_revisions'] = 0;
 		if ( ! empty( $input['disable_revisions'] ) ) {
 			$output['disable_revisions'] = 1;
 		}
+
 		$output['number_revisions'] = $defaults['number_revisions'];
 		if ( isset( $input['number_revisions'] ) ) {
 			$output['number_revisions'] = (int) $input['number_revisions'];
 		}
+
 		$output['disable_comments'] = 0;
 		if ( ! empty( $input['disable_comments'] ) ) {
 			$output['disable_comments'] = 1;
 		}
+
 		$output['hide_login'] = 0;
 		if ( ! empty( $input['hide_login'] ) ) {
 			$output['hide_login'] = 1;
 		}
+
 		$login_slug = sanitize_title( (string) ( $input['login_page_slug'] ?? $defaults['login_page_slug'] ) );
 		$forbidden_slugs = array( 'wp-admin', 'wp-login', 'wp-content', 'wp-includes', 'wp-signup', 'wp-activate', 'admin', 'login', 'options' );
 		if ( $login_slug !== '' && in_array( $login_slug, $forbidden_slugs, true ) ) {
 			$login_slug = $defaults['login_page_slug'];
 		}
 		$output['login_page_slug'] = $login_slug;
+
 		$output['enable_ninja_forms'] = 0;
 		if ( ! empty( $input['enable_ninja_forms'] ) ) {
 			$output['enable_ninja_forms'] = 1;
 		}
+
 		$output['enable_social_sharing'] = 0;
 		if ( ! empty( $input['enable_social_sharing'] ) ) {
 			$output['enable_social_sharing'] = 1;
 		}
+
 		$output['social_sharing_post_types'] = sanitize_text_field( (string) ( $input['social_sharing_post_types'] ?? $defaults['social_sharing_post_types'] ) );
+
 		$output['share_facebook'] = 0;
 		if ( ! empty( $input['share_facebook'] ) ) {
 			$output['share_facebook'] = 1;
 		}
+
 		$output['share_x'] = 0;
 		if ( ! empty( $input['share_x'] ) ) {
 			$output['share_x'] = 1;
 		}
+
 		$output['share_linkedin'] = 0;
 		if ( ! empty( $input['share_linkedin'] ) ) {
 			$output['share_linkedin'] = 1;
 		}
+
 		$output['share_bluesky'] = 0;
 		if ( ! empty( $input['share_bluesky'] ) ) {
 			$output['share_bluesky'] = 1;
 		}
+
 		$output['share_email'] = 0;
 		if ( ! empty( $input['share_email'] ) ) {
 			$output['share_email'] = 1;
 		}
+
 		$output['share_copy_link'] = 0;
 		if ( ! empty( $input['share_copy_link'] ) ) {
 			$output['share_copy_link'] = 1;
 		}
+
 		$output['self_host_fontawesome'] = 0;
 		if ( ! empty( $input['self_host_fontawesome'] ) ) {
 			$output['self_host_fontawesome'] = 1;
 		}
+
 		$output['enable_local_fonts'] = 0;
 		if ( ! empty( $input['enable_local_fonts'] ) ) {
 			$output['enable_local_fonts'] = 1;
@@ -411,15 +430,18 @@ class SettingsPage {
 		// (If we only flushed, the rule would be missing because init ran with old options.)
 		if ( ! empty( $result['hide_login'] ) && ! empty( $result['login_page_slug'] ) ) {
 			$slug = $result['login_page_slug'];
+
 			add_rewrite_rule(
 				'^' . preg_quote( $slug, '#' ) . '/?$',
 				'index.php?asc_core_tools_login=1',
 				'top'
 			);
+
 			flush_rewrite_rules( true );
 		} else {
 			// When Hide Login is turned off, flush so the custom login rule is removed.
 			$had_hide_login = ! empty( $current['hide_login'] ) && ! empty( $current['login_page_slug'] );
+
 			if ( $had_hide_login ) {
 				flush_rewrite_rules( true );
 			}
@@ -438,6 +460,7 @@ class SettingsPage {
 		$value = ! empty( $settings['disable_xmlrpc'] );
 		$name = Admin::OPTION_NAME . '[disable_xmlrpc]';
 		$id = 'disable_xmlrpc';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -454,6 +477,7 @@ class SettingsPage {
 		$value = ! empty( $settings['disable_autoupdate_emails'] );
 		$name = Admin::OPTION_NAME . '[disable_autoupdate_emails]';
 		$id = 'disable_autoupdate_emails';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -470,6 +494,7 @@ class SettingsPage {
 		$value = ! empty( $settings['disable_autosave'] );
 		$name = Admin::OPTION_NAME . '[disable_autosave]';
 		$id = 'disable_autosave';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -486,6 +511,7 @@ class SettingsPage {
 		$value = (int) ( $settings['autosave_interval_seconds'] ?? 60 );
 		$name = Admin::OPTION_NAME . '[autosave_interval_seconds]';
 		$id = 'autosave_interval_seconds';
+
 		?>
 		<input type="number" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="<?php echo esc_attr( (string) $value ); ?>" min="1" step="1" class="small-text">
@@ -502,6 +528,7 @@ class SettingsPage {
 		$value = ! empty( $settings['disable_revisions'] );
 		$name = Admin::OPTION_NAME . '[disable_revisions]';
 		$id = 'disable_revisions';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -550,6 +577,7 @@ class SettingsPage {
 		$value = ! empty( $settings['hide_login'] );
 		$name = Admin::OPTION_NAME . '[hide_login]';
 		$id = 'hide_login';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -566,6 +594,7 @@ class SettingsPage {
 		$value = $settings['login_page_slug'] ?? '';
 		$name = Admin::OPTION_NAME . '[login_page_slug]';
 		$id = 'login_page_slug';
+
 		?>
 		<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="<?php echo esc_attr( $value ); ?>" class="regular-text">
@@ -594,6 +623,7 @@ class SettingsPage {
 		$value = ! empty( $settings['enable_ninja_forms'] );
 		$name = Admin::OPTION_NAME . '[enable_ninja_forms]';
 		$id = 'enable_ninja_forms';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -622,6 +652,7 @@ class SettingsPage {
 		$value = ! empty( $settings['self_host_fontawesome'] );
 		$name = Admin::OPTION_NAME . '[self_host_fontawesome]';
 		$id = 'self_host_fontawesome';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -638,6 +669,7 @@ class SettingsPage {
 		$value = ! empty( $settings['enable_local_fonts'] );
 		$name = Admin::OPTION_NAME . '[enable_local_fonts]';
 		$id = 'enable_local_fonts';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -655,6 +687,7 @@ class SettingsPage {
 		if ( count( $files ) > 0 ) {
 			$message = __( 'Files in wp-content/fonts:', 'asc-core-tools' );
 		}
+
 		?>
 		<div class="asc-core-tools-description"><?php esc_html_e( 'Upload your fonts to the wp-content/fonts directory.', 'asc-core-tools' ); ?></div>
 		<p>
@@ -686,6 +719,7 @@ class SettingsPage {
 		$value = ! empty( $settings['enable_social_sharing'] );
 		$name = Admin::OPTION_NAME . '[enable_social_sharing]';
 		$id = 'enable_social_sharing';
+
 		?>
 		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="1" <?php checked( $value ); ?>>
@@ -702,6 +736,7 @@ class SettingsPage {
 		$value = $settings['social_sharing_post_types'] ?? 'post,page';
 		$name = Admin::OPTION_NAME . '[social_sharing_post_types]';
 		$id = 'social_sharing_post_types';
+
 		?>
 		<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
 			value="<?php echo esc_attr( $value ); ?>" class="regular-text">
@@ -717,6 +752,7 @@ class SettingsPage {
 		?>
 		<div class="asc-core-tools-description-label"><?php esc_html_e( 'Networks to show in sharing bar:', 'asc-core-tools' ); ?></div>
 		<?php
+
 		$settings = Settings::get_settings();
 		$networks = array(
 			'share_facebook' => __( 'Facebook', 'asc-core-tools' ),
@@ -726,10 +762,12 @@ class SettingsPage {
 			'share_email' => __( 'Email', 'asc-core-tools' ),
 			'share_copy_link' => __( 'Copy link', 'asc-core-tools' ),
 		);
+
 		foreach ( $networks as $key => $label ) {
 			$value = ! empty( $settings[ $key ] );
 			$name = Admin::OPTION_NAME . '[' . $key . ']';
 			$id = $key;
+
 			?>
 			<div class="asc-core-tools-checkbox">
 				<label for="<?php echo esc_attr( $id ); ?>">
@@ -808,10 +846,12 @@ class SettingsPage {
 		if ( $active_tab === 'wordpress' ) {
 			$aria_selected_wordpress = 'true';
 		}
+
 		$aria_selected_display = 'false';
 		if ( $active_tab === 'display' ) {
 			$aria_selected_display = 'true';
 		}
+
 		$aria_selected_database = 'false';
 		if ( $active_tab === 'database' ) {
 			$aria_selected_database = 'true';

@@ -35,11 +35,13 @@ class Front {
 	 * @return void
 	 */
 	private function init(): void {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_assets' ) );
-		add_shortcode( 'asc_core_tools_year', array( $this, 'shortcode_year' ) );
 		new HideLogin();
 		new DisableComments();
 		new SocialSharing();
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_assets' ) );
+
+		add_shortcode( 'asc_core_tools_year', array( $this, 'shortcode_year' ) );
 	}
 
 	/**
@@ -97,29 +99,36 @@ class Front {
 			$fa_ver = Core::VERSION;
 			$prev_handle = '';
 			$fa_files = array( 'fontawesome.css', 'all.css', 'solid.css', 'regular.css', 'brands.css' );
+
 			foreach ( $fa_files as $file ) {
 				$path = $plugin_path . $fa_base . $file;
+
 				$ver = $fa_ver;
 				if ( file_exists( $path ) ) {
 					$ver = (string) filemtime( $path );
 				}
+
 				$handle = 'asc_core_tools_fa_' . pathinfo( $file, PATHINFO_FILENAME );
+
 				$deps = array();
 				if ( $prev_handle !== '' ) {
 					$deps = array( $prev_handle );
 				}
+
 				wp_enqueue_style(
 					$handle,
 					$plugin_url . $fa_base . $file,
 					$deps,
 					$ver
 				);
+
 				$prev_handle = $handle;
 			}
 		}
 
 		if ( ! empty( $settings['enable_ninja_forms'] ) ) {
 			$ninja_css = 'assets/front/ninja-forms.css';
+
 			wp_enqueue_style(
 				'asc_core_tools_ninja_forms',
 				$plugin_url . $ninja_css,
@@ -132,9 +141,11 @@ class Front {
 			$fonts_css_url = content_url( 'fonts/fonts.css' );
 			$fonts_css_path = WP_CONTENT_DIR . '/fonts/fonts.css';
 			$version = '1';
+
 			if ( is_file( $fonts_css_path ) ) {
 				$version = (string) filemtime( $fonts_css_path );
 			}
+
 			wp_enqueue_style(
 				'asc_core_tools_local_fonts',
 				$fonts_css_url,

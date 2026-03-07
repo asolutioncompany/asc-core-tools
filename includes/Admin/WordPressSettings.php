@@ -80,21 +80,24 @@ class WordPressSettings {
 		$saved = Core::get_settings();
 		$seconds = (int) ( $saved['autosave_interval_seconds'] ?? 60 );
 		$settings['interval'] = max( 15, min( 120, $seconds ) );
+
 		return $settings;
 	}
 
 	/**
 	 * Filter number of revisions to keep from plugin settings.
 	 *
-	 * @param int     $num  Default number of revisions.
+	 * @param int $num Default number of revisions.
 	 * @param \WP_Post $post Post object.
 	 * @return int Number of revisions to keep (0 = none, -1 = unlimited).
 	 */
 	public function limit_revisions( int $num, \WP_Post $post ): int {
 		$saved = Core::get_settings();
+
 		if ( ! empty( $saved['disable_revisions'] ) ) {
 			return 0;
 		}
+
 		return (int) ( $saved['number_revisions'] ?? $num );
 	}
 }

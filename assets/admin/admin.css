@@ -9,7 +9,6 @@
 	cursor: pointer;
 }
 
-/* Focus styling: show ring for keyboard, not necessarily for mouse (focus-visible) */
 .asc-core-tools-tabs .nav-tab:focus {
 	outline: none;
 }

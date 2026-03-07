@@ -58,6 +58,7 @@
 			const y = win.top.outerHeight / 2 + win.top.screenY - ( h / 2);
 			const x = win.top.outerWidth / 2 + win.top.screenX - ( w / 2);
 			const param = 'width=' + w + ', height=' + h + ', top=' + y + ', left=' + x;
+
 			return win.open(url, window_name, param);
 		}
 

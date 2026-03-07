@@ -88,7 +88,7 @@ class Fonts {
 	 *
 	 * @return array<int, string> Sorted list of filenames.
 	 */
-	public function get_directory_files(): array {
+	private function get_directory_files(): array {
 		$dir = $this->get_fonts_dir();
 		if ( ! is_dir( $dir ) ) {
 			return array();
@@ -216,9 +216,11 @@ class Fonts {
 		}
 
 		$fonts = $this->get_directory_files();
-		$message = count( $fonts ) > 0
-			? __( 'Files in wp-content/fonts:', 'asc-core-tools' )
-			: __( 'No font files or fonts.css found.', 'asc-core-tools' );
+		$message = __( 'No font files or fonts.css found.', 'asc-core-tools' );
+		if ( count( $fonts ) > 0 ) {
+			$message = __( 'Files in wp-content/fonts:', 'asc-core-tools' );
+		}
+
 		wp_send_json_success( array( 'fonts' => $fonts, 'message' => $message ) );
 	}
 
@@ -230,6 +232,7 @@ class Fonts {
 	 */
 	private function infer_font_weight( string $basename ): string {
 		$lower = strtolower( $basename );
+
 		if ( strpos( $lower, 'thin' ) !== false ) {
 			return '100';
 		}
@@ -276,6 +279,7 @@ class Fonts {
 		if ( strpos( strtolower( $basename ), 'italic' ) !== false ) {
 			$style = 'italic';
 		}
+
 		return $style;
 	}
 
@@ -293,6 +297,7 @@ class Fonts {
 		if ( $name !== '' ) {
 			$result = $name;
 		}
+
 		return $result;
 	}
 
@@ -305,10 +310,10 @@ class Fonts {
 	private function format_for_extension( string $ext ): string {
 		$map = array(
 			'woff2' => 'woff2',
-			'woff'  => 'woff',
-			'ttf'   => 'truetype',
-			'otf'   => 'opentype',
-			'eot'   => 'embedded-opentype',
+			'woff' => 'woff',
+			'ttf' => 'truetype',
+			'otf' => 'opentype',
+			'eot' => 'embedded-opentype',
 		);
 
 		return $map[ $ext ] ?? 'woff2';
@@ -319,7 +324,7 @@ class Fonts {
 	 *
 	 * @return array{success: bool, message: string}
 	 */
-	public function do_generate_css(): array {
+	private function do_generate_css(): array {
 		$dir = $this->get_fonts_dir();
 		if ( ! is_dir( $dir ) ) {
 			return array(
@@ -417,6 +422,7 @@ class Fonts {
 				'fonts' => $this->get_directory_files(),
 			) );
 		}
+
 		wp_send_json_error( array( 'message' => $result['message'] ) );
 	}
 }
