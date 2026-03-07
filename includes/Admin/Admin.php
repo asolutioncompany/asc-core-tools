@@ -56,7 +56,7 @@ class Admin {
 	 */
 	private function init(): void {
 		$this->settings_page = new SettingsPage();
-		new General();
+		new WordPressSettings();
 		new Database();
 		new Fonts();
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );

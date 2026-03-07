@@ -1,8 +1,8 @@
 <?php
 /**
- * General Class
+ * WordPressSettings Class
  *
- * Admin class for general settings.
+ * Admin class for WordPress settings (XML-RPC, autosave/heartbeat, revisions).
  *
  * @package: asc-core-tools
  * @since 1.0.0
@@ -15,14 +15,14 @@ namespace ASC\CoreTools\Admin;
 use ASC\CoreTools\Core\Core;
 
 /**
- * General Class
+ * WordPressSettings Class
  *
- * Applies general settings from the settings page (XML-RPC, autosave/heartbeat, revisions).
+ * Applies WordPress settings from the settings page (XML-RPC, autosave/heartbeat, revisions).
  */
-class General {
+class WordPressSettings {
 
 	/**
-	 * Initialize the General class.
+	 * Initialize the WordPressSettings class.
 	 *
 	 * @return void
 	 */
@@ -31,7 +31,7 @@ class General {
 	}
 
 	/**
-	 * Initialize general components: apply settings via hooks.
+	 * Initialize WordPress settings components: apply settings via hooks.
 	 *
 	 * @return void
 	 */

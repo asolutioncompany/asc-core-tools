@@ -772,10 +772,10 @@ class SettingsPage {
 		 */
 
 		// Tabs available
-		$tabs = array( 'general', 'database', 'features' );
+		$tabs = array( 'wordpress', 'display', 'database' );
 
-		// Get active tab or default to 'general'; allow only whitelisted tabs.
-		$active_tab = 'general';
+		// Get active tab or default to 'wordpress'; allow only whitelisted tabs.
+		$active_tab = 'wordpress';
 		if ( isset( $_GET['tab'] ) ) {
 			$requested = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
 			if ( in_array( $requested, $tabs, true ) ) {
@@ -785,17 +785,17 @@ class SettingsPage {
 
 		// Set tab that is active with active class
 		$active_tab_class = array(
-			'general' => '',
-			'database' => '',
-			'features' => '',
+			'wordpress' => '',
+			'display'   => '',
+			'database'  => '',
 		);
 		$active_tab_class[$active_tab] = ' nav-tab-active';
 
 		// Hide all tabs with CSS that are not active
 		$inactive_tab_css = array(
-			'general' => '',
-			'database' => '',
-			'features' => '',
+			'wordpress' => '',
+			'display'   => '',
+			'database'  => '',
 		);
 
 		foreach ( $tabs as $tab ) {
@@ -804,13 +804,13 @@ class SettingsPage {
 			}
 		}
 
-		$aria_selected_general = 'false';
-		if ( $active_tab === 'general' ) {
-			$aria_selected_general = 'true';
+		$aria_selected_wordpress = 'false';
+		if ( $active_tab === 'wordpress' ) {
+			$aria_selected_wordpress = 'true';
 		}
-		$aria_selected_features = 'false';
-		if ( $active_tab === 'features' ) {
-			$aria_selected_features = 'true';
+		$aria_selected_display = 'false';
+		if ( $active_tab === 'display' ) {
+			$aria_selected_display = 'true';
 		}
 		$aria_selected_database = 'false';
 		if ( $active_tab === 'database' ) {
@@ -833,11 +833,11 @@ class SettingsPage {
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<nav class="nav-tab-wrapper asc-core-tools-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings sections', 'asc-core-tools' ); ?>">
-				<a href="#" class="nav-tab<?php echo esc_attr( $active_tab_class['general'] ); ?>" id="asc-core-tools-tab-general" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_general ); ?>" aria-controls="asc-core-tools-panel-general" data-tab="general">
-					<?php esc_html_e( 'General', 'asc-core-tools' ); ?>
+				<a href="#" class="nav-tab<?php echo esc_attr( $active_tab_class['wordpress'] ); ?>" id="asc-core-tools-tab-wordpress" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_wordpress ); ?>" aria-controls="asc-core-tools-panel-wordpress" data-tab="wordpress">
+					<?php esc_html_e( 'WordPress', 'asc-core-tools' ); ?>
 				</a>
-				<a href="#" class="nav-tab<?php echo esc_attr( $active_tab_class['features'] ); ?>" id="asc-core-tools-tab-features" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_features ); ?>" aria-controls="asc-core-tools-panel-features" data-tab="features">
-					<?php esc_html_e( 'Features', 'asc-core-tools' ); ?>
+				<a href="#" class="nav-tab<?php echo esc_attr( $active_tab_class['display'] ); ?>" id="asc-core-tools-tab-display" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_display ); ?>" aria-controls="asc-core-tools-panel-display" data-tab="display">
+					<?php esc_html_e( 'Display', 'asc-core-tools' ); ?>
 				</a>
 				<a href="#" class="nav-tab<?php echo esc_attr( $active_tab_class['database'] ); ?>" id="asc-core-tools-tab-database" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_database ); ?>" aria-controls="asc-core-tools-panel-database" data-tab="database">
 					<?php esc_html_e( 'Database', 'asc-core-tools' ); ?>
@@ -849,8 +849,8 @@ class SettingsPage {
 				settings_fields( 'asc_core_tools_settings_group' );
 				?>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-general-tab" id="asc-core-tools-panel-general" role="tabpanel" aria-labelledby="asc-core-tools-tab-general"<?php echo $inactive_tab_css['general']; ?>>
-					<h2><?php esc_html_e( 'General Settings', 'asc-core-tools' ); ?></h2>
+				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo $inactive_tab_css['wordpress']; ?>>
+					<h2><?php esc_html_e( 'WordPress Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
 							<?php
@@ -916,8 +916,8 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-features-tab" id="asc-core-tools-panel-features" role="tabpanel" aria-labelledby="asc-core-tools-tab-features"<?php echo $inactive_tab_css['features']; ?>>
-					<h2><?php esc_html_e( 'Features', 'asc-core-tools' ); ?></h2>
+				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo $inactive_tab_css['display']; ?>>
+					<h2><?php esc_html_e( 'Display Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
 							<?php
