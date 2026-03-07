@@ -190,7 +190,7 @@ class Core {
 	public static function uninstall(): void {
 		// Delete options
 		delete_option( 'asc_core_tools_version' );
-		delete_option( 'asc_core_tools_settings' );
+		delete_option( Admin::OPTION_NAME );
 
 		// Clean up any other data
 	}

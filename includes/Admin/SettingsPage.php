@@ -889,7 +889,7 @@ class SettingsPage {
 				settings_fields( 'asc_core_tools_settings_group' );
 				?>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo $inactive_tab_css['wordpress']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo esc_attr( $inactive_tab_css['wordpress'] ); ?>>
 					<h2><?php esc_html_e( 'WordPress Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -956,7 +956,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo $inactive_tab_css['display']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo esc_attr( $inactive_tab_css['display'] ); ?>>
 					<h2><?php esc_html_e( 'Display Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -1027,7 +1027,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo $inactive_tab_css['database']; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo esc_attr( $inactive_tab_css['database'] ); ?>>
 					<h2><?php esc_html_e( 'Database Maintenance', 'asc-core-tools' ); ?></h2>
 					<table class="form-table asc-core-tools-database-table" role="presentation">
 						<tbody>
@@ -1062,7 +1062,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-save-wrap"<?php echo $save_wrap_style; ?>>
+				<div class="asc-core-tools-save-wrap"<?php echo esc_attr( $save_wrap_style ); ?>>
 					<?php submit_button( __( 'Save Settings', 'asc-core-tools' ) ); ?>
 				</div>
 			</form>

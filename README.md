@@ -12,7 +12,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 ## Features
 
-### General Settings
+### WordPress (tab)
 - **Disable XML-RPC** – Turn off the XML-RPC endpoint.
 - **Hide WordPress Login** – Use a custom URL for login; `wp-login.php` is gated by a required parameter so only the custom slug works. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
 - **Disable auto-update emails** – Stop WordPress from sending email notifications after automatic core, plugin, or theme updates.
@@ -20,9 +20,9 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Disable Revisions** – Disable revisions or limit how many are kept per post.
 - **Disable Comments** – Disable comments and pings site-wide; removes the Comments menu when there are no comments.
 
-### Features
+### Display (tab)
 - **Shortcodes** – `[asc_core_tools_year]` (current year); `[asc_core_tools_social_sharing]` when social sharing is enabled.
-- **Local Fonts** – Upload font files to `wp-content/fonts`; enable to load a generated `fonts.css` on the front-end. Use **Scan for fonts** and **Generate CSS** on the Features tab to list files and build `@font-face` rules. When “Enable local fonts” is on, the settings page auto-scans the directory and regenerates `fonts.css` on load.
+- **Local Fonts** – Upload font files to `wp-content/fonts`; enable to load a generated `fonts.css` on the front-end. Use **Scan for fonts** and **Generate CSS** on the Display tab to list files and build `@font-face` rules. When “Enable local fonts” is on, the settings page auto-scans the directory and regenerates `fonts.css` on load.
 - **Local Font Awesome** – Option to host Font Awesome locally from the plugin; on by default.
 - **Social sharing** – Optional sharing bar (Facebook, LinkedIn, Bluesky, X, Email, Copy link) on selected post types or via shortcode; you can choose which networks to show (all enabled by default). Requires clipboard.js and Font Awesome, which are included in the vendor directory and locally hosted by default.
 - **Ninja Forms** – Optional customization (enable to load custom CSS).
@@ -38,7 +38,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 1. Install via WordPress admin (Plugins → Add New → upload or search) or copy the plugin folder into `wp-content/plugins/`.
 2. Activate the plugin.
-3. Go to **Settings → aS.c Core Tools** to configure General, Features, and Database options.
+3. Go to **Settings → aS.c Core Tools** to configure WordPress, Display, and Database options.
 
 ---
 
@@ -59,7 +59,7 @@ Save settings after changing the slug so rewrite rules are updated.
 When **Enable local fonts** is on:
 
 - The plugin enqueues `wp-content/fonts/fonts.css` on the front-end (when the file exists).
-- On the **Features** tab you can **Scan for fonts** to list font files and `fonts.css` in that directory, and **Generate CSS** to build or update `fonts.css` with `@font-face` rules from the scanned font files (woff2, woff, ttf, otf, eot).
+- On the **Display** tab you can **Scan for fonts** to list font files and `fonts.css` in that directory, and **Generate CSS** to build or update `fonts.css` with `@font-face` rules from the scanned font files (woff2, woff, ttf, otf, eot).
 - Each time you load the settings page with local fonts enabled, the directory is scanned and `fonts.css` is regenerated automatically so it stays in sync.
 
 Upload your font files to `wp-content/fonts`, then enable the option and use **Generate CSS** (or reload the settings page) to create the stylesheet.
@@ -68,7 +68,7 @@ Upload your font files to `wp-content/fonts`, then enable the option and use **G
 
 ## Social Sharing
 
-When **Enable Social Sharing** is on (Features tab):
+When **Enable Social Sharing** is on (Display tab):
 
 - **Where it appears** – The sharing bar is shown on the post types you list in **Set Social Sharing Post Types** (e.g. `post,page`). You can also place it anywhere with the shortcode `[asc_core_tools_social_sharing]`.
 - **Networks** – You can choose which networks to show: Facebook, LinkedIn, Bluesky, X, Email, and Copy link. All are enabled by default; uncheck any you do not want in the sharing bar.

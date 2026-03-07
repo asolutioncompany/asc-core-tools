@@ -140,8 +140,11 @@ class Database {
 		$rows = $rows_1 + $rows_2 + $rows_3 + $rows_4 + $rows_5;
 
 		$response->success = 1;
-		$message = 'Deleted ' . $rows . ' rows of transient and obsolete data.';
-		$response->message = __( $message, 'asc-core-tools' );
+		$response->message = sprintf(
+			/* translators: %s: number of rows deleted */
+			__( 'Deleted %s rows of transient and obsolete data.', 'asc-core-tools' ),
+			$rows
+		);
 		wp_send_json( $response );
 	}
 
@@ -253,8 +256,12 @@ class Database {
 		}
 
 		$response->success = 1;
-		$message = 'Deleted ' . $rows . ' rows of orphaned ' . $table . ' data.';
-		$response->message = __( $message, 'asc-core-tools' );
+		$response->message = sprintf(
+			/* translators: 1: number of rows deleted, 2: table name */
+			__( 'Deleted %1$s rows of orphaned %2$s data.', 'asc-core-tools' ),
+			$rows,
+			$table
+		);
 		wp_send_json( $response );
 	}
 
@@ -294,8 +301,11 @@ class Database {
 		$wpdb->query( "OPTIMIZE TABLE `$full_table`" );
 
 		$response->success = 1;
-		$message = 'Optimized ' . $full_table . ' table.';
-		$response->message = __( $message, 'asc-core-tools' );
+		$response->message = sprintf(
+			/* translators: %s: table name (e.g. wp_posts) */
+			__( 'Optimized %s table.', 'asc-core-tools' ),
+			$full_table
+		);
 		wp_send_json( $response );
 	}
 }

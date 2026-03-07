@@ -1,0 +1,368 @@
+# Copyright (C) 2026 aSolution.company
+# This file is distributed under the GPL v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: aS.c Core Tools 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/asc-core-tools\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-07T10:34:32+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: asc-core-tools\n"
+
+#. Plugin Name of the plugin
+#: asc-core-tools.php
+#: includes/Admin/Admin.php:136
+#: includes/Admin/Admin.php:137
+msgid "aS.c Core Tools"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: asc-core-tools.php
+msgid "https://github.com/asolutioncompany/asc-core-tools"
+msgstr ""
+
+#. Description of the plugin
+#: asc-core-tools.php
+msgid "Common customizations for WordPress"
+msgstr ""
+
+#. Author of the plugin
+#: asc-core-tools.php
+msgid "aSolution.company"
+msgstr ""
+
+#. Author URI of the plugin
+#: asc-core-tools.php
+msgid "https://asolution.company"
+msgstr ""
+
+#: includes/Admin/Database.php:74
+#: includes/Admin/Database.php:164
+#: includes/Admin/Database.php:281
+#: includes/Admin/Fonts.php:210
+#: includes/Admin/Fonts.php:415
+msgid "Not allowed."
+msgstr ""
+
+#. translators: %s: number of rows deleted
+#: includes/Admin/Database.php:145
+#, php-format
+msgid "Deleted %s rows of transient and obsolete data."
+msgstr ""
+
+#: includes/Admin/Database.php:181
+#: includes/Admin/Database.php:294
+msgid "Invalid table."
+msgstr ""
+
+#. translators: 1: number of rows deleted, 2: table name
+#: includes/Admin/Database.php:261
+#, php-format
+msgid "Deleted %1$s rows of orphaned %2$s data."
+msgstr ""
+
+#. translators: %s: table name (e.g. wp_posts)
+#: includes/Admin/Database.php:306
+#, php-format
+msgid "Optimized %s table."
+msgstr ""
+
+#: includes/Admin/Fonts.php:215
+msgid "Directory wp-content/fonts does not exist."
+msgstr ""
+
+#: includes/Admin/Fonts.php:219
+#: includes/Admin/SettingsPage.php:686
+msgid "No font files or fonts.css found."
+msgstr ""
+
+#: includes/Admin/Fonts.php:221
+#: includes/Admin/SettingsPage.php:688
+msgid "Files in wp-content/fonts:"
+msgstr ""
+
+#: includes/Admin/Fonts.php:332
+msgid "Directory wp-content/fonts does not exist. Create it and upload font files."
+msgstr ""
+
+#: includes/Admin/Fonts.php:340
+msgid "Could not read directory."
+msgstr ""
+
+#: includes/Admin/Fonts.php:388
+msgid "Invalid path."
+msgstr ""
+
+#: includes/Admin/Fonts.php:396
+msgid "Could not write fonts.css. Check that wp-content/fonts is writable."
+msgstr ""
+
+#: includes/Admin/Fonts.php:402
+msgid "fonts.css generated successfully."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:68
+msgid "XML-RPC"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:76
+msgid "Disable XML-RPC"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:85
+msgid "Autoupdate Emails"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:93
+msgid "Disable autoupdate emails"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:102
+msgid "Autosave / Heartbeat API"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:110
+msgid "Disable Autosave / Heartbeat API"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:119
+msgid "Autosave Interval (Seconds):"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:128
+msgid "Revisions"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:136
+msgid "Disable Revisions"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:145
+msgid "Number of Kept Revisions (Use -1 for Unlimited):"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:154
+msgid "Comments"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:162
+msgid "Disable Comments"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:171
+msgid "Hide Login"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:178
+msgid "Hide the default WordPress login page"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:186
+msgid "Enter the page slug for the new login page URL:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:210
+msgid "Shortcodes"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:225
+msgid "Local Fonts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:232
+msgid "Enable local fonts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:248
+msgid "Font Awesome"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:255
+msgid "Enable local Font Awesome fonts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:264
+msgid "Social Sharing"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:278
+msgid "Enable Social Sharing"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:286
+msgid "Set Social Sharing Post Types:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:302
+msgid "Ninja Forms"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:309
+msgid "Enable Ninja Forms Customization"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:611
+msgid "Manually add a social sharing bar to a page:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:612
+msgid "Shows the current year, useful for copyright footers:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:640
+msgid "Font Awesome is required for the sharing icons. Either enable Self-host Font Awesome above or install the Font Awesome plugin."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:641
+msgid "Either enable social sharing on listed post types (post, page, etc.) or use the shortcode:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:692
+msgid "Upload your fonts to the wp-content/fonts directory."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:694
+msgid "Scan for fonts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:695
+msgid "Generate CSS"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:753
+msgid "Networks to show in sharing bar:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:758
+msgid "Facebook"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:759
+msgid "LinkedIn"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:760
+msgid "Bluesky"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:761
+msgid "X"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:762
+msgid "Email"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:763
+#: includes/Front/SocialSharing.php:92
+msgid "Copy link"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:799
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:875
+msgid "Settings sections"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:877
+msgid "WordPress"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:880
+msgid "Display"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:883
+msgid "Database"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:893
+msgid "WordPress Settings"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:960
+msgid "Display Settings"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1031
+msgid "Database Maintenance"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1037
+msgid "Warning"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1038
+msgid "Warning:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1038
+msgid "Deleting obsolete data will delete trash, auto-draft, and revision posts."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1045
+msgid "Actions"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1046
+msgid "Delete Obsolete Data"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1047
+msgid "Delete Orphaned Data"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1048
+msgid "Optimize Tables"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1055
+msgid "Messages"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1057
+msgid "Clear Messages"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1066
+msgid "Save Settings"
+msgstr ""
+
+#: includes/Front/DisableComments.php:84
+msgid "Comments are disabled."
+msgstr ""
+
+#: includes/Front/HideLogin.php:405
+msgid "REST API is disabled when Hide Login is enabled. Log in via the custom login URL."
+msgstr ""
+
+#: includes/Front/SocialSharing.php:68
+msgid "Share this"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:73
+msgid "Share on Facebook"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:77
+msgid "Share on LinkedIn"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:81
+msgid "Share on Bluesky"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:85
+msgid "Share on X"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:89
+msgid "Share via email"
+msgstr ""
