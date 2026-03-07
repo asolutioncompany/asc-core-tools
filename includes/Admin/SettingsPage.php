@@ -325,37 +325,85 @@ class SettingsPage {
 		$current = Settings::get_settings();
 		$output = array();
 
-		$output['disable_xmlrpc'] = ! empty( $input['disable_xmlrpc'] ) ? 1 : 0;
-		$output['disable_autoupdate_emails'] = ! empty( $input['disable_autoupdate_emails'] ) ? 1 : 0;
-		$output['disable_autosave'] = ! empty( $input['disable_autosave'] ) ? 1 : 0;
-		$output['autosave_interval_seconds'] = isset( $input['autosave_interval_seconds'] )
-			? max( 1, (int) $input['autosave_interval_seconds'] )
-			: $defaults['autosave_interval_seconds'];
-		$output['disable_revisions'] = ! empty( $input['disable_revisions'] ) ? 1 : 0;
-		$output['number_revisions'] = isset( $input['number_revisions'] )
-			? (int) $input['number_revisions']
-			: $defaults['number_revisions'];
-		$output['disable_comments'] = ! empty( $input['disable_comments'] ) ? 1 : 0;
-		$output['hide_login'] = ! empty( $input['hide_login'] ) ? 1 : 0;
-		$login_slug = isset( $input['login_page_slug'] ) ? sanitize_title( $input['login_page_slug'] ) : $defaults['login_page_slug'];
+		$output['disable_xmlrpc'] = 0;
+		if ( ! empty( $input['disable_xmlrpc'] ) ) {
+			$output['disable_xmlrpc'] = 1;
+		}
+		$output['disable_autoupdate_emails'] = 0;
+		if ( ! empty( $input['disable_autoupdate_emails'] ) ) {
+			$output['disable_autoupdate_emails'] = 1;
+		}
+		$output['disable_autosave'] = 0;
+		if ( ! empty( $input['disable_autosave'] ) ) {
+			$output['disable_autosave'] = 1;
+		}
+		$output['autosave_interval_seconds'] = $defaults['autosave_interval_seconds'];
+		if ( isset( $input['autosave_interval_seconds'] ) ) {
+			$output['autosave_interval_seconds'] = max( 1, (int) $input['autosave_interval_seconds'] );
+		}
+		$output['disable_revisions'] = 0;
+		if ( ! empty( $input['disable_revisions'] ) ) {
+			$output['disable_revisions'] = 1;
+		}
+		$output['number_revisions'] = $defaults['number_revisions'];
+		if ( isset( $input['number_revisions'] ) ) {
+			$output['number_revisions'] = (int) $input['number_revisions'];
+		}
+		$output['disable_comments'] = 0;
+		if ( ! empty( $input['disable_comments'] ) ) {
+			$output['disable_comments'] = 1;
+		}
+		$output['hide_login'] = 0;
+		if ( ! empty( $input['hide_login'] ) ) {
+			$output['hide_login'] = 1;
+		}
+		$login_slug = sanitize_title( (string) ( $input['login_page_slug'] ?? $defaults['login_page_slug'] ) );
 		$forbidden_slugs = array( 'wp-admin', 'wp-login', 'wp-content', 'wp-includes', 'wp-signup', 'wp-activate', 'admin', 'login', 'options' );
 		if ( $login_slug !== '' && in_array( $login_slug, $forbidden_slugs, true ) ) {
 			$login_slug = $defaults['login_page_slug'];
 		}
 		$output['login_page_slug'] = $login_slug;
-		$output['enable_ninja_forms'] = ! empty( $input['enable_ninja_forms'] ) ? 1 : 0;
-		$output['enable_social_sharing'] = ! empty( $input['enable_social_sharing'] ) ? 1 : 0;
-		$output['social_sharing_post_types'] = isset( $input['social_sharing_post_types'] )
-			? sanitize_text_field( $input['social_sharing_post_types'] )
-			: $defaults['social_sharing_post_types'];
-		$output['share_facebook'] = ! empty( $input['share_facebook'] ) ? 1 : 0;
-		$output['share_x'] = ! empty( $input['share_x'] ) ? 1 : 0;
-		$output['share_linkedin'] = ! empty( $input['share_linkedin'] ) ? 1 : 0;
-		$output['share_bluesky'] = ! empty( $input['share_bluesky'] ) ? 1 : 0;
-		$output['share_email'] = ! empty( $input['share_email'] ) ? 1 : 0;
-		$output['share_copy_link'] = ! empty( $input['share_copy_link'] ) ? 1 : 0;
-		$output['self_host_fontawesome'] = ! empty( $input['self_host_fontawesome'] ) ? 1 : 0;
-		$output['enable_local_fonts'] = ! empty( $input['enable_local_fonts'] ) ? 1 : 0;
+		$output['enable_ninja_forms'] = 0;
+		if ( ! empty( $input['enable_ninja_forms'] ) ) {
+			$output['enable_ninja_forms'] = 1;
+		}
+		$output['enable_social_sharing'] = 0;
+		if ( ! empty( $input['enable_social_sharing'] ) ) {
+			$output['enable_social_sharing'] = 1;
+		}
+		$output['social_sharing_post_types'] = sanitize_text_field( (string) ( $input['social_sharing_post_types'] ?? $defaults['social_sharing_post_types'] ) );
+		$output['share_facebook'] = 0;
+		if ( ! empty( $input['share_facebook'] ) ) {
+			$output['share_facebook'] = 1;
+		}
+		$output['share_x'] = 0;
+		if ( ! empty( $input['share_x'] ) ) {
+			$output['share_x'] = 1;
+		}
+		$output['share_linkedin'] = 0;
+		if ( ! empty( $input['share_linkedin'] ) ) {
+			$output['share_linkedin'] = 1;
+		}
+		$output['share_bluesky'] = 0;
+		if ( ! empty( $input['share_bluesky'] ) ) {
+			$output['share_bluesky'] = 1;
+		}
+		$output['share_email'] = 0;
+		if ( ! empty( $input['share_email'] ) ) {
+			$output['share_email'] = 1;
+		}
+		$output['share_copy_link'] = 0;
+		if ( ! empty( $input['share_copy_link'] ) ) {
+			$output['share_copy_link'] = 1;
+		}
+		$output['self_host_fontawesome'] = 0;
+		if ( ! empty( $input['self_host_fontawesome'] ) ) {
+			$output['self_host_fontawesome'] = 1;
+		}
+		$output['enable_local_fonts'] = 0;
+		if ( ! empty( $input['enable_local_fonts'] ) ) {
+			$output['enable_local_fonts'] = 1;
+		}
 
 		$result = wp_parse_args( $output, wp_parse_args( $current, $defaults ) );
 
@@ -435,7 +483,7 @@ class SettingsPage {
 	 */
 	public function render_autosave_interval(): void {
 		$settings = Settings::get_settings();
-		$value = isset( $settings['autosave_interval_seconds'] ) ? (int) $settings['autosave_interval_seconds'] : 60;
+		$value = (int) ( $settings['autosave_interval_seconds'] ?? 60 );
 		$name = Admin::OPTION_NAME . '[autosave_interval_seconds]';
 		$id = 'autosave_interval_seconds';
 		?>
@@ -467,7 +515,7 @@ class SettingsPage {
 	 */
 	public function render_number_revisions(): void {
 		$settings = Settings::get_settings();
-		$value = isset( $settings['number_revisions'] ) ? (int) $settings['number_revisions'] : -1;
+		$value = (int) ( $settings['number_revisions'] ?? -1 );
 		$name = Admin::OPTION_NAME . '[number_revisions]';
 		$id = 'number_revisions';
 		?>
@@ -515,7 +563,7 @@ class SettingsPage {
 	 */
 	public function render_login_page_slug(): void {
 		$settings = Settings::get_settings();
-		$value = isset( $settings['login_page_slug'] ) ? $settings['login_page_slug'] : '';
+		$value = $settings['login_page_slug'] ?? '';
 		$name = Admin::OPTION_NAME . '[login_page_slug]';
 		$id = 'login_page_slug';
 		?>
@@ -603,9 +651,10 @@ class SettingsPage {
 	 */
 	public function render_local_fonts_actions(): void {
 		$files = Fonts::get_last_directory_files();
-		$message = count( $files ) > 0
-			? __( 'Files in wp-content/fonts:', 'asc-core-tools' )
-			: __( 'No font files or fonts.css found.', 'asc-core-tools' );
+		$message = __( 'No font files or fonts.css found.', 'asc-core-tools' );
+		if ( count( $files ) > 0 ) {
+			$message = __( 'Files in wp-content/fonts:', 'asc-core-tools' );
+		}
 		?>
 		<div class="asc-core-tools-description"><?php esc_html_e( 'Upload your fonts to the wp-content/fonts directory.', 'asc-core-tools' ); ?></div>
 		<p>
@@ -650,7 +699,7 @@ class SettingsPage {
 	 */
 	public function render_social_sharing_post_types(): void {
 		$settings = Settings::get_settings();
-		$value = isset( $settings['social_sharing_post_types'] ) ? $settings['social_sharing_post_types'] : 'post,page';
+		$value = $settings['social_sharing_post_types'] ?? 'post,page';
 		$name = Admin::OPTION_NAME . '[social_sharing_post_types]';
 		$id = 'social_sharing_post_types';
 		?>
@@ -749,10 +798,28 @@ class SettingsPage {
 			'features' => '',
 		);
 
-		foreach( $tabs as $tab ) {
+		foreach ( $tabs as $tab ) {
 			if ( $tab !== $active_tab ) {
-				$inactive_tab_css[$tab] = ' style="display: none;"';
+				$inactive_tab_css[ $tab ] = ' style="display: none;"';
 			}
+		}
+
+		$aria_selected_general = 'false';
+		if ( $active_tab === 'general' ) {
+			$aria_selected_general = 'true';
+		}
+		$aria_selected_features = 'false';
+		if ( $active_tab === 'features' ) {
+			$aria_selected_features = 'true';
+		}
+		$aria_selected_database = 'false';
+		if ( $active_tab === 'database' ) {
+			$aria_selected_database = 'true';
+		}
+
+		$save_wrap_style = '';
+		if ( $active_tab === 'database' ) {
+			$save_wrap_style = ' style="display: none;"';
 		}
 
 		/*
@@ -766,13 +833,13 @@ class SettingsPage {
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<nav class="nav-tab-wrapper asc-core-tools-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings sections', 'asc-core-tools' ); ?>">
-				<a href="#" class="nav-tab<?php echo $active_tab_class['general']; ?>" id="asc-core-tools-tab-general" role="tab" aria-selected="<?php echo $active_tab === 'general' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-general" data-tab="general">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['general']; ?>" id="asc-core-tools-tab-general" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_general ); ?>" aria-controls="asc-core-tools-panel-general" data-tab="general">
 					<?php esc_html_e( 'General', 'asc-core-tools' ); ?>
 				</a>
-				<a href="#" class="nav-tab<?php echo $active_tab_class['features']; ?>" id="asc-core-tools-tab-features" role="tab" aria-selected="<?php echo $active_tab === 'features' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-features" data-tab="features">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['features']; ?>" id="asc-core-tools-tab-features" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_features ); ?>" aria-controls="asc-core-tools-panel-features" data-tab="features">
 					<?php esc_html_e( 'Features', 'asc-core-tools' ); ?>
 				</a>
-				<a href="#" class="nav-tab<?php echo $active_tab_class['database']; ?>" id="asc-core-tools-tab-database" role="tab" aria-selected="<?php echo $active_tab === 'database' ? 'true' : 'false'; ?>" aria-controls="asc-core-tools-panel-database" data-tab="database">
+				<a href="#" class="nav-tab<?php echo $active_tab_class['database']; ?>" id="asc-core-tools-tab-database" role="tab" aria-selected="<?php echo esc_attr( $aria_selected_database ); ?>" aria-controls="asc-core-tools-panel-database" data-tab="database">
 					<?php esc_html_e( 'Database', 'asc-core-tools' ); ?>
 				</a>
 			</nav>
@@ -791,8 +858,10 @@ class SettingsPage {
 							$sections = array();
 							$current_title = null;
 							foreach ( $general_fields as $field_id => $field ) {
-								$is_heading = ( isset( $field['callback'] ) && $field['callback'] === '__return_false' )
-									|| ( is_string( $field_id ) && str_ends_with( $field_id, '_heading' ) );
+								$is_heading = false;
+								if ( ( isset( $field['callback'] ) && $field['callback'] === '__return_false' ) || ( is_string( $field_id ) && str_ends_with( $field_id, '_heading' ) ) ) {
+									$is_heading = true;
+								}
 								if ( $is_heading ) {
 									$current_title = $field['title'];
 								} else {
@@ -856,8 +925,10 @@ class SettingsPage {
 							$sections = array();
 							$current_title = null;
 							foreach ( $general_fields as $field_id => $field ) {
-								$is_heading = ( isset( $field['callback'] ) && $field['callback'] === '__return_false' )
-									|| ( is_string( $field_id ) && str_ends_with( $field_id, '_heading' ) );
+								$is_heading = false;
+								if ( ( isset( $field['callback'] ) && $field['callback'] === '__return_false' ) || ( is_string( $field_id ) && str_ends_with( $field_id, '_heading' ) ) ) {
+									$is_heading = true;
+								}
 								if ( $is_heading ) {
 									$current_title = $field['title'];
 								} else {
@@ -951,9 +1022,6 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<?php
-				$save_wrap_style = ( $active_tab === 'database' ) ? ' style="display: none;"' : '';
-				?>
 				<div class="asc-core-tools-save-wrap"<?php echo $save_wrap_style; ?>>
 					<?php submit_button( __( 'Save Settings', 'asc-core-tools' ) ); ?>
 				</div>

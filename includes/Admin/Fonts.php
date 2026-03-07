@@ -182,7 +182,20 @@ class Fonts {
 
 		$basename = basename( $path );
 
-		return $basename !== '' && $basename !== '.' && $basename !== '..' && strpos( $basename, '/' ) === false && strpos( $basename, '\\' ) === false;
+		if ( $basename === '' ) {
+			return false;
+		}
+		if ( $basename === '.' || $basename === '..' ) {
+			return false;
+		}
+		if ( strpos( $basename, '/' ) !== false ) {
+			return false;
+		}
+		if ( strpos( $basename, '\\' ) !== false ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -259,7 +272,11 @@ class Fonts {
 	 * @return string
 	 */
 	private function infer_font_style( string $basename ): string {
-		return ( strpos( strtolower( $basename ), 'italic' ) !== false ) ? 'italic' : 'normal';
+		$style = 'normal';
+		if ( strpos( strtolower( $basename ), 'italic' ) !== false ) {
+			$style = 'italic';
+		}
+		return $style;
 	}
 
 	/**
@@ -272,7 +289,11 @@ class Fonts {
 		$name = preg_replace( '/[-_](regular|normal|italic|bold|light|thin|medium|black)$/i', '', $basename );
 		$name = trim( preg_replace( '/[-_]+/', ' ', $name ) );
 
-		return $name !== '' ? $name : $basename;
+		$result = $basename;
+		if ( $name !== '' ) {
+			$result = $name;
+		}
+		return $result;
 	}
 
 	/**

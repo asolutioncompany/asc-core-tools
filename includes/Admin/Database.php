@@ -170,7 +170,10 @@ class Database {
 			'term_relationships',
 			'terms_and_term_taxonomy',
 		);
-		$table = isset( $_POST['table'] ) ? sanitize_text_field( wp_unslash( $_POST['table'] ) ) : '';
+		$table = '';
+		if ( isset( $_POST['table'] ) ) {
+			$table = sanitize_text_field( wp_unslash( $_POST['table'] ) );
+		}
 		if ( ! in_array( $table, $allowed_tables, true ) ) {
 			$response->message = __( 'Invalid table.', 'asc-core-tools' );
 			wp_send_json( $response );
@@ -276,7 +279,10 @@ class Database {
 			'posts', 'postmeta', 'terms', 'termmeta', 'term_taxonomy', 'term_relationships',
 			'options', 'users', 'usermeta', 'comments', 'commentmeta', 'links',
 		);
-		$table = isset( $_POST['table'] ) ? sanitize_text_field( wp_unslash( $_POST['table'] ) ) : '';
+		$table = '';
+		if ( isset( $_POST['table'] ) ) {
+			$table = sanitize_text_field( wp_unslash( $_POST['table'] ) );
+		}
 		if ( ! in_array( $table, $allowed_tables, true ) ) {
 			$response->message = __( 'Invalid table.', 'asc-core-tools' );
 			wp_send_json( $response );

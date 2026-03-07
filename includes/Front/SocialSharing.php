@@ -125,7 +125,7 @@ class SocialSharing {
 			return $content;
 		}
 
-		$post_types_str = isset( $settings['social_sharing_post_types'] ) ? $settings['social_sharing_post_types'] : 'post,page';
+		$post_types_str = $settings['social_sharing_post_types'] ?? 'post,page';
 		$post_types = array_filter( array_map( 'trim', explode( ',', $post_types_str ) ) );
 		if ( empty( $post_types ) ) {
 			return $content;

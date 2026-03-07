@@ -99,9 +99,15 @@ class Front {
 			$fa_files = array( 'fontawesome.css', 'all.css', 'solid.css', 'regular.css', 'brands.css' );
 			foreach ( $fa_files as $file ) {
 				$path = $plugin_path . $fa_base . $file;
-				$ver = file_exists( $path ) ? (string) filemtime( $path ) : $fa_ver;
+				$ver = $fa_ver;
+				if ( file_exists( $path ) ) {
+					$ver = (string) filemtime( $path );
+				}
 				$handle = 'asc_core_tools_fa_' . pathinfo( $file, PATHINFO_FILENAME );
-				$deps = $prev_handle ? array( $prev_handle ) : array();
+				$deps = array();
+				if ( $prev_handle !== '' ) {
+					$deps = array( $prev_handle );
+				}
 				wp_enqueue_style(
 					$handle,
 					$plugin_url . $fa_base . $file,
@@ -125,7 +131,10 @@ class Front {
 		if ( ! empty( $settings['enable_local_fonts'] ) ) {
 			$fonts_css_url = content_url( 'fonts/fonts.css' );
 			$fonts_css_path = WP_CONTENT_DIR . '/fonts/fonts.css';
-			$version = is_file( $fonts_css_path ) ? (string) filemtime( $fonts_css_path ) : '1';
+			$version = '1';
+			if ( is_file( $fonts_css_path ) ) {
+				$version = (string) filemtime( $fonts_css_path );
+			}
 			wp_enqueue_style(
 				'asc_core_tools_local_fonts',
 				$fonts_css_url,

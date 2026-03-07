@@ -78,7 +78,7 @@ class General {
 	 */
 	public function update_heartbeat( array $settings ): array {
 		$saved = Core::get_settings();
-		$seconds = isset( $saved['autosave_interval_seconds'] ) ? (int) $saved['autosave_interval_seconds'] : 60;
+		$seconds = (int) ( $saved['autosave_interval_seconds'] ?? 60 );
 		$settings['interval'] = max( 15, min( 120, $seconds ) );
 		return $settings;
 	}
@@ -95,6 +95,6 @@ class General {
 		if ( ! empty( $saved['disable_revisions'] ) ) {
 			return 0;
 		}
-		return isset( $saved['number_revisions'] ) ? (int) $saved['number_revisions'] : $num;
+		return (int) ( $saved['number_revisions'] ?? $num );
 	}
 }

@@ -103,7 +103,10 @@ class HideLogin {
 		if ( $slug === '' ) {
 			return;
 		}
-		$param = isset( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) ) : '';
+		$param = '';
+		if ( isset( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) ) {
+			$param = sanitize_text_field( wp_unslash( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) );
+		}
 		if ( $param === '' || $param !== $slug ) {
 			wp_safe_redirect( home_url( '/' ) );
 			exit;
@@ -238,7 +241,11 @@ class HideLogin {
 			return $redirect_to;
 		}
 		$login_url = $this->get_custom_login_url();
-		return $login_url !== '' ? $login_url : home_url( '/' );
+		$result = home_url( '/' );
+		if ( $login_url !== '' ) {
+			$result = $login_url;
+		}
+		return $result;
 	}
 
 	public function restrict_wp_admin(): void {
