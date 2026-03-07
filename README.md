@@ -16,7 +16,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Disable XML-RPC** – Turn off the XML-RPC endpoint.
 - **Hide WordPress Login** – Use a custom URL for login; `wp-login.php` is gated by a required parameter so only the custom slug works. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
 - **Disable auto-update emails** – Stop WordPress from sending email notifications after automatic core, plugin, or theme updates.
-- **Disable Autosave (Heartbeat API)** – Disable autosave or set the autosave interval (15–120 seconds).
+- **Disable Autosave (Heartbeat API)** – Disable autosave or set the autosave interval.
 - **Disable Revisions** – Disable revisions or limit how many are kept per post.
 - **Disable Comments** – Disable comments and pings site-wide; removes the Comments menu when there are no comments.
 
@@ -25,7 +25,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Local Fonts** – Upload font files to `wp-content/fonts`; enable to load a generated `fonts.css` on the front-end. Use **Scan for fonts** and **Generate CSS** on the Features tab to list files and build `@font-face` rules. When “Enable local fonts” is on, the settings page auto-scans the directory and regenerates `fonts.css` on load.
 - **Local Font Awesome** – Option to host Font Awesome locally from the plugin; on by default.
 - **Social sharing** – Optional sharing bar (Facebook, LinkedIn, Bluesky, X, Email, Copy link) on selected post types or via shortcode; you can choose which networks to show (all enabled by default). Requires clipboard.js and Font Awesome, which are included in the vendor directory and locally hosted by default.
-- **Ninja Forms** – Optional customization (enable to load custom public CSS).
+- **Ninja Forms** – Optional customization (enable to load custom CSS).
 
 ### Database
 - **Delete obsolete data** – Remove revisions, trash, auto-drafts, oembed cache, orphaned post meta, transients, and similar.
