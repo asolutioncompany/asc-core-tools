@@ -73,11 +73,16 @@ class Admin {
 	}
 
 	/**
-	 * Enqueue admin assets (CSS and JavaScript).
+	 * Enqueue admin assets (CSS and JavaScript) only on the plugin settings page.
 	 *
 	 * @return void
 	 */
 	public function enqueue_admin_assets(): void {
+		$screen = get_current_screen();
+		if ( $screen === null || $screen->id !== 'settings_page_' . self::PAGE_SLUG ) {
+			return;
+		}
+
 		$core = Core::get_instance();
 		$plugin_url = $core->get_plugin_url();
 		$plugin_path = $core->get_plugin_path();
