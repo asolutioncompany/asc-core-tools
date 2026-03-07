@@ -3,7 +3,7 @@
 declare( strict_types = 1 );
 
 /**
- * aS.c Core tools
+ * aS.c Core Tools
  *
  * A lightweight WordPress plugin for common customizations of WordPress.
  *
