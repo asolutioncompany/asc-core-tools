@@ -57,19 +57,10 @@ class Admin {
 	private function init(): void {
 		$this->settings_page = new SettingsPage();
 		new General();
-		add_action( 'load-settings_page_' . self::PAGE_SLUG, array( $this, 'load_settings_page_components' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
-		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
-	}
-
-	/**
-	 * Load Database and Fonts only when the plugin settings page is displayed.
-	 *
-	 * @return void
-	 */
-	public function load_settings_page_components(): void {
 		new Database();
 		new Fonts();
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+		add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
 	}
 
 	/**
