@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-07T10:34:32+00:00\n"
+"POT-Creation-Date: 2026-03-08T10:06:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: asc-core-tools\n"
@@ -42,32 +42,32 @@ msgid "https://asolution.company"
 msgstr ""
 
 #: includes/Admin/Database.php:74
-#: includes/Admin/Database.php:164
-#: includes/Admin/Database.php:281
+#: includes/Admin/Database.php:199
+#: includes/Admin/Database.php:316
 #: includes/Admin/Fonts.php:210
-#: includes/Admin/Fonts.php:415
+#: includes/Admin/Fonts.php:425
 msgid "Not allowed."
 msgstr ""
 
 #. translators: %s: number of rows deleted
-#: includes/Admin/Database.php:145
+#: includes/Admin/Database.php:180
 #, php-format
-msgid "Deleted %s rows of transient and obsolete data."
+msgid "Deleted %s rows of transient and other obsolete data."
 msgstr ""
 
-#: includes/Admin/Database.php:181
-#: includes/Admin/Database.php:294
+#: includes/Admin/Database.php:216
+#: includes/Admin/Database.php:329
 msgid "Invalid table."
 msgstr ""
 
 #. translators: 1: number of rows deleted, 2: table name
-#: includes/Admin/Database.php:261
+#: includes/Admin/Database.php:296
 #, php-format
 msgid "Deleted %1$s rows of orphaned %2$s data."
 msgstr ""
 
 #. translators: %s: table name (e.g. wp_posts)
-#: includes/Admin/Database.php:306
+#: includes/Admin/Database.php:341
 #, php-format
 msgid "Optimized %s table."
 msgstr ""
@@ -77,32 +77,32 @@ msgid "Directory wp-content/fonts does not exist."
 msgstr ""
 
 #: includes/Admin/Fonts.php:219
-#: includes/Admin/SettingsPage.php:686
+#: includes/Admin/SettingsPage.php:713
 msgid "No font files or fonts.css found."
 msgstr ""
 
 #: includes/Admin/Fonts.php:221
-#: includes/Admin/SettingsPage.php:688
+#: includes/Admin/SettingsPage.php:715
 msgid "Files in wp-content/fonts:"
 msgstr ""
 
-#: includes/Admin/Fonts.php:332
+#: includes/Admin/Fonts.php:342
 msgid "Directory wp-content/fonts does not exist. Create it and upload font files."
 msgstr ""
 
-#: includes/Admin/Fonts.php:340
+#: includes/Admin/Fonts.php:350
 msgid "Could not read directory."
 msgstr ""
 
-#: includes/Admin/Fonts.php:388
+#: includes/Admin/Fonts.php:398
 msgid "Invalid path."
 msgstr ""
 
-#: includes/Admin/Fonts.php:396
+#: includes/Admin/Fonts.php:406
 msgid "Could not write fonts.css. Check that wp-content/fonts is writable."
 msgstr ""
 
-#: includes/Admin/Fonts.php:402
+#: includes/Admin/Fonts.php:412
 msgid "fonts.css generated successfully."
 msgstr ""
 
@@ -206,137 +206,157 @@ msgstr ""
 msgid "Enable Ninja Forms Customization"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:611
+#: includes/Admin/SettingsPage.php:638
 msgid "Manually add a social sharing bar to a page:"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:612
+#: includes/Admin/SettingsPage.php:639
 msgid "Shows the current year, useful for copyright footers:"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:640
+#: includes/Admin/SettingsPage.php:667
 msgid "Font Awesome is required for the sharing icons. Either enable Self-host Font Awesome above or install the Font Awesome plugin."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:641
+#: includes/Admin/SettingsPage.php:668
 msgid "Either enable social sharing on listed post types (post, page, etc.) or use the shortcode:"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:692
+#: includes/Admin/SettingsPage.php:719
 msgid "Upload your fonts to the wp-content/fonts directory."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:694
+#: includes/Admin/SettingsPage.php:721
 msgid "Scan for fonts"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:695
+#: includes/Admin/SettingsPage.php:722
 msgid "Generate CSS"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:753
+#: includes/Admin/SettingsPage.php:780
 msgid "Networks to show in sharing bar:"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:758
+#: includes/Admin/SettingsPage.php:785
 msgid "Facebook"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:759
+#: includes/Admin/SettingsPage.php:786
 msgid "LinkedIn"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:760
+#: includes/Admin/SettingsPage.php:787
 msgid "Bluesky"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:761
+#: includes/Admin/SettingsPage.php:788
 msgid "X"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:762
+#: includes/Admin/SettingsPage.php:789
 msgid "Email"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:763
+#: includes/Admin/SettingsPage.php:790
 #: includes/Front/SocialSharing.php:92
 msgid "Copy link"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:799
+#: includes/Admin/SettingsPage.php:826
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:875
+#: includes/Admin/SettingsPage.php:897
 msgid "Settings sections"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:877
+#: includes/Admin/SettingsPage.php:899
 msgid "WordPress"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:880
+#: includes/Admin/SettingsPage.php:902
 msgid "Display"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:883
+#: includes/Admin/SettingsPage.php:905
 msgid "Database"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:893
+#: includes/Admin/SettingsPage.php:915
 msgid "WordPress Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:960
+#: includes/Admin/SettingsPage.php:982
 msgid "Display Settings"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1031
+#: includes/Admin/SettingsPage.php:1053
 msgid "Database Maintenance"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1037
-msgid "Warning"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:1038
-msgid "Warning:"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:1038
-msgid "Deleting obsolete data will delete trash, auto-draft, and revision posts."
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:1045
-msgid "Actions"
-msgstr ""
-
-#: includes/Admin/SettingsPage.php:1046
+#: includes/Admin/SettingsPage.php:1067
+#: includes/Admin/SettingsPage.php:1070
+#: includes/Admin/SettingsPage.php:1130
 msgid "Delete Obsolete Data"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1047
+#: includes/Admin/SettingsPage.php:1071
+msgid "Removes oembed cache posts, obsolete post meta (e.g. old slug, edit lock), transients, and session options. Also, when enabled below, old trash, draft, and revision posts by age."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1075
+msgid "Delete old trash posts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1079
+#: includes/Admin/SettingsPage.php:1089
+#: includes/Admin/SettingsPage.php:1099
+msgid "Days old:"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1085
+msgid "Delete old draft posts"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1095
+msgid "Delete old revisions"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1106
+#: includes/Admin/SettingsPage.php:1109
+#: includes/Admin/SettingsPage.php:1131
 msgid "Delete Orphaned Data"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1048
+#: includes/Admin/SettingsPage.php:1110
+msgid "Removes post meta, terms, term meta, term taxonomy, and term relationships that no longer reference valid posts or terms. Runs table by table."
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:1115
+#: includes/Admin/SettingsPage.php:1118
+#: includes/Admin/SettingsPage.php:1132
 msgid "Optimize Tables"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1055
-msgid "Messages"
+#: includes/Admin/SettingsPage.php:1119
+msgid "Runs OPTIMIZE TABLE on core WordPress tables to reclaim space and defragment after deletions."
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1057
+#: includes/Admin/SettingsPage.php:1138
 msgid "Clear Messages"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:1066
+#: includes/Admin/SettingsPage.php:1145
 msgid "Save Settings"
 msgstr ""
 
 #: includes/Front/DisableComments.php:84
 msgid "Comments are disabled."
+msgstr ""
+
+#: includes/Front/Front.php:189
+msgid "Copied link!"
 msgstr ""
 
 #: includes/Front/HideLogin.php:405
@@ -345,6 +365,10 @@ msgstr ""
 
 #: includes/Front/SocialSharing.php:68
 msgid "Share this"
+msgstr ""
+
+#: includes/Front/SocialSharing.php:70
+msgid "Share:"
 msgstr ""
 
 #: includes/Front/SocialSharing.php:73
