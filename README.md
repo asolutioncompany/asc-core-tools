@@ -12,7 +12,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 ## Features
 
-### WordPress (tab)
+### WordPress Settings (tab)
 - **Disable XML-RPC** – Turn off the XML-RPC endpoint.
 - **Hide WordPress Login** – Use a custom URL for login; `wp-login.php` is gated by a required parameter so only the custom slug works. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
 - **Disable auto-update emails** – Stop WordPress from sending email notifications after automatic core, plugin, or theme updates.
@@ -20,7 +20,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Disable Revisions** – Disable revisions or limit how many are kept per post.
 - **Disable Comments** – Disable comments and pings site-wide; removes the Comments menu when there are no comments.
 
-### Display (tab)
+### Display Settings (tab)
 - **Shortcodes** – `[asc_core_tools_year]` (current year); `[asc_core_tools_social_sharing]` when social sharing is enabled.
 - **Local Fonts** – Upload font files to `wp-content/fonts`; enable to load a generated `fonts.css` on the front-end. Use **Scan for fonts** and **Generate CSS** on the Display tab to list files and build `@font-face` rules. When “Enable local fonts” is on, the settings page auto-scans the directory and regenerates `fonts.css` on load.
 - **Local Font Awesome** – Option to host Font Awesome locally from the plugin; on by default.
@@ -28,7 +28,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Ninja Forms** – Optional customization (enable to load custom CSS).
 
 ### Database Maintenance
-- **Delete obsolete data** – Removes oembed cache posts and, when enabled, old trash, draft, and revision posts by age (configurable “days old” per type). Also removes obsolete post meta (e.g. old slug, edit lock), transients, and session options. Use the Database tab options to enable “Delete old trash posts”, “Delete old draft posts”, and “Delete old revisions” and set the days threshold for each before running the action.
+- **Delete obsolete data** – Removes oembed cache posts, obsolete post meta (e.g. old slug, edit lock), transients, and session options. Also, when enabled, old trash, draft, and revision posts by age, configured by days.
 - **Delete orphaned data** – Removes post meta, terms, term meta, term taxonomy, and term relationships that no longer reference valid posts or terms. Runs table by table.
 - **Optimize tables** – Runs OPTIMIZE TABLE on core WordPress tables to reclaim space and defragment after deletions.
 
@@ -68,14 +68,12 @@ Upload your font files to `wp-content/fonts`, then enable the option and use **G
 
 ## Social Sharing
 
-When **Enable Social Sharing** is on (Display tab):
+When **Enable Social Sharing** is on (Display Settings tab):
 
 - **Where it appears** – The sharing bar is shown on the post types you list in **Set Social Sharing Post Types** (e.g. `post,page`). You can also place it anywhere with the shortcode `[asc_core_tools_social_sharing]`.
 - **Networks** – You can choose which networks to show: Facebook, LinkedIn, Bluesky, X, Email, and Copy link. All are enabled by default; uncheck any you do not want in the sharing bar.
 - **Copy link** – Uses the page URL; a short message is shown when the link is copied. Clipboard.js is loaded by the plugin when social sharing is enabled.
 - **Icons** – Share icons use Font Awesome (loaded by the plugin; see Local Font Awesome). Ensure Local Font Awesome is enabled or that Font Awesome is available on the front-end for icons to display.
-
-To use only the shortcode and not show the bar on post types automatically, leave **Set Social Sharing Post Types** empty or set it to post types that do not display the bar in your theme (e.g. a custom post type you do not use for content).
 
 ---
 
