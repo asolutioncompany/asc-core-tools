@@ -75,6 +75,8 @@ class Database {
 			wp_send_json( $response );
 		}
 
+		$settings = \ASC\CoreTools\Core\Core::get_settings();
+
 		global $wpdb;
 
 		$posts_table = $wpdb->prefix . 'posts';
@@ -82,16 +84,49 @@ class Database {
 		$terms_table = $wpdb->prefix . 'terms';
 		$options_table = $wpdb->prefix . 'options';
 
-		$sql = "DELETE FROM $posts_table
-			WHERE post_status = 'revision'
-				OR post_status = 'oembed_cache'
-				OR post_status = 'trash'
-				OR post_status = 'auto-draft'";
+		$rows_1 = 0;
 
-		$rows_1 = $wpdb->query( $sql );
+		// Always delete oembed_cache posts.
+		$sql = "DELETE FROM $posts_table WHERE post_status = 'oembed_cache'";
+		$r = $wpdb->query( $sql );
+		if ( $r ) {
+			$rows_1 += $r;
+		}
 
-		if ( ! $rows_1 ) {
-			$rows_1 = 0;
+		if ( ! empty( $settings['delete_old_trash'] ) ) {
+			$days = max( 1, (int) ( $settings['delete_old_trash_days'] ?? 30 ) );
+			$sql = $wpdb->prepare(
+				"DELETE FROM $posts_table WHERE post_status = 'trash' AND post_modified < DATE_SUB(NOW(), INTERVAL %d DAY)",
+				$days
+			);
+			$r = $wpdb->query( $sql );
+			if ( $r ) {
+				$rows_1 += $r;
+			}
+		}
+
+		if ( ! empty( $settings['delete_old_draft'] ) ) {
+			$days = max( 1, (int) ( $settings['delete_old_draft_days'] ?? 30 ) );
+			$sql = $wpdb->prepare(
+				"DELETE FROM $posts_table WHERE post_status IN ('draft', 'auto-draft') AND post_modified < DATE_SUB(NOW(), INTERVAL %d DAY)",
+				$days
+			);
+			$r = $wpdb->query( $sql );
+			if ( $r ) {
+				$rows_1 += $r;
+			}
+		}
+
+		if ( ! empty( $settings['delete_old_revisions'] ) ) {
+			$days = max( 1, (int) ( $settings['delete_old_revisions_days'] ?? 30 ) );
+			$sql = $wpdb->prepare(
+				"DELETE FROM $posts_table WHERE post_status = 'revision' AND post_modified < DATE_SUB(NOW(), INTERVAL %d DAY)",
+				$days
+			);
+			$r = $wpdb->query( $sql );
+			if ( $r ) {
+				$rows_1 += $r;
+			}
 		}
 
 		$sql = "DELETE posts_child FROM $posts_table AS posts_child
@@ -142,7 +177,7 @@ class Database {
 		$response->success = 1;
 		$response->message = sprintf(
 			/* translators: %s: number of rows deleted */
-			__( 'Deleted %s rows of transient and obsolete data.', 'asc-core-tools' ),
+			__( 'Deleted %s rows of transient and other obsolete data.', 'asc-core-tools' ),
 			$rows
 		);
 		wp_send_json( $response );

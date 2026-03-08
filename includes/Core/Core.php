@@ -55,6 +55,12 @@ class Core {
 		'share_copy_link' => 1,
 		'self_host_fontawesome' => 1,
 		'enable_local_fonts' => 0,
+		'delete_old_trash' => 0,
+		'delete_old_trash_days' => 30,
+		'delete_old_draft' => 0,
+		'delete_old_draft_days' => 30,
+		'delete_old_revisions' => 0,
+		'delete_old_revisions_days' => 30,
 	);
 
 	/**

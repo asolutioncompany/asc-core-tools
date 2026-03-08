@@ -424,6 +424,33 @@ class SettingsPage {
 			$output['enable_local_fonts'] = 1;
 		}
 
+		$output['delete_old_trash'] = 0;
+		if ( ! empty( $input['delete_old_trash'] ) ) {
+			$output['delete_old_trash'] = 1;
+		}
+		$output['delete_old_trash_days'] = $defaults['delete_old_trash_days'];
+		if ( isset( $input['delete_old_trash_days'] ) ) {
+			$output['delete_old_trash_days'] = max( 1, (int) $input['delete_old_trash_days'] );
+		}
+
+		$output['delete_old_draft'] = 0;
+		if ( ! empty( $input['delete_old_draft'] ) ) {
+			$output['delete_old_draft'] = 1;
+		}
+		$output['delete_old_draft_days'] = $defaults['delete_old_draft_days'];
+		if ( isset( $input['delete_old_draft_days'] ) ) {
+			$output['delete_old_draft_days'] = max( 1, (int) $input['delete_old_draft_days'] );
+		}
+
+		$output['delete_old_revisions'] = 0;
+		if ( ! empty( $input['delete_old_revisions'] ) ) {
+			$output['delete_old_revisions'] = 1;
+		}
+		$output['delete_old_revisions_days'] = $defaults['delete_old_revisions_days'];
+		if ( isset( $input['delete_old_revisions_days'] ) ) {
+			$output['delete_old_revisions_days'] = max( 1, (int) $input['delete_old_revisions_days'] );
+		}
+
 		$result = wp_parse_args( $output, wp_parse_args( $current, $defaults ) );
 
 		// When Hide Login is enabled, add the login slug rewrite rule and flush so it is persisted.
@@ -690,13 +717,13 @@ class SettingsPage {
 
 		?>
 		<div class="asc-core-tools-description"><?php esc_html_e( 'Upload your fonts to the wp-content/fonts directory.', 'asc-core-tools' ); ?></div>
-		<p>
+		<div class="asc-core-tools-font-buttons">
 			<button type="button" class="button asc-core-tools-scan-fonts"><?php esc_html_e( 'Scan for fonts', 'asc-core-tools' ); ?></button>
 			<button type="button" class="button asc-core-tools-generate-fonts-css"><?php esc_html_e( 'Generate CSS', 'asc-core-tools' ); ?></button>
-		</p>
+		</div>
 		<div class="asc-core-tools-font-list" aria-live="polite">
 			<?php if ( count( $files ) > 0 ) : ?>
-				<p><strong><?php echo esc_html( $message ); ?></strong></p>
+				<div><strong><?php echo esc_html( $message ); ?></strong></div>
 				<ul>
 					<?php foreach ( $files as $file ) : ?>
 						<li><?php echo esc_html( $file ); ?></li>
@@ -857,11 +884,6 @@ class SettingsPage {
 			$aria_selected_database = 'true';
 		}
 
-		$save_wrap_style = '';
-		if ( $active_tab === 'database' ) {
-			$save_wrap_style = ' style="display: none;"';
-		}
-
 		/*
 		 * Render Settings Sections and Fields
 		 */
@@ -889,7 +911,7 @@ class SettingsPage {
 				settings_fields( 'asc_core_tools_settings_group' );
 				?>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo esc_attr( $inactive_tab_css['wordpress'] ); ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo $inactive_tab_css['wordpress']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- server-controlled display style ?>>
 					<h2><?php esc_html_e( 'WordPress Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -956,7 +978,7 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo esc_attr( $inactive_tab_css['display'] ); ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo $inactive_tab_css['display']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- server-controlled display style ?>>
 					<h2><?php esc_html_e( 'Display Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -1027,44 +1049,100 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo esc_attr( $inactive_tab_css['database'] ); ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo $inactive_tab_css['database']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- server-controlled display style ?>>
 					<h2><?php esc_html_e( 'Database Maintenance', 'asc-core-tools' ); ?></h2>
-					<table class="form-table asc-core-tools-database-table" role="presentation">
+					<table class="form-table" role="presentation">
 						<tbody>
+							<?php
+							$db_settings = Settings::get_settings();
+							$delete_old_trash = ! empty( $db_settings['delete_old_trash'] );
+							$delete_old_trash_days = (int) ( $db_settings['delete_old_trash_days'] ?? 30 );
+							$delete_old_draft = ! empty( $db_settings['delete_old_draft'] );
+							$delete_old_draft_days = (int) ( $db_settings['delete_old_draft_days'] ?? 30 );
+							$delete_old_revisions = ! empty( $db_settings['delete_old_revisions'] );
+							$delete_old_revisions_days = (int) ( $db_settings['delete_old_revisions_days'] ?? 30 );
+							$opt = Admin::OPTION_NAME;
+							?>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Delete Obsolete Data', 'asc-core-tools' ); ?></th>
 								<td>
 									<fieldset>
-										<legend class="screen-reader-text"><span><?php esc_html_e( 'Warning', 'asc-core-tools' ); ?></span></legend>
-										<div class="asc-core-tools-description"><strong><?php esc_html_e( 'Warning:', 'asc-core-tools' ); ?></strong> <?php esc_html_e( 'Deleting obsolete data will delete trash, auto-draft, and revision posts.', 'asc-core-tools' ); ?></div>
+										<legend class="screen-reader-text"><span><?php esc_html_e( 'Delete Obsolete Data', 'asc-core-tools' ); ?></span></legend>
+										<div class="asc-core-tools-description"><?php esc_html_e( 'Removes oembed cache posts, obsolete post meta (e.g. old slug, edit lock), transients, and session options. Also, when enabled below, old trash, draft, and revision posts by age.', 'asc-core-tools' ); ?></div>
+										<div class="asc-core-tools-checkbox">
+											<label>
+												<input type="checkbox" name="<?php echo esc_attr( $opt ); ?>[delete_old_trash]" id="delete_old_trash" value="1" <?php checked( $delete_old_trash ); ?>>
+												<?php esc_html_e( 'Delete old trash posts', 'asc-core-tools' ); ?>
+											</label>
+										</div>
+										<div class="asc-core-tools-table-input-description">
+											<label for="delete_old_trash_days"><?php esc_html_e( 'Days old:', 'asc-core-tools' ); ?></label>
+											<input type="number" name="<?php echo esc_attr( $opt ); ?>[delete_old_trash_days]" id="delete_old_trash_days" value="<?php echo esc_attr( (string) $delete_old_trash_days ); ?>" min="1" step="1" class="small-text">
+										</div>
+										<div class="asc-core-tools-extra-checkbox asc-core-tools-checkbox">
+											<label>
+												<input type="checkbox" name="<?php echo esc_attr( $opt ); ?>[delete_old_draft]" id="delete_old_draft" value="1" <?php checked( $delete_old_draft ); ?>>
+												<?php esc_html_e( 'Delete old draft posts', 'asc-core-tools' ); ?>
+											</label>
+										</div>
+										<div class="asc-core-tools-table-input-description">
+											<label for="delete_old_draft_days"><?php esc_html_e( 'Days old:', 'asc-core-tools' ); ?></label>
+											<input type="number" name="<?php echo esc_attr( $opt ); ?>[delete_old_draft_days]" id="delete_old_draft_days" value="<?php echo esc_attr( (string) $delete_old_draft_days ); ?>" min="1" step="1" class="small-text">
+										</div>
+										<div class="asc-core-tools-extra-checkbox asc-core-tools-checkbox">
+											<label>
+												<input type="checkbox" name="<?php echo esc_attr( $opt ); ?>[delete_old_revisions]" id="delete_old_revisions" value="1" <?php checked( $delete_old_revisions ); ?>>
+												<?php esc_html_e( 'Delete old revisions', 'asc-core-tools' ); ?>
+											</label>
+										</div>
+										<div class="asc-core-tools-table-input-description">
+											<label for="delete_old_revisions_days"><?php esc_html_e( 'Days old:', 'asc-core-tools' ); ?></label>
+											<input type="number" name="<?php echo esc_attr( $opt ); ?>[delete_old_revisions_days]" id="delete_old_revisions_days" value="<?php echo esc_attr( (string) $delete_old_revisions_days ); ?>" min="1" step="1" class="small-text">
+										</div>
 									</fieldset>
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Delete Orphaned Data', 'asc-core-tools' ); ?></th>
 								<td>
 									<fieldset>
-										<legend class="screen-reader-text"><span><?php esc_html_e( 'Actions', 'asc-core-tools' ); ?></span></legend>
-										<button type="button" class="asc-core-tools-delete-obsolete-data button button-primary"><?php esc_html_e( 'Delete Obsolete Data', 'asc-core-tools' ); ?></button>
-										<button type="button" class="asc-core-tools-delete-orphaned-data button button-primary"><?php esc_html_e( 'Delete Orphaned Data', 'asc-core-tools' ); ?></button>
-										<button type="button" class="asc-core-tools-optimize-tables button button-primary"><?php esc_html_e( 'Optimize Tables', 'asc-core-tools' ); ?></button>
+										<legend class="screen-reader-text"><span><?php esc_html_e( 'Delete Orphaned Data', 'asc-core-tools' ); ?></span></legend>
+										<div class="asc-core-tools-description"><?php esc_html_e( 'Removes post meta, terms, term meta, term taxonomy, and term relationships that no longer reference valid posts or terms. Runs table by table.', 'asc-core-tools' ); ?></div>
 									</fieldset>
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Optimize Tables', 'asc-core-tools' ); ?></th>
 								<td>
 									<fieldset>
-										<legend class="screen-reader-text"><span><?php esc_html_e( 'Messages', 'asc-core-tools' ); ?></span></legend>
-										<div class="asc-core-tools-db-status" aria-live="polite" aria-atomic="true"></div>
-										<button type="button" class="asc-core-tools-clear-db-messages button"><?php esc_html_e( 'Clear Messages', 'asc-core-tools' ); ?></button>
+										<legend class="screen-reader-text"><span><?php esc_html_e( 'Optimize Tables', 'asc-core-tools' ); ?></span></legend>
+										<div class="asc-core-tools-description"><?php esc_html_e( 'Runs OPTIMIZE TABLE on core WordPress tables to reclaim space and defragment after deletions.', 'asc-core-tools' ); ?></div>
 									</fieldset>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+
+					<table class="form-table asc-core-tools-database-actions" role="presentation">
+						<tbody>
+							<tr>
+								<td>
+									<button type="button" class="asc-core-tools-delete-obsolete-data button button-primary"><?php esc_html_e( 'Delete Obsolete Data', 'asc-core-tools' ); ?></button>
+									<button type="button" class="asc-core-tools-delete-orphaned-data button button-primary"><?php esc_html_e( 'Delete Orphaned Data', 'asc-core-tools' ); ?></button>
+									<button type="button" class="asc-core-tools-optimize-tables button button-primary"><?php esc_html_e( 'Optimize Tables', 'asc-core-tools' ); ?></button>
+								</th>
+							</tr>
+							<tr>
+								<td>
+									<div class="asc-core-tools-db-status" aria-live="polite" aria-atomic="true"></div>
+									<button type="button" class="asc-core-tools-clear-db-messages button"><?php esc_html_e( 'Clear Messages', 'asc-core-tools' ); ?></button>
+								</th>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 
-				<div class="asc-core-tools-save-wrap"<?php echo esc_attr( $save_wrap_style ); ?>>
-					<?php submit_button( __( 'Save Settings', 'asc-core-tools' ) ); ?>
-				</div>
+				<?php submit_button( __( 'Save Settings', 'asc-core-tools' ) ); ?>
 			</form>
 		</div>
 		<?php

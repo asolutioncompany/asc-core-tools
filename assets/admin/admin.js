@@ -43,12 +43,6 @@
 				$panel.find('h2').first().attr('tabindex', '-1').focus();
 			}
 
-			// Hide Save Settings button on Database tab, show on others
-			if (targetTab === 'database') {
-				$('.asc-core-tools-save-wrap').hide();
-			} else {
-				$('.asc-core-tools-save-wrap').show();
-			}
 		});
 	});
 })(jQuery);
