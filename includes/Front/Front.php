@@ -181,6 +181,14 @@ class Front {
 				filemtime( $plugin_path . $social_js ),
 				true
 			);
+
+			wp_localize_script(
+				'asc_core_tools_social_sharing',
+				'asc_core_tools_social_sharing',
+				array(
+					'copied_message' => __( 'Copied link!', 'asc-core-tools' ),
+				)
+			);
 		}
 	}
 }

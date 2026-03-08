@@ -8,6 +8,18 @@
 (function ($) {
 	'use strict';
 
+	function escapeHtml(str) {
+		if (str == null) {
+			return '';
+		}
+		return String(str)
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;');
+	}
+
 	$(document).ready(function () {
 		var ajax_url = asc_core_tools_admin.ajax_url;
 		var ajax_nonce = asc_core_tools_admin.ajax_nonce;
@@ -42,7 +54,7 @@
 				success: function(response) {
 					var msg = '';
 					if (response.message) {
-						msg = response.message;
+						msg = escapeHtml(response.message);
 					}
 					status += '<br/>' + msg + '<br/><b>Done.</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
@@ -51,7 +63,7 @@
 				error: function(xhr) {
 					var msg = 'Error.';
 					if (xhr.responseJSON && xhr.responseJSON.message) {
-						msg = xhr.responseJSON.message;
+						msg = escapeHtml(xhr.responseJSON.message);
 					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
@@ -64,7 +76,7 @@
 		function delete_orphaned_data(table) {
 			disable_db_buttons();
 			var status = $('.asc-core-tools-db-status').html();
-			status += '<br/>Deleting orphaned data in ' + table + ' table...';
+			status += '<br/>Deleting orphaned data in ' + escapeHtml(table) + ' table...';
 			$('.asc-core-tools-db-status').html(status);
 			setTimeout(function() { delete_orphaned_data_cb(table); }, 1500);
 		}
@@ -79,7 +91,7 @@
 					var status = $('.asc-core-tools-db-status').html() || '';
 					var msg = '';
 					if (response.message) {
-						msg = response.message;
+						msg = escapeHtml(response.message);
 					}
 					status += '<br/>' + msg;
 					$('.asc-core-tools-db-status').html(status);
@@ -108,7 +120,7 @@
 					var status = $('.asc-core-tools-db-status').html() || '';
 					var msg = 'Error.';
 					if (xhr.responseJSON && xhr.responseJSON.message) {
-						msg = xhr.responseJSON.message;
+						msg = escapeHtml(xhr.responseJSON.message);
 					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);
@@ -125,7 +137,7 @@
 		function optimize_tables(table) {
 			disable_db_buttons();
 			var status = $('.asc-core-tools-db-status').html();
-			status += '<br/>Optimizing ' + table + ' table...';
+			status += '<br/>Optimizing ' + escapeHtml(table) + ' table...';
 			$('.asc-core-tools-db-status').html(status);
 			setTimeout(function() { optimize_tables_cb(table); }, 1500);
 		}
@@ -140,7 +152,7 @@
 					var status = $('.asc-core-tools-db-status').html() || '';
 					var msg = '';
 					if (response.message) {
-						msg = response.message;
+						msg = escapeHtml(response.message);
 					}
 					status += '<br/>' + msg;
 					$('.asc-core-tools-db-status').html(status);
@@ -172,7 +184,7 @@
 					var status = $('.asc-core-tools-db-status').html() || '';
 					var msg = 'Error.';
 					if (xhr.responseJSON && xhr.responseJSON.message) {
-						msg = xhr.responseJSON.message;
+						msg = escapeHtml(xhr.responseJSON.message);
 					}
 					status += '<br/><b>' + msg + '</b><br/>';
 					$('.asc-core-tools-db-status').html(status);

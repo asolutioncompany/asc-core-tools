@@ -30,12 +30,23 @@
 			);
 		}
 
-		// If message is ever dynamic or translated, escape it before using .html() to avoid XSS.
+		function escapeHtml(str) {
+			if (str == null) {
+				return '';
+			}
+			return String(str)
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#39;');
+		}
+
 		function asc_core_tools_show_success(message) {
 			var status_bar = $('.asc-core-tools-share-success');
 			status_bar.hide();
 			status_bar.html(
-				'<span class="asc-core-tools-share-alert-message">' + message + '</span>'+
+				'<span class="asc-core-tools-share-alert-message">' + escapeHtml(message) + '</span>' +
 				'<span class="asc-core-tools-share-alert-close"><i class="fa-solid fa-circle-xmark"></i></span>'
 			);
 			asc_core_tools_show_status_bar(status_bar);
@@ -49,7 +60,8 @@
 		});
 
 		$(document).on('click', '.asc-core-tools-copy', function(e) {
-			asc_core_tools_show_success('Copied link!');
+			var msg = (typeof asc_core_tools_social_sharing !== 'undefined' && asc_core_tools_social_sharing.copied_message) ? asc_core_tools_social_sharing.copied_message : 'Copied link!';
+			asc_core_tools_show_success(msg);
 
 			return false;
 		});

@@ -15,34 +15,60 @@
 		// Localized Ajax Nonce
 		var ajax_nonce = asc_core_tools_admin.ajax_nonce;
 
-		/*
-		 * Tab Switcher
-		 *
-		 * Show/hide tabs for each tab.
-		 */
-		$('.asc-core-tools-tabs .nav-tab').on('click', function (e) {
-			e.preventDefault();
+		var $tabs = $('.asc-core-tools-tabs .nav-tab');
+		var tabIds = $tabs.map(function () { return $(this).attr('data-tab'); }).get();
 
-			const targetTab = $(this).attr('data-tab');
-			const targetClass = '.asc-core-tools-' + targetTab + '-tab';
-			const $panel = $(targetClass);
+		function activateTab($tab) {
+			var targetTab = $tab.attr('data-tab');
+			var targetClass = '.asc-core-tools-' + targetTab + '-tab';
+			var $panel = $(targetClass);
 
-			// Set active tab and ARIA
-			$('.asc-core-tools-tabs .nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
-			$(this).addClass('nav-tab-active').attr('aria-selected', 'true');
+			$tabs.removeClass('nav-tab-active').attr('aria-selected', 'false');
+			$tab.addClass('nav-tab-active').attr('aria-selected', 'true');
 
-			// Show/hide active tab content
 			$('.asc-core-tools-tab-content').hide();
 			$panel.show();
 
-			// Move focus into the panel: first focusable element or the panel's h2
 			var $focusTarget = $panel.find('input:visible, select:visible, textarea:visible, button:visible, [href]:visible').first();
 			if ($focusTarget.length) {
 				$focusTarget.focus();
 			} else {
 				$panel.find('h2').first().attr('tabindex', '-1').focus();
 			}
+		}
 
+		$tabs.on('click', function (e) {
+			e.preventDefault();
+			activateTab($(this));
+		});
+
+		$('.asc-core-tools-tabs').on('keydown', function (e) {
+			var $current = $(e.target);
+			if (!$current.hasClass('nav-tab')) {
+				return;
+			}
+			var idx = $tabs.index($current);
+			if (idx < 0) {
+				return;
+			}
+			var nextIdx = -1;
+			if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+				e.preventDefault();
+				nextIdx = idx > 0 ? idx - 1 : tabIds.length - 1;
+			} else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+				e.preventDefault();
+				nextIdx = idx < tabIds.length - 1 ? idx + 1 : 0;
+			} else if (e.key === 'Home') {
+				e.preventDefault();
+				nextIdx = 0;
+			} else if (e.key === 'End') {
+				e.preventDefault();
+				nextIdx = tabIds.length - 1;
+			}
+			if (nextIdx >= 0) {
+				activateTab($tabs.eq(nextIdx));
+				$tabs.eq(nextIdx).focus();
+			}
 		});
 	});
 })(jQuery);

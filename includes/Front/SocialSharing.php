@@ -67,7 +67,7 @@ class SocialSharing {
 
 		$html = '<div class="asc-core-tools-share-container" role="region" aria-label="' . esc_attr__( 'Share this', 'asc-core-tools' ) . '">';
 		$html .= '<div class="asc-core-tools-share-networks">';
-		$html .= '<span class="asc-core-tools-share-header">Share:</span>';
+		$html .= '<span class="asc-core-tools-share-header">' . esc_html__( 'Share:', 'asc-core-tools' ) . '</span>';
 
 		if ( ! empty( $settings['share_facebook'] ) ) {
 			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="Facebook" aria-label="' . esc_attr__( 'Share on Facebook', 'asc-core-tools' ) . '"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>';

@@ -8,6 +8,18 @@
 (function ($) {
 	'use strict';
 
+	function escapeHtml(str) {
+		if (str == null) {
+			return '';
+		}
+		return String(str)
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;');
+	}
+
 	$(document).ready(function () {
 		var ajax_url = asc_core_tools_admin.ajax_url;
 		var ajax_nonce = asc_core_tools_admin.ajax_nonce;
@@ -34,13 +46,14 @@
 					if (hasFontList) {
 						var heading = '';
 						if (res.data && res.data.message) {
-							heading = res.data.message;
+							heading = escapeHtml(res.data.message);
 						}
-						list.html('<p><strong>' + heading + '</strong></p><ul><li>' + res.data.fonts.join('</li><li>') + '</li></ul>');
+						var safeFonts = res.data.fonts.map(function (f) { return escapeHtml(f); });
+						list.html('<div><strong>' + heading + '</strong></div><ul><li>' + safeFonts.join('</li><li>') + '</li></ul>');
 					} else {
 						var listMsg = 'No font files found.';
 						if (res.data && res.data.message) {
-							listMsg = res.data.message;
+							listMsg = escapeHtml(res.data.message);
 						}
 						list.html('<p>' + listMsg + '</p>');
 					}
@@ -48,7 +61,7 @@
 				error: function(xhr) {
 					var msg = 'Request failed.';
 					if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
-						msg = xhr.responseJSON.data.message;
+						msg = escapeHtml(xhr.responseJSON.data.message);
 					}
 					list.html('<p class="notice notice-error">' + msg + '</p>');
 				},
@@ -75,21 +88,22 @@
 					if (res.success) {
 						var msg = 'Done.';
 						if (res.data && res.data.message) {
-							msg = res.data.message;
+							msg = escapeHtml(res.data.message);
 						}
 						var hasFontList = false;
 						if (res.data && res.data.fonts && res.data.fonts.length) {
 							hasFontList = true;
 						}
 						if (hasFontList) {
-							list.html('<p class="notice notice-success">' + msg + '</p><p><strong>Files in wp-content/fonts:</strong></p><ul><li>' + res.data.fonts.join('</li><li>') + '</li></ul>');
+							var safeFonts = res.data.fonts.map(function (f) { return escapeHtml(f); });
+							list.html('<p class="notice notice-success">' + msg + '</p><p><strong>Files in wp-content/fonts:</strong></p><ul><li>' + safeFonts.join('</li><li>') + '</li></ul>');
 						} else {
 							list.html('<p class="notice notice-success">' + msg + '</p>');
 						}
 					} else {
 						var errMsg = 'Error.';
 						if (res.data && res.data.message) {
-							errMsg = res.data.message;
+							errMsg = escapeHtml(res.data.message);
 						}
 						list.html('<p class="notice notice-error">' + errMsg + '</p>');
 					}
@@ -97,7 +111,7 @@
 				error: function(xhr) {
 					var msg = 'Request failed.';
 					if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message) {
-						msg = xhr.responseJSON.data.message;
+						msg = escapeHtml(xhr.responseJSON.data.message);
 					}
 					list.html('<p class="notice notice-error">' + msg + '</p>');
 				},
