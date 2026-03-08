@@ -320,6 +320,16 @@ class Fonts {
 	}
 
 	/**
+	 * Escape a string for safe use inside a CSS double-quoted string (e.g. font-family).
+	 *
+	 * @param string $value Raw string (e.g. from filename).
+	 * @return string Escaped for "..." in CSS.
+	 */
+	private function escape_css_quoted_string( string $value ): string {
+		return str_replace( array( '\\', '"' ), array( '\\\\', '\\"' ), $value );
+	}
+
+	/**
 	 * Generate fonts.css in wp-content/fonts. Used by AJAX and by on_load_settings_page.
 	 *
 	 * @return array{success: bool, message: string}
@@ -371,7 +381,7 @@ class Fonts {
 			$url = $content_url . '/' . rawurlencode( $file );
 
 			$css_lines[] = '@font-face {';
-			$css_lines[] = '  font-family: "' . $family . '";';
+			$css_lines[] = '  font-family: "' . $this->escape_css_quoted_string( $family ) . '";';
 			$css_lines[] = '  font-weight: ' . $weight . ';';
 			$css_lines[] = '  font-style: ' . $style . ';';
 			$css_lines[] = '  src: url("' . esc_url( $url ) . '") format("' . $format . '");';

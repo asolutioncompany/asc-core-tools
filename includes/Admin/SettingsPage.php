@@ -1126,17 +1126,17 @@ class SettingsPage {
 					<table class="form-table asc-core-tools-database-actions" role="presentation">
 						<tbody>
 							<tr>
-								<td>
+								<td colspan="2">
 									<button type="button" class="asc-core-tools-delete-obsolete-data button button-primary"><?php esc_html_e( 'Delete Obsolete Data', 'asc-core-tools' ); ?></button>
 									<button type="button" class="asc-core-tools-delete-orphaned-data button button-primary"><?php esc_html_e( 'Delete Orphaned Data', 'asc-core-tools' ); ?></button>
 									<button type="button" class="asc-core-tools-optimize-tables button button-primary"><?php esc_html_e( 'Optimize Tables', 'asc-core-tools' ); ?></button>
-								</th>
+								</td>
 							</tr>
 							<tr>
-								<td>
+								<td colspan="2">
 									<div class="asc-core-tools-db-status" aria-live="polite" aria-atomic="true"></div>
 									<button type="button" class="asc-core-tools-clear-db-messages button"><?php esc_html_e( 'Clear Messages', 'asc-core-tools' ); ?></button>
-								</th>
+								</td>
 							</tr>
 						</tbody>
 					</table>

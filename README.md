@@ -28,9 +28,9 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Ninja Forms** – Optional customization (enable to load custom CSS).
 
 ### Database Maintenance
-- **Delete obsolete data** – Remove revisions, trash, auto-drafts, oembed cache, orphaned post meta, transients, and similar.
-- **Delete orphaned data** – Clean specific tables (postmeta, terms, termmeta, term_taxonomy, term_relationships, terms_and_term_taxonomy).
-- **Optimize tables** – Run OPTIMIZE on core WordPress tables.
+- **Delete obsolete data** – Removes oembed cache posts and, when enabled, old trash, draft, and revision posts by age (configurable “days old” per type). Also removes obsolete post meta (e.g. old slug, edit lock), transients, and session options. Use the Database tab options to enable “Delete old trash posts”, “Delete old draft posts”, and “Delete old revisions” and set the days threshold for each before running the action.
+- **Delete orphaned data** – Removes post meta, terms, term meta, term taxonomy, and term relationships that no longer reference valid posts or terms. Runs table by table.
+- **Optimize tables** – Runs OPTIMIZE TABLE on core WordPress tables to reclaim space and defragment after deletions.
 
 ---
 
