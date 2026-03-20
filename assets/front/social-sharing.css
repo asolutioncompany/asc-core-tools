@@ -34,17 +34,21 @@ body {
 	text-align: center;
 }
 .asc-core-tools-share-container .asc-core-tools-share-icon {
+	box-sizing: border-box;
 	cursor: pointer;
 	margin-top: 7.5px;
 	margin-right: 10px;
 	margin-bottom: 10px;
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 	vertical-align: middle;
 	text-align: center;
 	min-height: 50px;
 	min-width: 50px;
 	font-size: 18px;
-	line-height: 24px;
+	line-height: 1;
 	padding: 13px;
 	border-radius: 10px;
 	color: var(--asc-social-color); /* icon color */
@@ -67,7 +71,13 @@ body {
 
 .asc-core-tools-share-container button.asc-core-tools-share-icon {
 	border: none;
+	padding: 13px;
+	min-height: 50px;
+	min-width: 50px;
 	font: inherit;
+	font-size: 18px;
+	line-height: 1;
+	background-color: var(--asc-social-bg-color);
 	-webkit-appearance: none;
 	appearance: none;
 }

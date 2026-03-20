@@ -4,9 +4,17 @@ A lightweight WordPress plugin for common customizations of WordPress. Replaces 
 
 This plugin is developed for public use as Free and Open Source Software (FOSS).
 
-**Requires:** PHP 8.1+, WordPress 5.x  
-**Tested with:** WordPress 6.9.1, PHP 8.3  
-**Version:** 1.0.0
+**Requires:** PHP 8.1+, WordPress 5.x
+**Tested with:** WordPress 6.9.1, PHP 8.3
+**Version:** 1.1.0
+
+---
+
+## Changelog
+
+### 1.1.0
+
+- **Social sharing (front-end CSS)** – Normalized styles for `.asc-core-tools-share-icon` on both `<a>` (network links) and `<button>` (Copy link) so spacing, flex alignment, box model, and theme overrides produce a consistent layout and size across all share controls.
 
 ---
 
