@@ -2,7 +2,7 @@
 /**
  * HideLogin Class
  *
- * Hides the default WordPress login page and gates wp-login.php by a custom slug.
+ * Serves login at a custom slug URL; blocks direct access to wp-login.php.
  *
  * @package asc-core-tools
  * @since 1.0.0
@@ -27,13 +27,6 @@ class HideLogin {
 	const LOGIN_QUERY_VAR = 'asc_core_tools_login';
 
 	/**
-	 * Required query parameter name for gating wp-login.php when Hide Login is enabled.
-	 *
-	 * @var string
-	 */
-	const LOGIN_SLUG_PARAM = 'asc-core-tools-login';
-
-	/**
 	 * Initialize the HideLogin class.
 	 *
 	 * @return void
@@ -56,13 +49,13 @@ class HideLogin {
 		add_filter( 'query_vars', array( $this, 'add_login_query_var' ) );
 		add_action( 'init', array( $this, 'add_login_rewrite_rule' ) );
 		add_action( 'init', array( $this, 'redirect_backdoor_login_param_to_home' ), 1 );
-		add_action( 'template_redirect', array( $this, 'redirect_slug_to_wp_login' ) );
-		add_action( 'login_init', array( $this, 'gate_wp_login_by_slug_param' ) );
+		add_action( 'template_redirect', array( $this, 'load_wp_login_at_custom_slug' ), 0 );
+		add_action( 'login_init', array( $this, 'gate_direct_wp_login_file' ), 0 );
 		add_filter( 'site_url', array( $this, 'filter_login_url_to_slug' ), 10, 4 );
 		add_filter( 'network_site_url', array( $this, 'filter_login_url_to_slug_network' ), 10, 3 );
 		add_filter( 'wp_redirect', array( $this, 'filter_redirect_login_to_slug' ), 10, 2 );
 		add_filter( 'login_url', array( $this, 'login_url_to_slug' ), 10, 3 );
-		add_filter( 'logout_url', array( $this, 'logout_url_to_wp_login_with_slug' ), 10, 2 );
+		add_filter( 'logout_url', array( $this, 'logout_url_to_custom_slug' ), 10, 2 );
 		add_filter( 'logout_redirect', array( $this, 'logout_redirect_to_home' ), 10, 3 );
 		add_action( 'admin_init', array( $this, 'restrict_wp_admin' ) );
 		add_filter( 'rest_authentication_errors', array( $this, 'restrict_rest_api' ) );
@@ -120,11 +113,14 @@ class HideLogin {
 	}
 
 	/**
-	 * Gate wp-login.php: allow only when slug param is present and matches the stored slug.
+	 * Block direct access to wp-login.php when the main script is that file.
+	 *
+	 * Login at the custom slug loads wp-login.php via require; SCRIPT_FILENAME
+	 * stays index.php, so those requests are not blocked here.
 	 *
 	 * @return void
 	 */
-	public function gate_wp_login_by_slug_param(): void {
+	public function gate_direct_wp_login_file(): void {
 		$settings = Core::get_settings();
 		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
 
@@ -132,15 +128,19 @@ class HideLogin {
 			return;
 		}
 
-		$param = '';
-		if ( isset( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) ) {
-			$param = sanitize_text_field( wp_unslash( $_REQUEST[ self::LOGIN_SLUG_PARAM ] ) );
+		if ( empty( $_SERVER['SCRIPT_FILENAME'] ) || ! is_string( $_SERVER['SCRIPT_FILENAME'] ) ) {
+			return;
 		}
 
-		if ( $param === '' || $param !== $slug ) {
-			wp_safe_redirect( home_url( '/' ) );
-			exit;
+		$script_real = realpath( $_SERVER['SCRIPT_FILENAME'] );
+		$login_real = realpath( ABSPATH . 'wp-login.php' );
+
+		if ( false === $script_real || false === $login_real || $script_real !== $login_real ) {
+			return;
 		}
+
+		wp_safe_redirect( home_url( '/' ) );
+		exit;
 	}
 
 	/**
@@ -164,11 +164,11 @@ class HideLogin {
 	}
 
 	/**
-	 * When the request is for the custom login slug, redirect to wp-login.php with the slug parameter.
+	 * Run wp-login.php in place so the browser URL stays the custom slug (with query args).
 	 *
 	 * @return void
 	 */
-	public function redirect_slug_to_wp_login(): void {
+	public function load_wp_login_at_custom_slug(): void {
 		if ( ! get_query_var( self::LOGIN_QUERY_VAR ) ) {
 			return;
 		}
@@ -180,24 +180,15 @@ class HideLogin {
 			return;
 		}
 
-		$login_url = home_url( '/wp-login.php' );
-		$login_url = add_query_arg( self::LOGIN_SLUG_PARAM, $slug, $login_url );
+		global $pagenow;
 
-		if ( ! empty( $_GET ) && is_array( $_GET ) ) {
-			foreach ( $_GET as $key => $value ) {
-				if ( $key === self::LOGIN_SLUG_PARAM || $key === self::LOGIN_QUERY_VAR || ! is_string( $key ) || ! is_string( $value ) ) {
-					continue;
-				}
+		$pagenow = 'wp-login.php';
 
-				$key = sanitize_key( $key );
-				$value = sanitize_text_field( wp_unslash( $value ) );
-				if ( $key !== '' ) {
-					$login_url = add_query_arg( $key, $value, $login_url );
-				}
-			}
-		}
+		status_header( 200 );
+		nocache_headers();
 
-		wp_safe_redirect( $login_url );
+		require ABSPATH . 'wp-login.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
+
 		exit;
 	}
 
@@ -238,7 +229,7 @@ class HideLogin {
 	}
 
 	/**
-	 * If URL contains wp-login.php: on login page add slug param; elsewhere replace with custom slug URL.
+	 * If URL contains wp-login.php, replace with the custom slug URL and preserve query args.
 	 *
 	 * @param string $url URL to filter.
 	 * @param string|null $scheme Optional scheme (kept for filter signature compatibility).
@@ -258,20 +249,6 @@ class HideLogin {
 		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
 		if ( $slug === '' ) {
 			return $url;
-		}
-
-		$parsed = parse_url( $url, PHP_URL_QUERY );
-		if ( is_string( $parsed ) && strpos( $parsed, self::LOGIN_SLUG_PARAM . '=' ) !== false ) {
-			parse_str( $parsed, $args );
-			if ( isset( $args[ self::LOGIN_SLUG_PARAM ] ) && (string) $args[ self::LOGIN_SLUG_PARAM ] === $slug ) {
-				return $url;
-			}
-		}
-
-		global $pagenow;
-
-		if ( isset( $pagenow ) && $pagenow === 'wp-login.php' ) {
-			return add_query_arg( self::LOGIN_SLUG_PARAM, $slug, $url );
 		}
 
 		$custom = $this->get_custom_login_url();
@@ -322,29 +299,26 @@ class HideLogin {
 	}
 
 	/**
-	 * Filter logout_url to point to wp-login.php with the slug param and redirect_to=home.
+	 * Filter logout_url to use the custom slug with logout action and redirect_to=home.
 	 *
 	 * @param string $logout_url Default logout URL.
 	 * @param string $redirect Redirect path after logout.
 	 * @return string
 	 */
-	public function logout_url_to_wp_login_with_slug( string $logout_url, string $redirect ): string {
-		$settings = Core::get_settings();
+	public function logout_url_to_custom_slug( string $logout_url, string $redirect ): string {
+		$base = $this->get_custom_login_url();
 
-		$slug = trim( (string) ( $settings['login_page_slug'] ?? '' ), '/' );
-		if ( $slug === '' ) {
+		if ( $base === '' ) {
 			return $logout_url;
 		}
 
-		$url = home_url( '/wp-login.php' );
 		$url = add_query_arg(
 			array(
-				self::LOGIN_SLUG_PARAM => $slug,
 				'action' => 'logout',
 				'redirect_to' => urlencode( home_url( '/' ) ),
 				'_wpnonce' => wp_create_nonce( 'log-out' ),
 			),
-			$url
+			$base
 		);
 
 		return $url;
