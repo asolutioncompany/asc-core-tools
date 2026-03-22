@@ -6,11 +6,17 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 **Requires:** PHP 8.1+, WordPress 5.x
 **Tested with:** WordPress 6.9.1, PHP 8.3
-**Version:** 1.1.0
+**Version:** 1.2.0
 
 ---
 
 ## Changelog
+
+### 1.2.0
+
+- **XML-RPC** – Disabling XML-RPC is applied on all requests (including public `xmlrpc.php`) via `Front/WordPressSettings`, not only when the admin bootstrap runs.
+- **Hide Login** – Login, logout, lost password, and related flows use the custom slug URL in the browser (e.g. `yoursite.com/your-slug/` and query args on that path). Direct access to `wp-login.php` is redirected to the home page, which pairs cleanly with nginx rules that block `/wp-login.php` while allowing the slug.
+- **Documentation** – `Admin/WordPressSettings` docblocks describe automatic update email suppression and point to `Front/WordPressSettings` for XML-RPC; README Hide Login section updated for the slug-only behavior.
 
 ### 1.1.0
 
@@ -22,7 +28,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 ### WordPress Settings (tab)
 - **Disable XML-RPC** – Turn off the XML-RPC endpoint.
-- **Hide WordPress Login** – Use a custom URL for login; `wp-login.php` is gated by a required parameter so only the custom slug works. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
+- **Hide WordPress Login** – Use a custom URL for login; WordPress login runs at that slug (e.g. `yoursite.com/your-slug/` and `?action=lostpassword` on the same path). Direct requests to `wp-login.php` redirect to the home page. Unauthenticated access to `wp-admin` redirects to the home page; REST API is restricted when enabled.
 - **Disable auto-update emails** – Stop WordPress from sending email notifications after automatic core, plugin, or theme updates.
 - **Disable Autosave (Heartbeat API)** – Disable autosave or set the autosave interval.
 - **Disable Revisions** – Disable revisions or limit how many are kept per post.
@@ -54,8 +60,8 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 When **Hide Login** is enabled and a **login page slug** is set (e.g. `your-slug`):
 
-- The login page is available at `https://yoursite.com/your-slug/` (or `?your-slug` without pretty permalinks). Visiting that URL redirects to `wp-login.php` with the required parameter so login works normally (with full WordPress styling).
-- Direct access to `wp-login.php` without the correct parameter redirects to the home page.
+- The login page is available at `https://yoursite.com/your-slug/` (or `?your-slug` without pretty permalinks). The browser stays on that URL; flows such as lost password or logged-out use query arguments on the same slug (e.g. `your-slug/?action=lostpassword`).
+- Direct access to `wp-login.php` redirects to the home page.
 - Unauthenticated requests to `wp-admin` redirect to the home page; the REST API returns 401 when Hide Login is enabled.
 
 Save settings after changing the slug so rewrite rules are updated.
