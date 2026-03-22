@@ -2,7 +2,11 @@
 /**
  * WordPressSettings Class
  *
- * Admin class for WordPress settings (XML-RPC, autosave/heartbeat, revisions).
+ * Admin-initialized WordPress behavior from the plugin settings page:
+ * automatic update notification emails (when disabled), autosave and
+ * Heartbeat API, and post revisions. XML-RPC is handled in
+ * {@see \ASC\CoreTools\Front\WordPressSettings} so it applies on public
+ * requests (for example {@code xmlrpc.php}).
  *
  * @package: asc-core-tools
  * @since 1.0.0
@@ -17,7 +21,9 @@ use ASC\CoreTools\Core\Core;
 /**
  * WordPressSettings Class
  *
- * Applies WordPress settings from the settings page (XML-RPC, autosave/heartbeat, revisions).
+ * Applies WordPress settings from the settings page: optional suppression of
+ * emails after automatic core, plugin, and theme updates; autosave and
+ * heartbeat interval; revision limits.
  */
 class WordPressSettings {
 
@@ -38,10 +44,8 @@ class WordPressSettings {
 	private function init(): void {
 		$settings = Core::get_settings();
 
-		if ( ! empty( $settings['disable_xmlrpc'] ) ) {
-			add_filter( 'xmlrpc_enabled', '__return_false' );
-		}
-
+		// When enabled, WordPress does not send notification emails after
+		// automatic core, plugin, or theme updates (see also Settings UI label).
 		if ( ! empty( $settings['disable_autoupdate_emails'] ) ) {
 			add_filter( 'auto_plugin_update_send_email', '__return_false' );
 			add_filter( 'auto_theme_update_send_email', '__return_false' );
