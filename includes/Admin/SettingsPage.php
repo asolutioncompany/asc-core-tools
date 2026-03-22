@@ -851,16 +851,16 @@ class SettingsPage {
 		// Set tab that is active with active class
 		$active_tab_class = array(
 			'wordpress' => '',
-			'display'   => '',
-			'database'  => '',
+			'display' => '',
+			'database' => '',
 		);
-		$active_tab_class[$active_tab] = ' nav-tab-active';
+		$active_tab_class[ $active_tab ] = ' nav-tab-active';
 
 		// Hide all tabs with CSS that are not active
 		$inactive_tab_css = array(
 			'wordpress' => '',
-			'display'   => '',
-			'database'  => '',
+			'display' => '',
+			'database' => '',
 		);
 
 		foreach ( $tabs as $tab ) {
@@ -911,7 +911,11 @@ class SettingsPage {
 				settings_fields( 'asc_core_tools_settings_group' );
 				?>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php echo $inactive_tab_css['wordpress'] !== '' ? ' style="' . esc_attr( 'display: none;' ) . '"' : ''; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-wordpress-tab" id="asc-core-tools-panel-wordpress" role="tabpanel" aria-labelledby="asc-core-tools-tab-wordpress"<?php
+				if ( $inactive_tab_css['wordpress'] !== '' ) {
+					echo ' style="' . esc_attr( 'display: none;' ) . '"';
+				}
+				?>>
 					<h2><?php esc_html_e( 'WordPress Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -978,7 +982,11 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php echo $inactive_tab_css['display'] !== '' ? ' style="' . esc_attr( 'display: none;' ) . '"' : ''; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-display-tab" id="asc-core-tools-panel-display" role="tabpanel" aria-labelledby="asc-core-tools-tab-display"<?php
+				if ( $inactive_tab_css['display'] !== '' ) {
+					echo ' style="' . esc_attr( 'display: none;' ) . '"';
+				}
+				?>>
 					<h2><?php esc_html_e( 'Display Settings', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>
@@ -1049,7 +1057,11 @@ class SettingsPage {
 					</table>
 				</div>
 
-				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php echo $inactive_tab_css['database'] !== '' ? ' style="' . esc_attr( 'display: none;' ) . '"' : ''; ?>>
+				<div class="asc-core-tools-tab-content asc-core-tools-database-tab" id="asc-core-tools-panel-database" role="tabpanel" aria-labelledby="asc-core-tools-tab-database"<?php
+				if ( $inactive_tab_css['database'] !== '' ) {
+					echo ' style="' . esc_attr( 'display: none;' ) . '"';
+				}
+				?>>
 					<h2><?php esc_html_e( 'Database Maintenance', 'asc-core-tools' ); ?></h2>
 					<table class="form-table" role="presentation">
 						<tbody>

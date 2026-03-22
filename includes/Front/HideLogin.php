@@ -254,6 +254,9 @@ class HideLogin {
 		$custom = $this->get_custom_login_url();
 
 		$parsed = parse_url( $url );
+		if ( ! is_array( $parsed ) ) {
+			return $url;
+		}
 
 		if ( isset( $parsed['query'] ) ) {
 			parse_str( $parsed['query'], $args );

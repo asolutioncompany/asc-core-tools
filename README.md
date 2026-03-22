@@ -16,7 +16,8 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 
 - **XML-RPC** – Disabling XML-RPC is applied on all requests (including public `xmlrpc.php`) via `Front/WordPressSettings`, not only when the admin bootstrap runs.
 - **Hide Login** – Login, logout, lost password, and related flows use the custom slug URL in the browser (e.g. `yoursite.com/your-slug/` and query args on that path). Direct access to `wp-login.php` is redirected to the home page, which pairs cleanly with nginx rules that block `/wp-login.php` while allowing the slug.
-- **Documentation** – `Admin/WordPressSettings` docblocks describe automatic update email suppression and point to `Front/WordPressSettings` for XML-RPC; README Hide Login section updated for the slug-only behavior.
+- **Local fonts** – `font-family` names derived from filenames now strip trailing `-semibold` / `_semibold` and `-semi-bold` / `_semi-bold` suffixes (same as other weight/style tokens), so the family name matches other weights in the set. `font-weight` was already inferred for `semibold` / `semi-bold` as **600**.
+- **Documentation** – `Admin/WordPressSettings` docblocks describe automatic update email suppression and point to `Front/WordPressSettings` for XML-RPC; README updated for Hide Login slug-only behavior and how local `@font-face` CSS is generated from font filenames.
 
 ### 1.1.0
 
@@ -77,6 +78,42 @@ When **Enable local fonts** is on:
 - Each time you load the settings page with local fonts enabled, the directory is scanned and `fonts.css` is regenerated automatically so it stays in sync.
 
 Upload your font files to `wp-content/fonts`, then enable the option and use **Generate CSS** (or reload the settings page) to create the stylesheet.
+
+### How `fonts.css` / `@font-face` is generated from file names
+
+Each font file in `wp-content/fonts` becomes one `@font-face` block. **No font metadata is read from inside the file**—the plugin uses the **file name** (without extension) only.
+
+**`font-family` (display name)**  
+- Take the base file name (e.g. `MyBrand-SemiBold` from `MyBrand-SemiBold.woff2`).  
+- Remove a **single trailing token** after `-` or `_` if it matches one of (case-insensitive; longer hyphenated forms are listed so they win over shorter words inside them): `extra-light`, `extralight`, `extra-bold`, `extrabold`, `semi-bold`, `semibold`, `regular`, `normal`, `italic`, `medium`, `thin`, `black`, `light`, `bold`.  
+- Replace remaining hyphens and underscores with spaces for the CSS `font-family` value (e.g. `MyBrand-SemiBold` → `MyBrand` after stripping `Semibold`, or `My-Brand-semibold` → `My Brand`).  
+- If that leaves nothing usable, the full basename is used.
+
+**`font-weight`**  
+Inferred by **substring** in the base name (first match wins, case-insensitive):
+
+| If the name contains | `font-weight` |
+|----------------------|---------------|
+| `thin` | 100 |
+| `extralight` or `extra-light` | 200 |
+| `light` | 300 |
+| `medium` | 500 |
+| `semibold` or `semi-bold` | 600 |
+| `bold` | 700 |
+| `extrabold` or `extra-bold` | 800 |
+| `black` | 900 |
+| `regular` or `normal` | 400 |
+| *(none of the above—no weight-related keyword in the name)* | 400 |
+
+Use **`regular`** or **`normal`** in the file name for an explicit regular face (e.g. `SourceSans3-Regular.woff2`), or use a basename **without** any of the weight keywords above—both give **`font-weight: 400`**. Any name that does not match an earlier row defaults to **400**.
+
+**`font-style`**  
+`italic` if the base name contains `italic`; otherwise `normal`.
+
+**`src`**  
+Points at the file under your site’s content URL, with a `format(...)` hint from the extension (e.g. `woff2`, `truetype` for `.ttf`).
+
+Name files so the basename reflects the family and weight you want (e.g. `SourceSans3-Regular.woff2`, `SourceSans3-SemiBold.woff2`, `SourceSans3-BoldItalic.woff2`).
 
 ---
 

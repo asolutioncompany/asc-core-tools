@@ -70,26 +70,26 @@ class SocialSharing {
 		$html .= '<span class="asc-core-tools-share-header">' . esc_html__( 'Share:', 'asc-core-tools' ) . '</span>';
 
 		if ( ! empty( $settings['share_facebook'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="Facebook" aria-label="' . esc_attr__( 'Share on Facebook', 'asc-core-tools' ) . '"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>';
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $fb_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="' . esc_attr__( 'Facebook', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Share on Facebook', 'asc-core-tools' ) . '"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>';
 		}
 
 		if ( ! empty( $settings['share_linkedin'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="LinkedIn" aria-label="' . esc_attr__( 'Share on LinkedIn', 'asc-core-tools' ) . '"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>';
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $li_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="' . esc_attr__( 'LinkedIn', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Share on LinkedIn', 'asc-core-tools' ) . '"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>';
 		}
 
 		if ( ! empty( $settings['share_bluesky'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $bluesky_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="Bluesky" aria-label="' . esc_attr__( 'Share on Bluesky', 'asc-core-tools' ) . '"><i class="fab fa-bluesky" aria-hidden="true"></i></a>';
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $bluesky_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="' . esc_attr__( 'Bluesky', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Share on Bluesky', 'asc-core-tools' ) . '"><i class="fab fa-bluesky" aria-hidden="true"></i></a>';
 		}
 
 		if ( ! empty( $settings['share_x'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $x_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="X" aria-label="' . esc_attr__( 'Share on X', 'asc-core-tools' ) . '"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>';
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $x_url ) . '" target="_blank" rel="noopener noreferrer nofollow" title="' . esc_attr__( 'X', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Share on X', 'asc-core-tools' ) . '"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>';
 
 		}
 		if ( ! empty( $settings['share_email'] ) ) {
-			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $mail_url ) . '" target="_self" rel="noopener noreferrer nofollow" title="Email" aria-label="' . esc_attr__( 'Share via email', 'asc-core-tools' ) . '"><i class="far fa-envelope" aria-hidden="true"></i></a>';
+			$html .= '<a class="asc-core-tools-share-icon" href="' . esc_url( $mail_url ) . '" target="_self" rel="noopener noreferrer nofollow" title="' . esc_attr__( 'Email', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Share via email', 'asc-core-tools' ) . '"><i class="far fa-envelope" aria-hidden="true"></i></a>';
 		}
 		if ( ! empty( $settings['share_copy_link'] ) ) {
-			$html .= '<button type="button" class="asc-core-tools-share-icon asc-core-tools-copy" title="Copy Link" aria-label="' . esc_attr__( 'Copy link', 'asc-core-tools' ) . '" data-clipboard-text="' . $attr_link . '"><i class="far fa-copy" aria-hidden="true"></i><span class="asc-core-tools-share-success" aria-live="polite" aria-atomic="true"></span></button>';
+			$html .= '<button type="button" class="asc-core-tools-share-icon asc-core-tools-copy" title="' . esc_attr__( 'Copy link', 'asc-core-tools' ) . '" aria-label="' . esc_attr__( 'Copy link', 'asc-core-tools' ) . '" data-clipboard-text="' . $attr_link . '"><i class="far fa-copy" aria-hidden="true"></i><span class="asc-core-tools-share-success" aria-live="polite" aria-atomic="true"></span></button>';
 		}
 
 		$html .= '</div>';

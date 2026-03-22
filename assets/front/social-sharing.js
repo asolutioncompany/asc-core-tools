@@ -74,15 +74,11 @@
 			return win.open(url, window_name, param);
 		}
 
-		$(document).on('click', '.asc-core-tools-share-icon', function(e) {
+		$(document).on('click', '.asc-core-tools-share-icon:not(.asc-core-tools-copy)', function(e) {
 			var title = $(this).attr('title');
-			var url = $(this).attr('href');
+			var url = $(this).attr('href') || '';
 
-			if ('Copy Link' == title) {
-				return false;
-			}
-
-			if ('Email' == title) {
+			if (url.indexOf('mailto:') === 0) {
 				return true;
 			}
 
