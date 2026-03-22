@@ -138,9 +138,8 @@ class Fonts {
 		}
 
 		$settings = \ASC\CoreTools\Core\Core::get_settings();
-		$enable_local_fonts = ! empty( $settings['enable_local_fonts'] );
 
-		if ( $enable_local_fonts ) {
+		if ( ! empty( $settings['enable_local_fonts'] ) ) {
 			$this->do_generate_css();
 		}
 
@@ -169,14 +168,28 @@ class Fonts {
 			return false;
 		}
 
+		$fonts_dir = wp_normalize_path( $fonts_dir );
+		$fonts_dir = rtrim( $fonts_dir, '/' );
+		$fonts_boundary = $fonts_dir . '/';
+
 		$resolved = realpath( $path );
 		if ( $resolved !== false ) {
-			return strpos( $resolved, $fonts_dir ) === 0;
+			$resolved = wp_normalize_path( $resolved );
+			if ( $resolved === $fonts_dir ) {
+				return false;
+			}
+
+			return strpos( $resolved, $fonts_boundary ) === 0;
 		}
 
 		// File may not exist yet: resolve parent directory and check basename has no traversal.
 		$parent = realpath( dirname( $path ) );
-		if ( $parent === false || $parent !== $fonts_dir ) {
+		if ( $parent === false ) {
+			return false;
+		}
+
+		$parent = wp_normalize_path( $parent );
+		if ( $parent !== $fonts_dir ) {
 			return false;
 		}
 
@@ -275,8 +288,9 @@ class Fonts {
 	 * @return string
 	 */
 	private function infer_font_style( string $basename ): string {
+		$lower = strtolower( $basename );
 		$style = 'normal';
-		if ( strpos( strtolower( $basename ), 'italic' ) !== false ) {
+		if ( strpos( $lower, 'italic' ) !== false ) {
 			$style = 'italic';
 		}
 
@@ -286,11 +300,19 @@ class Fonts {
 	/**
 	 * Build a font-family name from filename (basename without extension).
 	 *
+	 * Strips one trailing weight/style token (after - or _) matching infer_font_weight /
+	 * infer_font_style naming, including hyphenated forms. Longer tokens are listed
+	 * first so e.g. extralight matches before light.
+	 *
 	 * @param string $basename Filename without extension.
 	 * @return string
 	 */
 	private function font_family_from_basename( string $basename ): string {
-		$name = preg_replace( '/[-_](regular|normal|italic|bold|light|thin|medium|black)$/i', '', $basename );
+		$name = preg_replace(
+			'/[-_](extra-light|extralight|extra-bold|extrabold|semi-bold|semibold|regular|normal|italic|medium|thin|black|light|bold)$/i',
+			'',
+			$basename
+		);
 		$name = trim( preg_replace( '/[-_]+/', ' ', $name ) );
 
 		$result = $basename;
