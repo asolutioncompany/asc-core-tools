@@ -35,6 +35,7 @@ class Front {
 	 * @return void
 	 */
 	private function init(): void {
+		new WordPressSettings();
 		new HideLogin();
 		new DisableComments();
 		new SocialSharing();
