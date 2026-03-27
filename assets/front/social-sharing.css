@@ -16,64 +16,58 @@ body {
 
 .asc-core-tools-share-container {
 	text-align: center;
-	margin: 60px auto 50px auto; /* spacing for social share box */
+	margin: 40px auto; /* spacing for social share box */
 }
-.asc-core-tools-share-container .asc-core-tools-share-header {
-	margin-right: 10px;
-	margin-bottom: 10px;
+.asc-core-tools-share-header {
+	margin: 5px;
 	font-weight: 600;
 }
-@media (max-width: 420px) {
-	.asc-core-tools-share-container .asc-core-tools-share-header {
-		display: block;
-		margin-right: 0;
-		margin-bottom: 5px;
-	}
-}
-.asc-core-tools-share-container .acs-share-networks {
+.asc-core-tools-share-networks {
 	text-align: center;
 }
-.asc-core-tools-share-container .asc-core-tools-share-icon {
+.asc-core-tools-share-icon {
 	box-sizing: border-box;
 	cursor: pointer;
-	margin-top: 7.5px;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	margin: 5px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	flex-shrink: 0;
 	vertical-align: middle;
 	text-align: center;
-	min-height: 50px;
-	min-width: 50px;
+	max-height: 48px;
+	max-width: 48px;
 	font-size: 18px;
 	line-height: 1;
-	padding: 13px;
+	padding: 14px;
 	border-radius: 10px;
 	color: var(--asc-social-color); /* icon color */
 	background-color: var(--asc-social-bg-color); /* icon background color */
 }
-.asc-core-tools-share-container .asc-core-tools-share-icon:hover,
-.asc-core-tools-share-container .asc-core-tools-share-icon:active {
+@media (max-width: 440px) {
+	.asc-core-tools-share-header {
+		display: block;
+	}
+}
+.asc-core-tools-share-icon:hover,
+.asc-core-tools-share-icon:active {
 	background-color: var(--asc-social-hover-bg-color); /* hover icon background color */
 	color: var(--asc-social-hover-color); /* hover icon color */
 }
-.asc-core-tools-share-container .asc-core-tools-share-icon:focus {
+.asc-core-tools-share-icon:focus {
 	outline: none;
 }
-.asc-core-tools-share-container .asc-core-tools-share-icon:focus-visible {
+.asc-core-tools-share-icon:focus-visible {
 	background-color: var(--asc-social-hover-bg-color);
 	color: var(--asc-social-hover-color);
 	outline: 1px solid currentColor;
 	outline-offset: 2px;
 }
-
 .asc-core-tools-share-container button.asc-core-tools-share-icon {
 	border: none;
-	padding: 13px;
-	min-height: 50px;
-	min-width: 50px;
+	padding: 14px;
+	max-height: 48px;
+	max-width: 48px;
 	font: inherit;
 	font-size: 18px;
 	line-height: 1;
@@ -81,17 +75,17 @@ body {
 	-webkit-appearance: none;
 	appearance: none;
 }
-.asc-core-tools-share-container .asc-core-tools-copy {
+.asc-core-tools-copy {
 	position: relative;
 	cursor: copy;
 }
-.asc-core-tools-share-container .asc-core-tools-share-success {
+.asc-core-tools-share-success {
 	cursor: pointer;
 	display: none;
 	position: absolute;
 	overflow: hidden;
 	border-radius: 10px;
-	bottom: 60px;
+	bottom: 56px;
 	right: 50px;
 	width: 160px;
 	min-height: 40px;
@@ -103,14 +97,14 @@ body {
 	margin: 0;
 	z-index: 999999;
 }
-.asc-core-tools-share-container .asc-core-tools-share-success:hover,
-.asc-core-tools-share-container .asc-core-tools-share-success:active,
-.asc-core-tools-share-container .asc-core-tools-share-success:focus {
+.asc-core-tools-share-success:hover,
+.asc-core-tools-share-success:active,
+.asc-core-tools-share-success:focus {
 	color: var(--asc-social-alert-hover-color); /* hover icon color */
 	background-color: var(--asc-social-alert-hover-bg-color); /* hover icon background color */
 }
-.asc-core-tools-share-container .asc-core-tools-share-alert-message {
+.asc-core-tools-share-alert-message {
 	margin-right: 10px;
 }
-.asc-core-tools-share-container .asc-core-tools-share-alert-close {
+.asc-core-tools-share-alert-close {
 }
