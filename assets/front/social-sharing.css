@@ -63,7 +63,7 @@ body {
 	outline: 1px solid currentColor;
 	outline-offset: 2px;
 }
-.asc-core-tools-share-container button.asc-core-tools-share-icon {
+.asc-core-tools-share-icon {
 	border: none;
 	padding: 14px;
 	max-height: 48px;
@@ -88,9 +88,9 @@ body {
 	bottom: 56px;
 	right: 50px;
 	width: 160px;
-	min-height: 40px;
+	max-height: 40px;
 	font-size: 18px;
-	line-height: 24px;
+	line-height: 1;
 	padding: 8px 13px;
 	color: var(--asc-social-alert-color); /* success message font color */
 	background-color: var(--asc-social-alert-bg-color); /* success message background color */
