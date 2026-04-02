@@ -306,11 +306,10 @@ class SettingsPage {
 		);
 		add_settings_field(
 			'enable_ninja_forms',
-			__( 'Enable Ninja Forms Customization', 'asc-core-tools' ),
+			'',
 			array( $this, 'render_enable_ninja_forms' ),
 			$page_slug,
-			'asc_core_tools_features_section',
-			array( 'label_for' => 'enable_ninja_forms' )
+			'asc_core_tools_features_section'
 		);
 	}
 
@@ -652,8 +651,12 @@ class SettingsPage {
 		$id = 'enable_ninja_forms';
 
 		?>
-		<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
-			value="1" <?php checked( $value ); ?>>
+		<div class="asc-core-tools-description"><?php esc_html_e( 'Note: In Ninja Forms settings, set "Opinionated Styles" to "Light" for default styling.', 'asc-core-tools' ); ?></div>
+		<label for="<?php echo esc_attr( $id ); ?>">
+			<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>"
+				value="1" <?php checked( $value ); ?>>
+			<?php esc_html_e( 'Enable Ninja Forms Customization', 'asc-core-tools' ); ?>
+		</label>
 		<?php
 	}
 

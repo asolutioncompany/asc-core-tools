@@ -202,8 +202,12 @@ msgstr ""
 msgid "Ninja Forms"
 msgstr ""
 
-#: includes/Admin/SettingsPage.php:309
+#: includes/Admin/SettingsPage.php:658
 msgid "Enable Ninja Forms Customization"
+msgstr ""
+
+#: includes/Admin/SettingsPage.php:654
+msgid "Note: In Ninja Forms settings, set \"Opinionated Styles\" to \"Light\" for default styling."
 msgstr ""
 
 #: includes/Admin/SettingsPage.php:638

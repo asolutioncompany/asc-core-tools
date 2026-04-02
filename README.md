@@ -40,7 +40,7 @@ This plugin is developed for public use as Free and Open Source Software (FOSS).
 - **Local Fonts** – Upload font files to `wp-content/fonts`; enable to load a generated `fonts.css` on the front-end. Use **Scan for fonts** and **Generate CSS** on the Display tab to list files and build `@font-face` rules. When “Enable local fonts” is on, the settings page auto-scans the directory and regenerates `fonts.css` on load.
 - **Local Font Awesome** – Option to host Font Awesome locally from the plugin; on by default.
 - **Social sharing** – Optional sharing bar (Facebook, LinkedIn, Bluesky, X, Email, Copy link) on selected post types or via shortcode; you can choose which networks to show (all enabled by default). Requires clipboard.js and Font Awesome, which are included in the vendor directory and locally hosted by default.
-- **Ninja Forms** – Optional customization (enable to load custom CSS).
+- **Ninja Forms** – Optional customization (enable to load custom CSS). **Note:** In Ninja Forms settings, set **Opinionated Styles** to **Light** for default styling.
 
 ### Database Maintenance
 - **Delete obsolete data** – Removes oembed cache posts, obsolete post meta (e.g. old slug, edit lock), transients, and session options. Also, when enabled, old trash, draft, and revision posts by age, configured by days.
@@ -83,13 +83,13 @@ Upload your font files to `wp-content/fonts`, then enable the option and use **G
 
 Each font file in `wp-content/fonts` becomes one `@font-face` block. **No font metadata is read from inside the file**—the plugin uses the **file name** (without extension) only.
 
-**`font-family` (display name)**  
-- Take the base file name (e.g. `MyBrand-SemiBold` from `MyBrand-SemiBold.woff2`).  
-- Remove a **single trailing token** after `-` or `_` if it matches one of (case-insensitive; longer hyphenated forms are listed so they win over shorter words inside them): `extra-light`, `extralight`, `extra-bold`, `extrabold`, `semi-bold`, `semibold`, `regular`, `normal`, `italic`, `medium`, `thin`, `black`, `light`, `bold`.  
-- Replace remaining hyphens and underscores with spaces for the CSS `font-family` value (e.g. `MyBrand-SemiBold` → `MyBrand` after stripping `Semibold`, or `My-Brand-semibold` → `My Brand`).  
+**`font-family` (display name)**
+- Take the base file name (e.g. `MyBrand-SemiBold` from `MyBrand-SemiBold.woff2`).
+- Remove a **single trailing token** after `-` or `_` if it matches one of (case-insensitive; longer hyphenated forms are listed so they win over shorter words inside them): `extra-light`, `extralight`, `extra-bold`, `extrabold`, `semi-bold`, `semibold`, `regular`, `normal`, `italic`, `medium`, `thin`, `black`, `light`, `bold`.
+- Replace remaining hyphens and underscores with spaces for the CSS `font-family` value (e.g. `MyBrand-SemiBold` → `MyBrand` after stripping `Semibold`, or `My-Brand-semibold` → `My Brand`).
 - If that leaves nothing usable, the full basename is used.
 
-**`font-weight`**  
+**`font-weight`**
 Inferred by **substring** in the base name (first match wins, case-insensitive):
 
 | If the name contains | `font-weight` |
@@ -107,10 +107,10 @@ Inferred by **substring** in the base name (first match wins, case-insensitive):
 
 Use **`regular`** or **`normal`** in the file name for an explicit regular face (e.g. `SourceSans3-Regular.woff2`), or use a basename **without** any of the weight keywords above—both give **`font-weight: 400`**. Any name that does not match an earlier row defaults to **400**.
 
-**`font-style`**  
+**`font-style`**
 `italic` if the base name contains `italic`; otherwise `normal`.
 
-**`src`**  
+**`src`**
 Points at the file under your site’s content URL, with a `format(...)` hint from the extension (e.g. `woff2`, `truetype` for `.ttf`).
 
 Name files so the basename reflects the family and weight you want (e.g. `SourceSans3-Regular.woff2`, `SourceSans3-SemiBold.woff2`, `SourceSans3-BoldItalic.woff2`).
